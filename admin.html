@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Portfolio Admin – AV</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#080810;--bg2:#0e0e1a;--bg3:#141420;--card:#16162a;--border:rgba(255,255,255,0.08);--accent:#8b5cf6;--accent2:#ec4899;--accent3:#06b6d4;--text:#f1f0ff;--muted:#7c7c9e;--soft:#a5a5c5;--ok:#34d399;--err:#f87171;--warn:#fbbf24;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;min-height:100vh;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-thumb{background:var(--accent);border-radius:10px;}
+/* LOGIN */
+#loginScreen{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:1rem;}
+#loginScreen.hidden{display:none;}
+.lbox{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:2.5rem 2rem;width:100%;max-width:400px;}
+.llogo{font-family:'Outfit',sans-serif;font-weight:900;font-size:2rem;background:linear-gradient(135deg,#8b5cf6,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:.3rem;}
+.lsub{text-align:center;color:var(--muted);font-size:.82rem;margin-bottom:2rem;}
+.ltabs{display:flex;gap:.4rem;margin-bottom:1.8rem;background:var(--bg3);border-radius:10px;padding:.22rem;}
+.ltab{flex:1;padding:.46rem;border-radius:8px;border:none;background:transparent;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-size:.76rem;font-weight:600;cursor:pointer;transition:all .2s;}
+.ltab.active{background:var(--card);color:var(--text);}
+.lf{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.95rem;}
+.lf label{font-size:.7rem;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;}
+.lf input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:.76rem 1rem;border-radius:11px;font-family:'Space Grotesk',sans-serif;font-size:.87rem;outline:none;transition:border-color .2s,box-shadow .2s;-webkit-text-fill-color:var(--text);width:100%;}
+.lf input:focus{border-color:rgba(139,92,246,.5);box-shadow:0 0 0 3px rgba(139,92,246,.08);}
+.lbtn{background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff;border:none;padding:.85rem;border-radius:11px;font-family:'Space Grotesk',sans-serif;font-size:.92rem;font-weight:700;cursor:pointer;width:100%;margin-top:.4rem;transition:all .2s;}
+.lbtn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(139,92,246,.4);}
+.lbtn:disabled{opacity:.7;cursor:not-allowed;transform:none;}
+.mbox{border-radius:9px;padding:.62rem .88rem;font-size:.81rem;margin-bottom:.8rem;display:none;}
+.mbox.show{display:block;}
+.merr{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);color:var(--err);}
+.mok{background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);color:var(--ok);}
+.pwhint{font-size:.7rem;color:var(--muted);margin-top:.28rem;}
+/* LAYOUT */
+#adminApp{display:none;}
+#adminApp.show{display:block;}
+.layout{display:grid;grid-template-columns:252px 1fr;min-height:100vh;}
+/* SIDEBAR */
+.sb{background:var(--bg2);border-right:1px solid var(--border);padding:1.5rem 1.1rem;display:flex;flex-direction:column;gap:1.3rem;position:sticky;top:0;height:100vh;overflow-y:auto;}
+.sblogo{font-family:'Outfit',sans-serif;font-weight:900;font-size:1.2rem;letter-spacing:-1px;background:linear-gradient(135deg,#8b5cf6,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.sblogo small{display:block;font-size:.6rem;color:var(--muted);-webkit-text-fill-color:var(--muted);font-weight:500;margin-top:.1rem;}
+.sbuser{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:.62rem .82rem;display:flex;align-items:center;justify-content:space-between;gap:.4rem;}
+.sbuser span{color:var(--accent3);font-weight:600;font-size:.68rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.sbout{background:none;border:none;color:var(--err);cursor:pointer;font-size:.7rem;font-weight:700;padding:.18rem .42rem;border-radius:5px;white-space:nowrap;}
+.sbout:hover{background:rgba(248,113,113,.1);}
+.sbsec{font-size:.58rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;padding:.35rem 0 .15rem 1rem;}
+.sbnav{display:flex;flex-direction:column;gap:.22rem;}
+.sbi{display:flex;align-items:center;gap:.68rem;padding:.64rem 1rem;border-radius:11px;cursor:pointer;color:var(--muted);font-size:.82rem;font-weight:500;transition:all .2s;border:1px solid transparent;background:none;width:100%;text-align:left;}
+.sbi:hover{color:var(--text);background:var(--bg3);}
+.sbi.active{color:var(--accent);background:rgba(139,92,246,.1);border-color:rgba(139,92,246,.2);}
+.sbico{font-size:.88rem;width:17px;text-align:center;flex-shrink:0;}
+.sbbadge{margin-left:auto;background:rgba(139,92,246,.15);color:var(--accent);font-size:.58rem;font-weight:700;padding:.08rem .42rem;border-radius:50px;}
+.sbbadge.red{background:rgba(248,113,113,.15);color:var(--err);}
+.sbdiv{height:1px;background:var(--border);margin:.12rem 0;}
+.sbback{display:flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;font-size:.78rem;padding:.6rem 1rem;border-radius:10px;border:1px solid var(--border);transition:all .2s;margin-top:auto;}
+.sbback:hover{color:var(--text);background:var(--bg3);}
+/* MAIN */
+.main{padding:1.8rem;overflow-x:hidden;}
+.topbar{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.8rem;flex-wrap:wrap;gap:.8rem;}
+.tbl{display:flex;align-items:center;gap:.75rem;}
+.hbtn{display:none;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:.36rem .6rem;cursor:pointer;font-size:.95rem;color:var(--text);}
+.pt{font-family:'Outfit',sans-serif;font-size:1.4rem;font-weight:800;letter-spacing:-.5px;}
+.ps{color:var(--muted);font-size:.76rem;margin-top:.16rem;}
+.page{display:none;}.page.active{display:block;}
+/* INFO BOX */
+.info-box{background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.2);border-radius:10px;padding:.8rem 1rem;font-size:.8rem;color:#c4b5fd;margin-bottom:1.5rem;line-height:1.6;}
+.info-box strong{color:var(--text);}
+/* STATS */
+.srow{display:grid;grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:.8rem;margin-bottom:1.8rem;}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem;}
+.sclbl{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;}
+.scnum{font-family:'Outfit',sans-serif;font-size:1.9rem;font-weight:900;}
+.cv{color:var(--accent)}.cp{color:var(--accent2)}.cc{color:var(--accent3)}.cg{color:var(--ok)}.cr{color:var(--err)}
+/* TABLE */
+.tcard{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:1.4rem;}
+.tchead{padding:.9rem 1.2rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:.55rem;}
+.tctitle{font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:700;}
+.srch{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:.36rem .78rem;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-size:.78rem;outline:none;width:165px;-webkit-text-fill-color:var(--text);}
+.srch:focus{border-color:rgba(139,92,246,.4);}
+.srch::placeholder{color:var(--muted);}
+.tw{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;min-width:460px;}
+th{text-align:left;padding:.62rem .95rem;font-size:.65rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;border-bottom:1px solid var(--border);background:var(--bg2);white-space:nowrap;}
+td{padding:.75rem .95rem;font-size:.81rem;border-bottom:1px solid var(--border);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,.013);}
+.tdm{font-weight:600;font-size:.84rem;}
+.tds{font-size:.7rem;color:var(--muted);margin-top:.13rem;}
+.tdurl{color:var(--accent);text-decoration:none;font-size:.71rem;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;}
+.badge{display:inline-flex;align-items:center;padding:.16rem .5rem;border-radius:50px;font-size:.61rem;font-weight:700;letter-spacing:.04em;white-space:nowrap;}
+.ba{color:var(--accent);background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.2);}
+.bt{color:var(--accent3);background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.15);}
+.bf{color:var(--accent2);background:rgba(236,72,153,.1);border:1px solid rgba(236,72,153,.2);}
+.bn{color:var(--muted);background:var(--bg3);border:1px solid var(--border);}
+.bg2c{color:var(--ok);background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.2);}
+.br2{color:var(--err);background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.2);}
+.act{display:flex;gap:.32rem;flex-wrap:nowrap;}
+.ib{height:27px;border-radius:7px;border:1px solid var(--border);background:var(--bg3);color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:.72rem;transition:all .2s;padding:0 .42rem;white-space:nowrap;}
+.ib:hover{border-color:rgba(139,92,246,.4);color:var(--accent);background:rgba(139,92,246,.08);}
+.ib.del:hover{border-color:rgba(248,113,113,.4);color:var(--err);background:rgba(248,113,113,.08);}
+.ib.up:hover{border-color:rgba(52,211,153,.4);color:var(--ok);background:rgba(52,211,153,.08);}
+.ib.dn:hover{border-color:rgba(251,191,36,.4);color:var(--warn);background:rgba(251,191,36,.08);}
+.ib.top2:hover{border-color:rgba(6,182,212,.4);color:var(--accent3);background:rgba(6,182,212,.08);}
+.ordb{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;background:var(--bg3);border:1px solid var(--border);border-radius:5px;font-size:.7rem;font-weight:700;color:var(--muted);}
+.emptyrow{text-align:center;padding:2.2rem;color:var(--muted);font-size:.84rem;}
+.unreadr td{background:rgba(139,92,246,.04);}
+/* BUTTONS */
+.btn{padding:.5rem 1.15rem;border-radius:10px;font-family:'Space Grotesk',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;border:none;display:inline-flex;align-items:center;gap:.38rem;}
+.btnp{background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff;box-shadow:0 3px 12px rgba(139,92,246,.28);}
+.btnp:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 18px rgba(139,92,246,.42);}
+.btnp:disabled{opacity:.65;cursor:not-allowed;}
+.btno{background:transparent;border:1px solid var(--border);color:var(--soft);}
+.btno:hover{border-color:var(--accent);color:var(--accent);}
+.btnd{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.2);color:var(--err);}
+.btnd:hover{background:rgba(248,113,113,.2);}
+.btnsm{padding:.32rem .78rem;font-size:.73rem;}
+/* FORMS */
+.fcard{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.6rem;margin-bottom:1.4rem;}
+.fctitle{font-family:'Outfit',sans-serif;font-size:.93rem;font-weight:700;margin-bottom:1.2rem;padding-bottom:.7rem;border-bottom:1px solid var(--border);}
+.fg{display:flex;flex-direction:column;gap:.36rem;margin-bottom:.9rem;}
+.fg label{font-size:.68rem;font-weight:700;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;}
+.fg input,.fg textarea,.fg select{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:.68rem .92rem;border-radius:10px;font-family:'Space Grotesk',sans-serif;font-size:.84rem;outline:none;transition:border-color .2s,box-shadow .2s;resize:vertical;-webkit-text-fill-color:var(--text);}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:rgba(139,92,246,.5);box-shadow:0 0 0 3px rgba(139,92,246,.08);}
+.fg textarea{min-height:90px;}
+.fg select option{background:var(--bg2);}
+.fgrow{display:grid;grid-template-columns:1fr 1fr;gap:.95rem;}
+.fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.95rem;}
+.cbrow{display:flex;align-items:center;gap:.58rem;padding:.68rem .92rem;background:var(--bg3);border:1px solid var(--border);border-radius:10px;}
+.cbrow input[type=checkbox]{width:15px;height:15px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;}
+.cbrow label{font-size:.84rem;cursor:pointer;}
+.factions{display:flex;gap:.65rem;justify-content:flex-end;margin-top:1.2rem;flex-wrap:wrap;}
+/* POINTS */
+.ptlist{display:flex;flex-direction:column;gap:.42rem;margin-bottom:.65rem;}
+.ptitem{display:flex;align-items:center;gap:.38rem;}
+.ptitem input{flex:1;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:.55rem .8rem;border-radius:9px;font-family:'Space Grotesk',sans-serif;font-size:.82rem;outline:none;-webkit-text-fill-color:var(--text);}
+.ptitem input:focus{border-color:rgba(139,92,246,.4);}
+.rmpt{width:26px;height:26px;border-radius:7px;border:1px solid rgba(248,113,113,.2);background:rgba(248,113,113,.08);color:var(--err);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.78rem;flex-shrink:0;}
+.rmpt:hover{background:rgba(248,113,113,.2);}
+.addpt{background:transparent;border:1px dashed var(--border);color:var(--muted);padding:.5rem;border-radius:9px;font-family:'Space Grotesk',sans-serif;font-size:.76rem;cursor:pointer;width:100%;transition:all .2s;}
+.addpt:hover{border-color:rgba(139,92,246,.4);color:var(--accent);}
+/* SKILLS */
+.skgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:.6rem;margin-bottom:.75rem;}
+.skitem{display:grid;grid-template-columns:26px 40px 1fr 1fr 26px;gap:.32rem;align-items:center;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:.52rem .65rem;}
+.skitem input{background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:.78rem;outline:none;padding:.16rem .25rem;-webkit-text-fill-color:var(--text);min-width:0;width:100%;}
+.skord{font-size:.66rem;color:var(--muted);font-weight:700;text-align:center;}
+/* STATS */
+.steditor{display:flex;flex-direction:column;gap:.52rem;margin-bottom:.75rem;}
+.strow{display:grid;grid-template-columns:88px 1fr 26px;gap:.42rem;align-items:center;}
+.strow input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:.52rem .72rem;border-radius:9px;font-family:'Space Grotesk',sans-serif;font-size:.82rem;outline:none;-webkit-text-fill-color:var(--text);}
+/* ENQUIRY */
+.enqdetail{background:var(--bg3);border:1px solid var(--border);border-radius:11px;padding:1.1rem;margin-bottom:.75rem;}
+.enqrow{display:flex;gap:.9rem;margin-bottom:.45rem;flex-wrap:wrap;}
+.enqlbl{font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;min-width:60px;padding-top:.13rem;}
+.enqval{font-size:.83rem;color:var(--text);font-weight:500;}
+.enqmsg{background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:.85rem;font-size:.83rem;color:var(--soft);line-height:1.7;margin-top:.45rem;}
+/* TOAST */
+#toast{position:fixed;bottom:1.6rem;right:1.6rem;z-index:9999;border-radius:12px;padding:.76rem 1.25rem;font-size:.81rem;font-weight:500;transform:translateY(70px);opacity:0;transition:all .3s;display:flex;align-items:center;gap:.52rem;max-width:280px;background:var(--card);border:1px solid var(--border);pointer-events:none;}
+#toast.show{transform:translateY(0);opacity:1;}
+#toast.ok{border-color:rgba(52,211,153,.3);color:var(--ok);}
+#toast.err{border-color:rgba(248,113,113,.3);color:var(--err);}
+#toast.info{border-color:rgba(139,92,246,.3);color:#a78bfa;}
+/* MODAL */
+.overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:1rem;}
+.overlay.open{display:flex;}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:1.6rem;width:100%;max-width:430px;max-height:90vh;overflow-y:auto;}
+.mhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;}
+.mtitle{font-family:'Outfit',sans-serif;font-size:1rem;font-weight:700;}
+.mclose{background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;line-height:1;}
+.mbody{color:var(--muted);font-size:.84rem;line-height:1.7;margin-bottom:1.3rem;}
+.mbody strong{color:var(--text);}
+.mfoot{display:flex;gap:.65rem;justify-content:flex-end;}
+/* RESPONSIVE */
+@media(max-width:900px){.layout{grid-template-columns:1fr;}.sb{display:none;position:fixed;z-index:300;width:252px;height:100vh;left:0;top:0;}.sb.open{display:flex;}.hbtn{display:block;}.fgrow,.fg3{grid-template-columns:1fr;}.main{padding:1.2rem;}.skgrid{grid-template-columns:1fr;}}
+@media(max-width:480px){table{min-width:400px;}.srow{grid-template-columns:repeat(2,1fr);}.act{flex-wrap:wrap;}}
+</style>
+</head>
+<body>
+<div id="toast"></div>
+<!-- DELETE MODAL -->
+<div class="overlay" id="delOverlay">
+  <div class="modal">
+    <div class="mhead"><span class="mtitle">🗑 Confirm Delete</span><button class="mclose" onclick="closeModal('delOverlay')">✕</button></div>
+    <div class="mbody">Delete <strong id="delName"></strong>? This cannot be undone.</div>
+    <div class="mfoot"><button class="btn btno" onclick="closeModal('delOverlay')">Cancel</button><button class="btn btnd" onclick="confirmDel()">Delete</button></div>
+  </div>
+</div>
+<!-- ENQUIRY MODAL -->
+<div class="overlay" id="enqOverlay">
+  <div class="modal" style="max-width:520px">
+    <div class="mhead"><span class="mtitle" id="enqMTitle">📨 Enquiry</span><button class="mclose" onclick="closeModal('enqOverlay')">✕</button></div>
+    <div id="enqMBody"></div>
+    <div class="mfoot"><button class="btn btno" onclick="closeModal('enqOverlay')">Close</button><button class="btn btnd btnsm" id="enqDelBtn">Delete</button></div>
+  </div>
+</div>
+<!-- LOGIN SCREEN -->
+<div id="loginScreen">
+  <div class="lbox">
+    <div class="llogo">AV.</div>
+    <div class="lsub">Portfolio Admin Panel</div>
+    <div class="ltabs">
+      <button class="ltab active" id="tabLogin" onclick="switchTab('login')">Login</button>
+      <button class="ltab" id="tabForgot" onclick="switchTab('forgot')">Forgot</button>
+      <button class="ltab" id="tabChange" onclick="switchTab('change')">Change PW</button>
+    </div>
+    <!-- LOGIN -->
+    <div id="formLogin">
+      <div class="mbox merr" id="loginErr"></div>
+      <div class="lf"><label>Email Address</label><input id="lEmail" type="email" placeholder="av.developer73@gmail.com" autocomplete="username"/></div>
+      <div class="lf"><label>Password</label><input id="lPass" type="password" placeholder="••••••••" autocomplete="current-password"/></div>
+      <button class="lbtn" id="loginBtn" onclick="doLogin()">🔐 Login to Admin</button>
+    </div>
+    <!-- FORGOT -->
+    <div id="formForgot" style="display:none">
+      <div class="mbox merr" id="forgotErr"></div>
+      <div class="mbox mok" id="forgotOk"></div>
+      <p style="font-size:.8rem;color:var(--muted);margin-bottom:1rem;line-height:1.6">Enter your registered email to see reset instructions.</p>
+      <div class="lf"><label>Registered Email</label><input id="fEmail" type="email" placeholder="av.developer73@gmail.com"/></div>
+      <button class="lbtn" onclick="doForgot()">Show Info</button>
+      <div id="forgotResult" style="display:none;margin-top:1rem;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1rem;font-size:.78rem;color:var(--muted);line-height:1.8;"></div>
+    </div>
+    <!-- CHANGE PW -->
+    <div id="formChange" style="display:none">
+      <div class="mbox merr" id="changeErr"></div>
+      <div class="mbox mok" id="changeOk"></div>
+      <div class="lf"><label>Email Address</label><input id="cpEmail" type="email" placeholder="av.developer73@gmail.com"/></div>
+      <div class="lf"><label>Current Password</label><input id="cpCurrent" type="password" placeholder="Current password"/></div>
+      <div class="lf"><label>New Password</label><input id="cpNew" type="password" placeholder="New password (min 6 chars)"/></div>
+      <div class="lf"><label>Confirm New Password</label><input id="cpConfirm" type="password" placeholder="Repeat new password"/>
+        <div class="pwhint">Stored as MD5(email|password) — downloads new auth.json</div>
+      </div>
+      <button class="lbtn" onclick="doChangePW()">Update Password</button>
+    </div>
+  </div>
+</div>
+<!-- ADMIN APP -->
+<div id="adminApp">
+<div class="layout">
+<aside class="sb" id="sb">
+  <div>
+    <div class="sblogo">AV Admin<small>Portfolio Manager</small></div>
+    <div class="sbuser"><span id="sbEmail">—</span><button class="sbout" onclick="doLogout()">Logout</button></div>
+  </div>
+  <nav class="sbnav">
+    <button class="sbi active" data-p="dash" onclick="go('dash')"><span class="sbico">📊</span>Dashboard</button>
+    <div class="sbdiv"></div>
+    <div class="sbsec">Content</div>
+    <button class="sbi" data-p="profile" onclick="go('profile')"><span class="sbico">👤</span>Profile &amp; Hero</button>
+    <button class="sbi" data-p="skills" onclick="go('skills')"><span class="sbico">⚡</span>Skills<span class="sbbadge" id="sb-skills">0</span></button>
+    <button class="sbi" data-p="projects" onclick="go('projects')"><span class="sbico">🗂</span>Projects<span class="sbbadge" id="sb-projects">0</span></button>
+    <button class="sbi" data-p="experience" onclick="go('experience')"><span class="sbico">💼</span>Experience<span class="sbbadge" id="sb-exp">0</span></button>
+    <button class="sbi" data-p="education" onclick="go('education')"><span class="sbico">🎓</span>Education<span class="sbbadge" id="sb-edu">0</span></button>
+    <div class="sbdiv"></div>
+    <div class="sbsec">Messages</div>
+    <button class="sbi" data-p="enquiries" onclick="go('enquiries')"><span class="sbico">📨</span>Enquiries<span class="sbbadge red" id="sb-enq">0</span></button>
+    <div class="sbdiv"></div>
+    <div class="sbsec">Account</div>
+    <button class="sbi" data-p="account" onclick="go('account')"><span class="sbico">🔒</span>Change Password</button>
+  </nav>
+  <a href="index.html" class="sbback">← Back to Portfolio</a>
+</aside>
+<main class="main">
+  <div class="topbar">
+    <div class="tbl">
+      <button class="hbtn" id="hbtn">☰</button>
+      <div><div class="pt" id="ptitle">Dashboard</div><div class="ps" id="psub">Overview</div></div>
+    </div>
+    <div id="paction"></div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="page active" id="page-dash">
+    <div class="srow" id="dashStats"></div>
+    <div class="fgrow">
+      <div class="tcard"><div class="tchead"><span class="tctitle">Projects</span><button class="btn btno btnsm" onclick="go('projects')">All →</button></div><div class="tw" id="dashProj"></div></div>
+      <div class="tcard"><div class="tchead"><span class="tctitle">Recent Enquiries</span><button class="btn btno btnsm" onclick="go('enquiries')">All →</button></div><div class="tw" id="dashEnq"></div></div>
+    </div>
+  </div>
+
+  <!-- PROFILE -->
+  <div class="page" id="page-profile">
+    <div class="info-box">💾 After saving, a <strong>profile.json</strong> file will download. Replace the file in your <strong>data/</strong> folder and re-upload to your hosting.</div>
+    <div class="fcard">
+      <div class="fctitle">👤 Personal Information</div>
+      <div class="fgrow"><div class="fg"><label>Full Name *</label><input id="pf_name" type="text"/></div><div class="fg"><label>Initials</label><input id="pf_initials" type="text" maxlength="3"/></div></div>
+      <div class="fgrow"><div class="fg"><label>Job Title</label><input id="pf_tagline" type="text"/></div><div class="fg"><label>Specialization</label><input id="pf_spec" type="text"/></div></div>
+      <div class="fgrow"><div class="fg"><label>Email</label><input id="pf_email" type="email"/></div><div class="fg"><label>Phone</label><input id="pf_phone" type="text"/></div></div>
+      <div class="fgrow"><div class="fg"><label>Location</label><input id="pf_location" type="text"/></div><div class="fg"><label>Status</label><input id="pf_status" type="text"/></div></div>
+      <div class="fg"><label>Availability Badge</label><input id="pf_avail" type="text"/></div>
+      <div class="fg"><label>Hero Description</label><textarea id="pf_hero_desc" rows="3"></textarea></div>
+      <div class="fg"><label>About Paragraph 1</label><textarea id="pf_about1" rows="3"></textarea></div>
+      <div class="fg"><label>About Paragraph 2</label><textarea id="pf_about2" rows="3"></textarea></div>
+    </div>
+    <div class="fcard"><div class="fctitle">📊 Hero Stats</div><div class="steditor" id="stEditor"></div><button class="addpt" onclick="addStat()">+ Add Stat</button></div>
+    <div class="factions"><button class="btn btno" onclick="loadProfile()">↺ Reset</button><button class="btn btnp" onclick="saveProfile()">💾 Save &amp; Download profile.json</button></div>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="page" id="page-skills">
+    <div class="info-box">💾 After saving, <strong>skills.json</strong> will download. Upload it to <strong>data/</strong> folder.</div>
+    <div class="fcard">
+      <div class="fctitle" style="display:flex;align-items:center;justify-content:space-between">⚡ Skills <button class="btn btnp btnsm" onclick="addSkill()">+ Add</button></div>
+      <p style="font-size:.7rem;color:var(--muted);margin-bottom:.9rem">Use ↑↓ arrows or ⬆1 to reorder. Order shown here = order on portfolio.</p>
+      <div class="skgrid" id="skEditor"></div>
+    </div>
+    <div class="factions"><button class="btn btno" onclick="loadSkills()">↺ Reset</button><button class="btn btnp" onclick="saveSkills()">💾 Save &amp; Download skills.json</button></div>
+  </div>
+
+  <!-- PROJECTS LIST -->
+  <div class="page" id="page-projects">
+    <div class="info-box">💾 Any changes download <strong>projects.json</strong> automatically. Upload it to <strong>data/</strong>.</div>
+    <div class="tcard">
+      <div class="tchead">
+        <span class="tctitle">Projects (<span id="projCount">0</span>)</span>
+        <div style="display:flex;gap:.45rem"><input class="srch" type="text" placeholder="Search…" oninput="searchProjects(this.value)"/><button class="btn btnp btnsm" onclick="openAddProject()">+ Add</button></div>
+      </div>
+      <div class="tw" id="projTable"></div>
+    </div>
+  </div>
+
+  <!-- ADD/EDIT PROJECT -->
+  <div class="page" id="page-addproject">
+    <div class="info-box">💾 Saving downloads <strong>projects.json</strong>. Upload it to <strong>data/</strong> folder to update your portfolio.</div>
+    <div class="fcard">
+      <div class="fctitle" id="projFTitle">➕ Add New Project</div>
+      <input type="hidden" id="proj_eid"/>
+      <div class="fgrow"><div class="fg"><label>Title *</label><input id="proj_title" type="text" placeholder="e.g. TINT CRM"/></div><div class="fg"><label>Technology *</label><input id="proj_tech" type="text" placeholder="e.g. Laravel"/></div></div>
+      <div class="fgrow"><div class="fg"><label>Live URL *</label><input id="proj_url" type="url" placeholder="https://"/></div><div class="fg"><label>Category *</label><select id="proj_cat"><option value="">Select…</option><option>CRM</option><option>E-Commerce</option><option>ERP</option><option>Booking</option><option>Event</option><option>Web App</option><option>Other</option></select></div></div>
+      <div class="fgrow"><div class="fg"><label>Sort Order # (lower = first)</label><input id="proj_order" type="number" min="1"/></div><div class="fg"><label>Tags (comma-separated)</label><input id="proj_tags" type="text" placeholder="Laravel, PHP, MySQL"/></div></div>
+      <div class="fg"><label>Description *</label><textarea id="proj_desc" rows="4"></textarea></div>
+      <div class="fg"><div class="cbrow"><input type="checkbox" id="proj_feat"/><label for="proj_feat">Mark as Featured (⭐ on portfolio)</label></div></div>
+      <div class="factions"><button class="btn btno" onclick="go('projects')">Cancel</button><button class="btn btno" onclick="resetProjForm()">Reset</button><button class="btn btnp" onclick="saveProject()">💾 Save &amp; Download</button></div>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE LIST -->
+  <div class="page" id="page-experience">
+    <div class="info-box">💾 Changes download <strong>experience.json</strong>. Upload to <strong>data/</strong>.</div>
+    <div class="tcard"><div class="tchead"><span class="tctitle">Experience (<span id="expCount">0</span>)</span><button class="btn btnp btnsm" onclick="openAddExp()">+ Add</button></div><div class="tw" id="expTable"></div></div>
+  </div>
+
+  <!-- ADD/EDIT EXPERIENCE -->
+  <div class="page" id="page-addexp">
+    <div class="info-box">💾 Saving downloads <strong>experience.json</strong>. Upload to <strong>data/</strong>.</div>
+    <div class="fcard">
+      <div class="fctitle" id="expFTitle">💼 Add Experience</div>
+      <input type="hidden" id="exp_eid"/>
+      <div class="fgrow"><div class="fg"><label>Job Title *</label><input id="exp_title" type="text"/></div><div class="fg"><label>Company *</label><input id="exp_company" type="text"/></div></div>
+      <div class="fg3"><div class="fg"><label>Location</label><input id="exp_location" type="text"/></div><div class="fg"><label>Duration *</label><input id="exp_duration" type="text" placeholder="June 2022 – Present"/></div><div class="fg"><label>Sort Order #</label><input id="exp_order" type="number" min="1"/></div></div>
+      <div class="fg"><div class="cbrow"><input type="checkbox" id="exp_current"/><label for="exp_current">Currently working here</label></div></div>
+      <div class="fg"><label>Responsibilities</label><div class="ptlist" id="expPts"></div><button class="addpt" onclick="addExpPt()">+ Add Point</button></div>
+      <div class="factions"><button class="btn btno" onclick="go('experience')">Cancel</button><button class="btn btnp" onclick="saveExp()">💾 Save &amp; Download</button></div>
+    </div>
+  </div>
+
+  <!-- EDUCATION LIST -->
+  <div class="page" id="page-education">
+    <div class="info-box">💾 Changes download <strong>education.json</strong>. Upload to <strong>data/</strong>.</div>
+    <div class="tcard"><div class="tchead"><span class="tctitle">Education (<span id="eduCount">0</span>)</span><button class="btn btnp btnsm" onclick="openAddEdu()">+ Add</button></div><div class="tw" id="eduTable"></div></div>
+  </div>
+
+  <!-- ADD/EDIT EDUCATION -->
+  <div class="page" id="page-addedu">
+    <div class="info-box">💾 Saving downloads <strong>education.json</strong>. Upload to <strong>data/</strong>.</div>
+    <div class="fcard">
+      <div class="fctitle" id="eduFTitle">🎓 Add Education</div>
+      <input type="hidden" id="edu_eid"/>
+      <div class="fg"><label>Degree *</label><input id="edu_degree" type="text"/></div>
+      <div class="fgrow"><div class="fg"><label>College *</label><input id="edu_college" type="text"/></div><div class="fg"><label>University</label><input id="edu_uni" type="text"/></div></div>
+      <div class="fg3"><div class="fg"><label>Year</label><input id="edu_year" type="text" placeholder="Oct 2020 or Completed"/></div><div class="fg"><label>Icon (emoji)</label><input id="edu_icon" type="text" placeholder="🎓" maxlength="4"/></div><div class="fg"><label>Sort Order #</label><input id="edu_order" type="number" min="1"/></div></div>
+      <div class="factions"><button class="btn btno" onclick="go('education')">Cancel</button><button class="btn btnp" onclick="saveEdu()">💾 Save &amp; Download</button></div>
+    </div>
+  </div>
+
+  <!-- ENQUIRIES — 100% localStorage, no download needed -->
+  <div class="page" id="page-enquiries">
+    <div class="info-box">📨 Enquiries are stored in your <strong>browser's localStorage</strong> — they appear automatically when someone submits the contact form on the same device/browser. No file upload needed.<br/>⚠ <strong>Important:</strong> Enquiries are tied to the browser. Open admin on the same browser where the portfolio is visited to see all messages.</div>
+    <div class="tcard">
+      <div class="tchead">
+        <span class="tctitle">Enquiries (<span id="enqCount">0</span>) &nbsp;<span id="enqUnread" style="color:var(--err);font-size:.78rem"></span></span>
+        <div style="display:flex;gap:.45rem;align-items:center"><input class="srch" type="text" placeholder="Search…" oninput="searchEnq(this.value)"/><button class="btn btnd btnsm" onclick="clearReadEnq()">Clear Read</button></div>
+      </div>
+      <div class="tw" id="enqTable"></div>
+    </div>
+  </div>
+
+  <!-- ACCOUNT -->
+  <div class="page" id="page-account">
+    <div class="info-box">💾 After changing password, a new <strong>auth.json</strong> will download. Upload it to <strong>data/</strong> to activate the new password.</div>
+    <div class="fcard" style="max-width:460px">
+      <div class="fctitle">🔒 Change Password</div>
+      <div class="mbox merr" id="accErr"></div>
+      <div class="mbox mok" id="accOk"></div>
+      <div class="fg"><label>Current Password *</label><input id="acc_cur" type="password" placeholder="Current password"/></div>
+      <div class="fg"><label>New Password *</label><input id="acc_new" type="password" placeholder="Min 6 characters"/></div>
+      <div class="fg"><label>Confirm New Password *</label><input id="acc_confirm" type="password" placeholder="Repeat new password"/>
+        <div class="pwhint">Stored as MD5(email|password)</div>
+      </div>
+      <div class="factions"><button class="btn btnp" onclick="doAdminChangePW()">🔒 Update &amp; Download auth.json</button></div>
+    </div>
+  </div>
+
+</main>
+</div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// MD5 (pure JS — no library)
+// ══════════════════════════════════════════
+function md5(s){function L(k,d){return(k<<d)|(k>>>(32-d))}function K(G,k){var I,d,F,H,x;F=(G&2147483648);H=(k&2147483648);I=(G&1073741824);d=(k&1073741824);x=(G&1073741823)+(k&1073741823);if(I&d){return(x^2147483648^F^H)}if(I|d){if(x&1073741824){return(x^3221225472^F^H)}else{return(x^1073741824^F^H)}}else{return(x^F^H)}}function r(G,F,k,H,I,d,x){G=K(G,K(K(F&k|~F&H,I),x));return K(L(G,d),F)}function q(G,F,k,H,I,d,x){G=K(G,K(K(F&H|k&~H,I),x));return K(L(G,d),F)}function p(G,F,k,H,I,d,x){G=K(G,K(K(F^k^H,I),x));return K(L(G,d),F)}function n(G,F,k,H,I,d,x){G=K(G,K(K(k^(F|~H),I),x));return K(L(G,d),F)}function u(G){var F=G.length,k=F+8;var H=(k-(k%64))/64;var I=(H+1)*16;var d=new Array(I-1);var x=0;var B=0;while(B<F){var C=(B-(B%4))/4;x=B%4*8;d[C]=(d[C]|(G.charCodeAt(B)<<x));B++}var J=(B-(B%4))/4;x=B%4*8;d[J]=(d[J]|(128<<x));d[I-2]=F<<3;d[I-1]=F>>>29;return d}function m(G){var F="";var k="";var H;for(H=0;H<=3;H++){k=G>>>(H*8)&255;k="0"+k.toString(16);F=F+k.substr(k.length-2,2)}return F}s=unescape(encodeURIComponent(s));var M=u(s);var N,O,P,Q;var S=1732584193,T=4023233417,U=2562383102,V=271733878;var b=7,a=12,Z=17,y=22,X=5,w=9,v=14,u2=20,ss=4,t=11,o=16,l=23,f=6,h=10,j=15,g=21;for(var x=0;x<M.length;x+=16){N=S;O=T;P=U;Q=V;S=r(S,T,U,V,M[x+0],b,3614090360);V=r(V,S,T,U,M[x+1],a,3905402710);U=r(U,V,S,T,M[x+2],Z,606105819);T=r(T,U,V,S,M[x+3],y,3250441966);S=r(S,T,U,V,M[x+4],b,4118548399);V=r(V,S,T,U,M[x+5],a,1200080426);U=r(U,V,S,T,M[x+6],Z,2821735955);T=r(T,U,V,S,M[x+7],y,4249261313);S=r(S,T,U,V,M[x+8],b,1770035416);V=r(V,S,T,U,M[x+9],a,2336552879);U=r(U,V,S,T,M[x+10],Z,4294925233);T=r(T,U,V,S,M[x+11],y,2304563134);S=r(S,T,U,V,M[x+12],b,1804603682);V=r(V,S,T,U,M[x+13],a,4254626195);U=r(U,V,S,T,M[x+14],Z,2792965006);T=r(T,U,V,S,M[x+15],y,1236535329);S=q(S,T,U,V,M[x+1],X,4129170786);V=q(V,S,T,U,M[x+6],w,3225465664);U=q(U,V,S,T,M[x+11],v,643717713);T=q(T,U,V,S,M[x+0],u2,3921069994);S=q(S,T,U,V,M[x+5],X,3593408605);V=q(V,S,T,U,M[x+10],w,38016083);U=q(U,V,S,T,M[x+15],v,3634488961);T=q(T,U,V,S,M[x+4],u2,3889429448);S=q(S,T,U,V,M[x+9],X,568446438);V=q(V,S,T,U,M[x+14],w,3275163606);U=q(U,V,S,T,M[x+3],v,4107603335);T=q(T,U,V,S,M[x+8],u2,1163531501);S=q(S,T,U,V,M[x+13],X,2850285829);V=q(V,S,T,U,M[x+2],w,4243563512);U=q(U,V,S,T,M[x+7],v,1735328473);T=q(T,U,V,S,M[x+12],u2,2368359562);S=p(S,T,U,V,M[x+5],ss,4294588738);V=p(V,S,T,U,M[x+8],t,2272392833);U=p(U,V,S,T,M[x+11],o,1839030562);T=p(T,U,V,S,M[x+14],l,4259657740);S=p(S,T,U,V,M[x+1],ss,2763975236);V=p(V,S,T,U,M[x+4],t,1272893353);U=p(U,V,S,T,M[x+7],o,4139469664);T=p(T,U,V,S,M[x+10],l,3200236656);S=p(S,T,U,V,M[x+13],ss,681279174);V=p(V,S,T,U,M[x+0],t,3936430074);U=p(U,V,S,T,M[x+3],o,3572445317);T=p(T,U,V,S,M[x+6],l,76029189);S=p(S,T,U,V,M[x+9],ss,3654602809);V=p(V,S,T,U,M[x+12],t,3873151461);U=p(U,V,S,T,M[x+15],o,530742520);T=p(T,U,V,S,M[x+2],l,3299628645);S=n(S,T,U,V,M[x+0],f,4096336452);V=n(V,S,T,U,M[x+7],h,1126891415);U=n(U,V,S,T,M[x+14],j,2878612391);T=n(T,U,V,S,M[x+5],g,4237533241);S=n(S,T,U,V,M[x+12],f,1700485571);V=n(V,S,T,U,M[x+3],h,2399980690);U=n(U,V,S,T,M[x+10],j,4293915773);T=n(T,U,V,S,M[x+1],g,2240044497);S=n(S,T,U,V,M[x+8],f,1873313359);V=n(V,S,T,U,M[x+15],h,4264355552);U=n(U,V,S,T,M[x+6],j,2734768916);T=n(T,U,V,S,M[x+13],g,1309151649);S=n(S,T,U,V,M[x+4],f,4149444226);V=n(V,S,T,U,M[x+11],h,3174756917);U=n(U,V,S,T,M[x+2],j,718787259);T=n(T,U,V,S,M[x+9],g,3951481745);S=K(S,N);T=K(T,O);U=K(U,P);V=K(V,Q)}return(m(S)+m(T)+m(U)+m(V))}
+
+// ══════════════════════════════════════════
+// ENQUIRY KEY — must match index.html
+// ══════════════════════════════════════════
+const ENQ_KEY = 'av_enquiries';
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let AUTH={};
+let SESS_KEY='av_admin_sess';
+let CUR_EMAIL='';
+let DB={profile:{},skills:[],projects:[],experience:[],education:[],enquiries:[]};
+let delCtx={type:null,id:null};
+const BASE='data/';
+
+// ══════════════════════════════════════════
+// AUTH
+// ══════════════════════════════════════════
+async function loadAuth(){
+  try{ AUTH=await jfetch('auth.json'); }
+  catch(e){ AUTH={email:'av.developer73@gmail.com',password_md5:'f17f769bfe250dc2c4671295bb102018'}; }
+}
+function checkSession(){
+  try{ const s=JSON.parse(sessionStorage.getItem(SESS_KEY)||'{}'); if(s.email&&s.ts&&(Date.now()-s.ts)<8*3600*1000){ CUR_EMAIL=s.email; return true; } }catch(e){}
+  return false;
+}
+function setSession(e){ CUR_EMAIL=e; sessionStorage.setItem(SESS_KEY,JSON.stringify({email:e,ts:Date.now()})); }
+function clearSession(){ sessionStorage.removeItem(SESS_KEY); }
+
+async function doLogin(){
+  const email=document.getElementById('lEmail').value.trim();
+  const pass=document.getElementById('lPass').value;
+  const btn=document.getElementById('loginBtn');
+  setMsg('loginErr','',false);
+  if(!email||!pass){ setMsg('loginErr','Email and password required.'); return; }
+  btn.disabled=true; btn.textContent='Checking…';
+  await loadAuth();
+  if(email.toLowerCase()===AUTH.email.toLowerCase() && md5(email+'|'+pass)===AUTH.password_md5){
+    setSession(email); showAdmin();
+  } else {
+    setMsg('loginErr','Invalid email or password.');
+    document.getElementById('lPass').value='';
+  }
+  btn.disabled=false; btn.textContent='🔐 Login to Admin';
+}
+function doLogout(){
+  clearSession();
+  document.getElementById('adminApp').classList.remove('show');
+  document.getElementById('loginScreen').classList.remove('hidden');
+  switchTab('login');
+  document.getElementById('lEmail').value=''; document.getElementById('lPass').value='';
+}
+async function doForgot(){
+  const email=document.getElementById('fEmail').value.trim();
+  if(!email){ setMsg('forgotErr','Enter your email.'); return; }
+  await loadAuth();
+  if(email.toLowerCase()!==AUTH.email.toLowerCase()){ setMsg('forgotErr','Email not registered.'); return; }
+  document.getElementById('forgotResult').style.display='block';
+  document.getElementById('forgotResult').innerHTML='<strong style="color:var(--text)">Account found!</strong><br/>Email: <strong style="color:var(--accent3)">'+AUTH.email+'</strong><br/>Hash: <code style="color:var(--accent);word-break:break-all">'+AUTH.password_md5+'</code><br/><br/>Use <strong>Change PW</strong> tab to reset with current credentials.';
+  setMsg('forgotOk','Account found — see below.',true,true);
+}
+async function doChangePW(){
+  const email=document.getElementById('cpEmail').value.trim();
+  const cur=document.getElementById('cpCurrent').value;
+  const nw=document.getElementById('cpNew').value;
+  const cf=document.getElementById('cpConfirm').value;
+  setMsg('changeErr','',false); setMsg('changeOk','',false,true);
+  if(!email||!cur||!nw||!cf){ setMsg('changeErr','All fields required.'); return; }
+  if(nw.length<6){ setMsg('changeErr','Min 6 characters.'); return; }
+  if(nw!==cf){ setMsg('changeErr','Passwords do not match.'); return; }
+  await loadAuth();
+  if(email.toLowerCase()!==AUTH.email.toLowerCase()||md5(email+'|'+cur)!==AUTH.password_md5){ setMsg('changeErr','Current credentials incorrect.'); return; }
+  AUTH.password_md5=md5(email+'|'+nw);
+  dlJson('auth.json',AUTH);
+  setMsg('changeOk','Password updated! Upload the downloaded auth.json to data/ folder.',true,true);
+  document.getElementById('cpCurrent').value=''; document.getElementById('cpNew').value=''; document.getElementById('cpConfirm').value='';
+}
+async function doAdminChangePW(){
+  const cur=document.getElementById('acc_cur').value;
+  const nw=document.getElementById('acc_new').value;
+  const cf=document.getElementById('acc_confirm').value;
+  setMsg('accErr','',false); setMsg('accOk','',false,true);
+  if(!cur||!nw||!cf){ setMsg('accErr','All fields required.'); return; }
+  if(nw.length<6){ setMsg('accErr','Min 6 characters.'); return; }
+  if(nw!==cf){ setMsg('accErr','Passwords do not match.'); return; }
+  if(md5(CUR_EMAIL+'|'+cur)!==AUTH.password_md5){ setMsg('accErr','Current password incorrect.'); return; }
+  AUTH.password_md5=md5(CUR_EMAIL+'|'+nw);
+  dlJson('auth.json',AUTH);
+  setMsg('accOk','Downloaded auth.json — upload it to data/ folder to activate.',true,true);
+  document.getElementById('acc_cur').value=''; document.getElementById('acc_new').value=''; document.getElementById('acc_confirm').value='';
+}
+function setMsg(id,msg,show=true,isOk=false){
+  const el=document.getElementById(id); if(!el)return;
+  el.textContent=msg; el.classList.toggle('show',show);
+  el.classList.toggle('mok',isOk&&show); el.classList.toggle('merr',!isOk&&show);
+}
+function switchTab(t){
+  ['login','forgot','change'].forEach(n=>{
+    document.getElementById('form'+n.charAt(0).toUpperCase()+n.slice(1)).style.display=n===t?'block':'none';
+    document.getElementById('tab'+n.charAt(0).toUpperCase()+n.slice(1)).classList.toggle('active',n===t);
+  });
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!document.getElementById('loginScreen').classList.contains('hidden')) doLogin(); });
+
+// ══════════════════════════════════════════
+// DOWNLOAD JSON HELPER
+// ══════════════════════════════════════════
+function dlJson(filename,data){
+  const b=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const u=URL.createObjectURL(b);
+  const a=document.createElement('a'); a.href=u; a.download=filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(u);
+}
+
+// ══════════════════════════════════════════
+// FETCH & BOOT
+// ══════════════════════════════════════════
+async function jfetch(f){ const r=await fetch(BASE+f+'?t='+Date.now()); return r.json(); }
+
+async function bootAdmin(){
+  const[P,SK,PR,EX,ED]=await Promise.all([
+    jfetch('profile.json'),jfetch('skills.json'),jfetch('projects.json'),
+    jfetch('experience.json'),jfetch('education.json')
+  ]);
+  DB.profile=P; DB.skills=SK; DB.projects=PR; DB.experience=EX; DB.education=ED;
+  // ── ENQUIRIES from localStorage (key: av_enquiries) ──
+  try{ DB.enquiries=JSON.parse(localStorage.getItem(ENQ_KEY)||'[]'); }
+  catch(e){ DB.enquiries=[]; }
+  updateBadges(); loadProfile(); loadSkills(); renderDash();
+}
+
+async function showAdmin(){
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('adminApp').classList.add('show');
+  document.getElementById('sbEmail').textContent=CUR_EMAIL;
+  await bootAdmin();
+}
+
+// ── Save enquiries back to localStorage ──
+function saveEnqLocal(data){
+  try{ localStorage.setItem(ENQ_KEY,JSON.stringify(data)); }catch(e){}
+}
+
+function updateBadges(){
+  document.getElementById('sb-skills').textContent=DB.skills.length;
+  document.getElementById('sb-projects').textContent=DB.projects.length;
+  document.getElementById('sb-exp').textContent=DB.experience.length;
+  document.getElementById('sb-edu').textContent=DB.education.length;
+  const unread=DB.enquiries.filter(e=>!e.read).length;
+  document.getElementById('sb-enq').textContent=DB.enquiries.length+(unread?' ('+unread+' new)':'');
+  document.getElementById('sb-enq').className='sbbadge'+(unread>0?' red':'');
+}
+
+// ══════════════════════════════════════════
+// PAGE NAV
+// ══════════════════════════════════════════
+const PMETA={
+  dash:{title:'Dashboard',sub:'Overview'},
+  profile:{title:'Profile & Hero',sub:'Edit personal info — downloads profile.json'},
+  skills:{title:'Skills',sub:'Manage tech stack — downloads skills.json'},
+  projects:{title:'Projects',sub:'Manage projects — downloads projects.json'},
+  addproject:{title:'Add / Edit Project',sub:''},
+  experience:{title:'Experience',sub:'Manage career — downloads experience.json'},
+  addexp:{title:'Add / Edit Experience',sub:''},
+  education:{title:'Education',sub:'Manage degrees — downloads education.json'},
+  addedu:{title:'Add / Edit Education',sub:''},
+  enquiries:{title:'Enquiries',sub:'Stored in browser localStorage — no upload needed'},
+  account:{title:'Change Password',sub:'Downloads new auth.json — upload to data/'},
+};
+function go(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sbi').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  const b=document.querySelector('[data-p="'+name+'"]'); if(b)b.classList.add('active');
+  const m=PMETA[name]||{title:name,sub:''};
+  document.getElementById('ptitle').textContent=m.title;
+  document.getElementById('psub').textContent=m.sub;
+  const act=document.getElementById('paction'); act.innerHTML='';
+  if(name==='projects') act.innerHTML='<button class="btn btnp" onclick="openAddProject()">+ Add Project</button>';
+  if(name==='experience') act.innerHTML='<button class="btn btnp" onclick="openAddExp()">+ Add Experience</button>';
+  if(name==='education') act.innerHTML='<button class="btn btnp" onclick="openAddEdu()">+ Add Education</button>';
+  if(name==='projects') renderProjTable(DB.projects);
+  if(name==='experience') renderExpTable();
+  if(name==='education') renderEduTable();
+  if(name==='enquiries'){ DB.enquiries=JSON.parse(localStorage.getItem(ENQ_KEY)||'[]'); updateBadges(); renderEnqTable(DB.enquiries); }
+  document.getElementById('sb').classList.remove('open');
+}
+
+// ══════════════════════════════════════════
+// DASHBOARD
+// ══════════════════════════════════════════
+function renderDash(){
+  const unread=DB.enquiries.filter(e=>!e.read).length;
+  document.getElementById('dashStats').innerHTML=
+    '<div class="sc"><div class="sclbl">Projects</div><div class="scnum cv">'+DB.projects.length+'</div></div>'+
+    '<div class="sc"><div class="sclbl">Skills</div><div class="scnum cc">'+DB.skills.length+'</div></div>'+
+    '<div class="sc"><div class="sclbl">Experience</div><div class="scnum cg">'+DB.experience.length+'</div></div>'+
+    '<div class="sc"><div class="sclbl">Education</div><div class="scnum cv">'+DB.education.length+'</div></div>'+
+    '<div class="sc"><div class="sclbl">Enquiries</div><div class="scnum cp">'+DB.enquiries.length+'</div></div>'+
+    '<div class="sc"><div class="sclbl">Unread</div><div class="scnum cr">'+unread+'</div></div>';
+  const rp=[...DB.projects].sort((a,b)=>(a.order||99)-(b.order||99)).slice(0,5);
+  document.getElementById('dashProj').innerHTML=rp.length?
+    '<table><thead><tr><th>#</th><th>Title</th><th>Cat</th><th>Actions</th></tr></thead><tbody>'+
+    rp.map(p=>'<tr><td><span class="ordb">'+p.order+'</span></td><td class="tdm">'+p.title+'</td>'+
+      '<td><span class="badge ba">'+p.category+'</span></td>'+
+      '<td><div class="act"><button class="ib" onclick="openEditProject('+p.id+')">✏️</button>'+
+      '<button class="ib del" onclick="askDel(\'project\','+p.id+',\''+esc(p.title)+'\')">🗑️</button></div></td></tr>'
+    ).join('')+'</tbody></table>':'<div class="emptyrow">No projects.</div>';
+  const re=[...DB.enquiries].slice(0,5);
+  document.getElementById('dashEnq').innerHTML=re.length?
+    '<table><thead><tr><th>Name</th><th>Subject</th><th>Status</th></tr></thead><tbody>'+
+    re.map(e=>'<tr class="'+(e.read?'':'unreadr')+'"><td class="tdm">'+e.name+'</td>'+
+      '<td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.79rem">'+e.subject+'</td>'+
+      '<td>'+(e.read?'<span class="badge bn">Read</span>':'<span class="badge br2">New</span>')+'</td></tr>'
+    ).join('')+'</tbody></table>':'<div class="emptyrow">No enquiries yet.</div>';
+}
+function esc(s){ return (s||'').replace(/'/g,"\\'"); }
+
+// ══════════════════════════════════════════
+// PROFILE
+// ══════════════════════════════════════════
+function loadProfile(){
+  const p=DB.profile;
+  ['name','initials','tagline','specialization','email','phone','location','status'].forEach(k=>{ const el=document.getElementById('pf_'+k); if(el) el.value=p[k]||''; });
+  document.getElementById('pf_avail').value=p.availability||'';
+  document.getElementById('pf_hero_desc').value=p.hero_desc||'';
+  document.getElementById('pf_about1').value=p.about_p1||'';
+  document.getElementById('pf_about2').value=p.about_p2||'';
+  renderStatEd(p.stats||[]);
+}
+function saveProfile(){
+  DB.profile={...DB.profile,name:v('pf_name'),initials:v('pf_initials'),tagline:v('pf_tagline'),specialization:v('pf_spec'),email:v('pf_email'),phone:v('pf_phone'),location:v('pf_location'),status:v('pf_status'),availability:v('pf_avail'),hero_desc:v('pf_hero_desc'),about_p1:v('pf_about1'),about_p2:v('pf_about2'),stats:readStats()};
+  dlJson('profile.json',DB.profile); toast('✓ profile.json downloaded! Upload to data/ folder.','ok');
+}
+function renderStatEd(stats){
+  document.getElementById('stEditor').innerHTML=stats.map((s,i)=>
+    '<div class="strow"><input placeholder="3+" value="'+e2(s.num||'')+'"/><input placeholder="Years Exp." value="'+e2(s.label||'')+'"/><button class="rmpt" onclick="removeStat('+i+')">✕</button></div>'
+  ).join('');
+}
+function addStat(){ const st=readStats(); st.push({num:'',label:''}); renderStatEd(st); }
+function removeStat(i){ const st=readStats(); st.splice(i,1); renderStatEd(st); }
+function readStats(){ return[...document.querySelectorAll('.strow')].map(r=>{ const[a,b]=r.querySelectorAll('input'); return{num:a.value.trim(),label:b.value.trim()}; }); }
+
+// ══════════════════════════════════════════
+// SKILLS
+// ══════════════════════════════════════════
+function loadSkills(){ DB.skills.sort((a,b)=>(a.order||99)-(b.order||99)); renderSkEd(DB.skills); }
+function renderSkEd(sk){
+  document.getElementById('skEditor').innerHTML=sk.map((s,i)=>
+    '<div class="skitem" id="sk-'+i+'"><span class="skord">'+(i+1)+'</span>'+
+    '<input placeholder="🐘" value="'+e2(s.icon||'')+'" style="text-align:center;font-size:1.1rem"/>'+
+    '<input placeholder="PHP" value="'+e2(s.name||'')+'"/>'+
+    '<input placeholder="Sub" value="'+e2(s.sub||'')+'"/>'+
+    '<button class="rmpt" onclick="removeSkill('+i+')">✕</button></div>'
+  ).join('');
+}
+function addSkill(){ const sk=readSkills(); sk.unshift({id:Date.now(),order:1,icon:'',name:'',sub:''}); renum(sk); renderSkEd(sk); }
+function removeSkill(i){ const sk=readSkills(); sk.splice(i,1); renum(sk); renderSkEd(sk); }
+function renum(sk){ sk.forEach((s,i)=>s.order=i+1); }
+function readSkills(){ return[...document.querySelectorAll('#skEditor .skitem')].map((row,i)=>{ const inp=row.querySelectorAll('input'); return{id:DB.skills[i]?DB.skills[i].id:Date.now()+i,order:i+1,icon:inp[0].value.trim(),name:inp[1].value.trim(),sub:inp[2].value.trim()}; }); }
+function saveSkills(){ DB.skills=readSkills(); renum(DB.skills); dlJson('skills.json',DB.skills); updateBadges(); toast('✓ skills.json downloaded! Upload to data/.','ok'); }
+
+// ══════════════════════════════════════════
+// PROJECTS
+// ══════════════════════════════════════════
+function renderProjTable(data){
+  const sorted=[...data].sort((a,b)=>(a.order||99)-(b.order||99));
+  document.getElementById('projCount').textContent=data.length;
+  document.getElementById('projTable').innerHTML=sorted.length?
+    '<table><thead><tr><th>#</th><th>Title</th><th>Category</th><th>Tech</th><th>Featured</th><th>URL</th><th>Actions</th></tr></thead><tbody>'+
+    sorted.map(p=>'<tr>'+
+      '<td><span class="ordb">'+p.order+'</span></td>'+
+      '<td><div class="tdm">'+p.title+'</div></td>'+
+      '<td><span class="badge ba">'+p.category+'</span></td>'+
+      '<td><span class="badge bt">'+p.tech+'</span></td>'+
+      '<td>'+(p.featured?'<span class="badge bf">⭐</span>':'<span class="badge bn">No</span>')+'</td>'+
+      '<td><a href="'+p.url+'" target="_blank" class="tdurl">'+p.url+'</a></td>'+
+      '<td><div class="act">'+
+        '<button class="ib top2" onclick="setTop(\'project\','+p.id+')" title="Move to Top">⬆1</button>'+
+        '<button class="ib up" onclick="moveOrd(\'project\','+p.id+',-1)" title="Move Up">↑</button>'+
+        '<button class="ib dn" onclick="moveOrd(\'project\','+p.id+',1)" title="Move Down">↓</button>'+
+        '<button class="ib" onclick="openEditProject('+p.id+')" title="Edit">✏️</button>'+
+        '<button class="ib del" onclick="askDel(\'project\','+p.id+',\''+esc(p.title)+'\')" title="Delete">🗑️</button>'+
+      '</div></td></tr>'
+    ).join('')+'</tbody></table>':'<div class="emptyrow">No projects yet.</div>';
+}
+function searchProjects(q){ const ql=q.toLowerCase(); renderProjTable(DB.projects.filter(p=>p.title.toLowerCase().includes(ql)||p.category.toLowerCase().includes(ql)||p.tech.toLowerCase().includes(ql))); }
+function openAddProject(){
+  resetProjForm();
+  document.getElementById('proj_order').value=DB.projects.length+1;
+  document.getElementById('projFTitle').textContent='➕ Add New Project';
+  go('addproject');
+}
+function openEditProject(id){
+  const p=DB.projects.find(x=>x.id===id); if(!p) return;
+  document.getElementById('proj_eid').value=id;
+  document.getElementById('proj_title').value=p.title;
+  document.getElementById('proj_tech').value=p.tech;
+  document.getElementById('proj_url').value=p.url;
+  document.getElementById('proj_cat').value=p.category;
+  document.getElementById('proj_desc').value=p.description;
+  document.getElementById('proj_tags').value=(p.tags||[]).join(', ');
+  document.getElementById('proj_feat').checked=!!p.featured;
+  document.getElementById('proj_order').value=p.order||1;
+  document.getElementById('projFTitle').textContent='✏️ Edit: '+p.title;
+  go('addproject');
+}
+function resetProjForm(){
+  ['proj_eid','proj_title','proj_tech','proj_url','proj_desc','proj_tags'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('proj_cat').value=''; document.getElementById('proj_feat').checked=false; document.getElementById('proj_order').value=1;
+}
+function saveProject(){
+  const title=v('proj_title'),url=v('proj_url'),cat=v('proj_cat');
+  if(!title||!url||!cat){ toast('Fill required fields (Title, URL, Category)','err'); return; }
+  const editId=v('proj_eid');
+  const tags=v('proj_tags').split(',').map(t=>t.trim()).filter(Boolean);
+  const data={title,tech:v('proj_tech'),url,category:cat,description:v('proj_desc'),tags,featured:document.getElementById('proj_feat').checked,order:parseInt(v('proj_order'))||1};
+  if(editId){ const i=DB.projects.findIndex(p=>p.id==editId); if(i!==-1) DB.projects[i]={...DB.projects[i],...data}; }
+  else DB.projects.unshift({id:Date.now(),...data});
+  dlJson('projects.json',DB.projects); updateBadges();
+  toast(editId?'✓ Updated! Upload projects.json to data/':'✓ Added! Upload projects.json to data/','ok');
+  setTimeout(()=>go('projects'),500);
+}
+
+// SORT ORDER
+function getArr(type){ return type==='project'?DB.projects:type==='exp'?DB.experience:DB.education; }
+function getFile(type){ return type==='project'?'projects.json':type==='exp'?'experience.json':'education.json'; }
+function setTop(type,id){
+  const arr=getArr(type);
+  arr.forEach(x=>x.order=(x.order||1)+1);
+  const idx=arr.findIndex(x=>x.id===id); if(idx!==-1) arr[idx].order=1;
+  arr.sort((a,b)=>(a.order||99)-(b.order||99)); arr.forEach((x,i)=>x.order=i+1);
+  dlJson(getFile(type),arr); refreshTable(type); toast('✓ Moved to top! Upload '+getFile(type)+' to data/','ok');
+}
+function moveOrd(type,id,dir){
+  const arr=getArr(type); arr.sort((a,b)=>(a.order||99)-(b.order||99));
+  const idx=arr.findIndex(x=>x.id===id); if(idx===-1) return;
+  const si=idx+dir; if(si<0||si>=arr.length) return;
+  const tmp=arr[idx].order; arr[idx].order=arr[si].order; arr[si].order=tmp;
+  arr.sort((a,b)=>(a.order||99)-(b.order||99)); arr.forEach((x,i)=>x.order=i+1);
+  dlJson(getFile(type),arr); refreshTable(type);
+}
+function refreshTable(type){
+  if(type==='project') renderProjTable(DB.projects);
+  else if(type==='exp') renderExpTable();
+  else renderEduTable();
+  renderDash();
+}
+
+// ══════════════════════════════════════════
+// EXPERIENCE
+// ══════════════════════════════════════════
+function renderExpTable(){
+  const data=[...DB.experience].sort((a,b)=>(a.order||99)-(b.order||99));
+  document.getElementById('expCount').textContent=data.length;
+  document.getElementById('expTable').innerHTML=data.length?
+    '<table><thead><tr><th>#</th><th>Title</th><th>Company</th><th>Duration</th><th>Status</th><th>Actions</th></tr></thead><tbody>'+
+    data.map(ex=>'<tr>'+
+      '<td><span class="ordb">'+ex.order+'</span></td>'+
+      '<td><div class="tdm">'+ex.title+'</div></td>'+
+      '<td><div class="tds">'+ex.company+(ex.location?', '+ex.location:'')+'</div></td>'+
+      '<td style="font-size:.78rem;color:var(--muted)">'+ex.duration+'</td>'+
+      '<td>'+(ex.current?'<span class="badge bg2c">● Current</span>':'<span class="badge bn">Past</span>')+'</td>'+
+      '<td><div class="act">'+
+        '<button class="ib top2" onclick="setTop(\'exp\','+ex.id+')">⬆1</button>'+
+        '<button class="ib up" onclick="moveOrd(\'exp\','+ex.id+',-1)">↑</button>'+
+        '<button class="ib dn" onclick="moveOrd(\'exp\','+ex.id+',1)">↓</button>'+
+        '<button class="ib" onclick="openEditExp('+ex.id+')">✏️</button>'+
+        '<button class="ib del" onclick="askDel(\'exp\','+ex.id+',\''+esc(ex.title)+'\')">🗑️</button>'+
+      '</div></td></tr>'
+    ).join('')+'</tbody></table>':'<div class="emptyrow">No experience added.</div>';
+}
+function openAddExp(){
+  document.getElementById('exp_eid').value='';
+  ['exp_title','exp_company','exp_location','exp_duration'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('exp_current').checked=false;
+  document.getElementById('exp_order').value=DB.experience.length+1;
+  document.getElementById('expPts').innerHTML=''; addExpPt();
+  document.getElementById('expFTitle').textContent='💼 Add Experience';
+  go('addexp');
+}
+function openEditExp(id){
+  const ex=DB.experience.find(x=>x.id===id); if(!ex) return;
+  document.getElementById('exp_eid').value=id;
+  document.getElementById('exp_title').value=ex.title;
+  document.getElementById('exp_company').value=ex.company;
+  document.getElementById('exp_location').value=ex.location||'';
+  document.getElementById('exp_duration').value=ex.duration;
+  document.getElementById('exp_current').checked=!!ex.current;
+  document.getElementById('exp_order').value=ex.order||1;
+  document.getElementById('expPts').innerHTML='';
+  (ex.points||[]).forEach(pt=>addExpPt(pt));
+  document.getElementById('expFTitle').textContent='✏️ Edit: '+ex.title;
+  go('addexp');
+}
+function addExpPt(val=''){
+  const wrap=document.getElementById('expPts');
+  const d=document.createElement('div'); d.className='ptitem';
+  d.innerHTML='<input type="text" placeholder="e.g. Built REST APIs…" value="'+e2(val)+'"/><button class="rmpt" onclick="this.parentElement.remove()">✕</button>';
+  wrap.appendChild(d);
+}
+function saveExp(){
+  const title=v('exp_title'),company=v('exp_company');
+  if(!title||!company){ toast('Title and Company required','err'); return; }
+  const editId=v('exp_eid');
+  const points=[...document.querySelectorAll('#expPts .ptitem input')].map(i=>i.value.trim()).filter(Boolean);
+  const data={title,company,location:v('exp_location'),duration:v('exp_duration'),current:document.getElementById('exp_current').checked,points,order:parseInt(v('exp_order'))||1};
+  if(editId){ const i=DB.experience.findIndex(ex=>ex.id==editId); if(i!==-1) DB.experience[i]={...DB.experience[i],...data}; }
+  else DB.experience.unshift({id:Date.now(),...data});
+  dlJson('experience.json',DB.experience); updateBadges();
+  toast(editId?'✓ Updated! Upload experience.json to data/':'✓ Added! Upload experience.json to data/','ok');
+  setTimeout(()=>go('experience'),500);
+}
+
+// ══════════════════════════════════════════
+// EDUCATION
+// ══════════════════════════════════════════
+function renderEduTable(){
+  const data=[...DB.education].sort((a,b)=>(a.order||99)-(b.order||99));
+  document.getElementById('eduCount').textContent=data.length;
+  document.getElementById('eduTable').innerHTML=data.length?
+    '<table><thead><tr><th>#</th><th>Degree</th><th>College</th><th>Year</th><th>Actions</th></tr></thead><tbody>'+
+    data.map(ed=>'<tr>'+
+      '<td><span class="ordb">'+ed.order+'</span></td>'+
+      '<td><div class="tdm">'+(ed.icon||'🎓')+' '+ed.degree+'</div></td>'+
+      '<td><div class="tds">'+ed.college+'</div></td>'+
+      '<td><span class="badge bn">'+ed.year+'</span></td>'+
+      '<td><div class="act">'+
+        '<button class="ib top2" onclick="setTop(\'edu\','+ed.id+')">⬆1</button>'+
+        '<button class="ib up" onclick="moveOrd(\'edu\','+ed.id+',-1)">↑</button>'+
+        '<button class="ib dn" onclick="moveOrd(\'edu\','+ed.id+',1)">↓</button>'+
+        '<button class="ib" onclick="openEditEdu('+ed.id+')">✏️</button>'+
+        '<button class="ib del" onclick="askDel(\'edu\','+ed.id+',\''+esc(ed.degree)+'\')">🗑️</button>'+
+      '</div></td></tr>'
+    ).join('')+'</tbody></table>':'<div class="emptyrow">No education added.</div>';
+}
+function openAddEdu(){
+  ['edu_degree','edu_college','edu_uni','edu_year'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('edu_icon').value='🎓';
+  document.getElementById('edu_eid').value='';
+  document.getElementById('edu_order').value=DB.education.length+1;
+  document.getElementById('eduFTitle').textContent='🎓 Add Education';
+  go('addedu');
+}
+function openEditEdu(id){
+  const ed=DB.education.find(x=>x.id===id); if(!ed) return;
+  document.getElementById('edu_eid').value=id;
+  document.getElementById('edu_degree').value=ed.degree;
+  document.getElementById('edu_college').value=ed.college;
+  document.getElementById('edu_uni').value=ed.university;
+  document.getElementById('edu_year').value=ed.year;
+  document.getElementById('edu_icon').value=ed.icon||'🎓';
+  document.getElementById('edu_order').value=ed.order||1;
+  document.getElementById('eduFTitle').textContent='✏️ Edit: '+ed.degree;
+  go('addedu');
+}
+function saveEdu(){
+  const degree=v('edu_degree'),college=v('edu_college');
+  if(!degree||!college){ toast('Degree and College required','err'); return; }
+  const editId=v('edu_eid');
+  const data={degree,college,university:v('edu_uni'),year:v('edu_year'),icon:v('edu_icon')||'🎓',order:parseInt(v('edu_order'))||1};
+  if(editId){ const i=DB.education.findIndex(ed=>ed.id==editId); if(i!==-1) DB.education[i]={...DB.education[i],...data}; }
+  else DB.education.unshift({id:Date.now(),...data});
+  dlJson('education.json',DB.education); updateBadges();
+  toast(editId?'✓ Updated! Upload education.json to data/':'✓ Added! Upload education.json to data/','ok');
+  setTimeout(()=>go('education'),500);
+}
+
+// ══════════════════════════════════════════
+// ENQUIRIES (localStorage — key: av_enquiries)
+// ══════════════════════════════════════════
+function renderEnqTable(data){
+  const unread=data.filter(e=>!e.read).length;
+  document.getElementById('enqCount').textContent=data.length;
+  document.getElementById('enqUnread').textContent=unread>0?unread+' unread':'✓ All read';
+  document.getElementById('enqTable').innerHTML=data.length?
+    '<table><thead><tr><th>Status</th><th>Name</th><th>Email</th><th>Subject</th><th>Date</th><th>Email</th><th>Action</th></tr></thead><tbody>'+
+    data.map(e=>'<tr class="'+(e.read?'':'unreadr')+'">'+
+      '<td>'+(e.read?'<span class="badge bn">Read</span>':'<span class="badge br2">● New</span>')+'</td>'+
+      '<td class="tdm">'+e.name+'</td>'+
+      '<td style="font-size:.76rem;color:var(--accent3)">'+e.email+'</td>'+
+      '<td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.78rem">'+e.subject+'</td>'+
+      '<td style="font-size:.72rem;color:var(--muted);white-space:nowrap">'+e.date+'</td>'+
+      '<td>'+(e.email_sent?'<span class="badge bg2c">✓</span>':'<span class="badge bn">—</span>')+'</td>'+
+      '<td><div class="act">'+
+        '<button class="ib" onclick="viewEnq('+e.id+')" title="View">👁</button>'+
+        '<button class="ib del" onclick="askDel(\'enq\','+e.id+',\'from '+esc(e.name)+'\')" title="Delete">🗑️</button>'+
+      '</div></td></tr>'
+    ).join('')+'</tbody></table>':'<div class="emptyrow">No enquiries yet.<br/>Messages submitted on the contact form appear here automatically.</div>';
+}
+function searchEnq(q){
+  const ql=q.toLowerCase();
+  renderEnqTable(DB.enquiries.filter(e=>e.name.toLowerCase().includes(ql)||e.email.toLowerCase().includes(ql)||e.subject.toLowerCase().includes(ql)));
+}
+function viewEnq(id){
+  const e=DB.enquiries.find(x=>x.id===id); if(!e) return;
+  if(!e.read){ e.read=true; saveEnqLocal(DB.enquiries); updateBadges(); }
+  document.getElementById('enqMTitle').textContent='📨 From: '+e.name;
+  document.getElementById('enqMBody').innerHTML=
+    '<div class="enqdetail">'+
+    '<div class="enqrow"><span class="enqlbl">Name</span><span class="enqval">'+e.name+'</span></div>'+
+    '<div class="enqrow"><span class="enqlbl">Email</span><span class="enqval"><a href="mailto:'+e.email+'" style="color:var(--accent3)">'+e.email+'</a></span></div>'+
+    (e.phone?'<div class="enqrow"><span class="enqlbl">Phone</span><span class="enqval">'+e.phone+'</span></div>':'')+
+    '<div class="enqrow"><span class="enqlbl">Subject</span><span class="enqval">'+e.subject+'</span></div>'+
+    '<div class="enqrow"><span class="enqlbl">Date</span><span class="enqval" style="color:var(--muted)">'+e.date+'</span></div>'+
+    '<div class="enqrow"><span class="enqlbl">Sent</span><span class="enqval">'+(e.email_sent?'<span class="badge bg2c">✓ Via EmailJS</span>':'<span class="badge bn">Stored locally</span>')+'</span></div>'+
+    '</div>'+
+    '<div class="enqmsg">'+e.message+'</div>';
+  document.getElementById('enqDelBtn').onclick=()=>{ closeModal('enqOverlay'); askDel('enq',id,'from '+e.name); };
+  document.getElementById('enqOverlay').classList.add('open');
+  renderEnqTable(DB.enquiries);
+}
+function clearReadEnq(){
+  DB.enquiries=DB.enquiries.filter(e=>!e.read);
+  saveEnqLocal(DB.enquiries); updateBadges(); renderEnqTable(DB.enquiries); toast('✓ Read enquiries cleared.','ok');
+}
+
+// ══════════════════════════════════════════
+// DELETE
+// ══════════════════════════════════════════
+function askDel(type,id,name){ delCtx={type,id}; document.getElementById('delName').textContent='"'+name+'"'; document.getElementById('delOverlay').classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+function confirmDel(){
+  const{type,id}=delCtx; closeModal('delOverlay');
+  if(type==='project'){ DB.projects=DB.projects.filter(p=>p.id!==id); dlJson('projects.json',DB.projects); renderProjTable(DB.projects); toast('🗑 Deleted. Upload projects.json to data/.','ok'); }
+  else if(type==='exp'){ DB.experience=DB.experience.filter(e=>e.id!==id); dlJson('experience.json',DB.experience); renderExpTable(); toast('🗑 Deleted. Upload experience.json to data/.','ok'); }
+  else if(type==='edu'){ DB.education=DB.education.filter(e=>e.id!==id); dlJson('education.json',DB.education); renderEduTable(); toast('🗑 Deleted. Upload education.json to data/.','ok'); }
+  else if(type==='enq'){ DB.enquiries=DB.enquiries.filter(e=>e.id!==id); saveEnqLocal(DB.enquiries); renderEnqTable(DB.enquiries); toast('🗑 Enquiry deleted.','ok'); }
+  updateBadges(); renderDash();
+}
+
+// ══════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════
+function v(id){ return(document.getElementById(id)||{}).value||''; }
+function e2(s){ return(s||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+function toast(msg,type='ok'){
+  const t=document.getElementById('toast'); t.textContent=msg; t.className='show '+type;
+  clearTimeout(t._t); t._t=setTimeout(()=>{t.className='';},4500);
+}
+document.getElementById('hbtn').onclick=()=>document.getElementById('sb').classList.toggle('open');
+document.addEventListener('click',e=>{
+  const sb=document.getElementById('sb');
+  if(sb.classList.contains('open')&&!sb.contains(e.target)&&e.target!==document.getElementById('hbtn')) sb.classList.remove('open');
+});
+
+// BOOT
+(async()=>{ await loadAuth(); if(checkSession()) showAdmin(); })();
+</script>
+</body>
+</html>
