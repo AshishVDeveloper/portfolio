@@ -1,0 +1,12 @@
+[
+  {"id":1,"order":1,"icon":"🐘","name":"PHP","sub":"Core Lang"},
+  {"id":2,"order":2,"icon":"⚡","name":"Laravel","sub":"Framework"},
+  {"id":3,"order":3,"icon":"🔥","name":"CodeIgniter","sub":"CI 4"},
+  {"id":4,"order":4,"icon":"🗄️","name":"MySQL","sub":"Database"},
+  {"id":5,"order":5,"icon":"🔗","name":"REST API","sub":"Integration"},
+  {"id":6,"order":6,"icon":"⚙️","name":"JavaScript","sub":"Frontend"},
+  {"id":7,"order":7,"icon":"🎨","name":"Bootstrap","sub":"CSS"},
+  {"id":8,"order":8,"icon":"🔄","name":"Ajax","sub":"Async"},
+  {"id":9,"order":9,"icon":"🌐","name":"HTML/CSS","sub":"Markup"},
+  {"id":10,"order":10,"icon":"🐙","name":"Git","sub":"Version Ctrl"}
+]
