@@ -518,11 +518,11 @@ document.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!document.getElemen
 // DOWNLOAD JSON HELPER
 // ══════════════════════════════════════════
 function dlJson(filename,data){
-  const b=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  /*const b=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const u=URL.createObjectURL(b);
   const a=document.createElement('a'); a.href=u; a.download=filename;
   document.body.appendChild(a); a.click();
-  document.body.removeChild(a); URL.revokeObjectURL(u);
+  document.body.removeChild(a); URL.revokeObjectURL(u);*/
 }
 
 // ══════════════════════════════════════════
