@@ -206,7 +206,7 @@ tr:hover td{background:rgba(255,255,255,.013);}
     <!-- LOGIN -->
     <div id="formLogin">
       <div class="mbox merr" id="loginErr"></div>
-      <div class="lf"><label>Email Address</label><input id="lEmail" type="email" placeholder="av.developer73@gmail.com" autocomplete="username"/></div>
+      <div class="lf"><label>Email Address</label><input id="lEmail" type="email" placeholder="Email id" autocomplete="username"/></div>
       <div class="lf"><label>Password</label><input id="lPass" type="password" placeholder="••••••••" autocomplete="current-password"/></div>
       <button class="lbtn" id="loginBtn" onclick="doLogin()">🔐 Login to Admin</button>
     </div>
@@ -215,7 +215,7 @@ tr:hover td{background:rgba(255,255,255,.013);}
       <div class="mbox merr" id="forgotErr"></div>
       <div class="mbox mok" id="forgotOk"></div>
       <p style="font-size:.8rem;color:var(--muted);margin-bottom:1rem;line-height:1.6">Enter your registered email to see reset instructions.</p>
-      <div class="lf"><label>Registered Email</label><input id="fEmail" type="email" placeholder="av.developer73@gmail.com"/></div>
+      <div class="lf"><label>Registered Email</label><input id="fEmail" type="email" placeholder="Email id"/></div>
       <button class="lbtn" onclick="doForgot()">Show Info</button>
       <div id="forgotResult" style="display:none;margin-top:1rem;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1rem;font-size:.78rem;color:var(--muted);line-height:1.8;"></div>
     </div>
@@ -223,11 +223,11 @@ tr:hover td{background:rgba(255,255,255,.013);}
     <div id="formChange" style="display:none">
       <div class="mbox merr" id="changeErr"></div>
       <div class="mbox mok" id="changeOk"></div>
-      <div class="lf"><label>Email Address</label><input id="cpEmail" type="email" placeholder="av.developer73@gmail.com"/></div>
+      <div class="lf"><label>Email Address</label><input id="cpEmail" type="email" placeholder="email id"/></div>
       <div class="lf"><label>Current Password</label><input id="cpCurrent" type="password" placeholder="Current password"/></div>
       <div class="lf"><label>New Password</label><input id="cpNew" type="password" placeholder="New password (min 6 chars)"/></div>
       <div class="lf"><label>Confirm New Password</label><input id="cpConfirm" type="password" placeholder="Repeat new password"/>
-        <div class="pwhint">Stored as MD5(email|password) — downloads new auth.json</div>
+        <!-- <div class="pwhint">Stored as MD5(email|password) — downloads new auth.json</div> -->
       </div>
       <button class="lbtn" onclick="doChangePW()">Update Password</button>
     </div>
@@ -279,7 +279,7 @@ tr:hover td{background:rgba(255,255,255,.013);}
 
   <!-- PROFILE -->
   <div class="page" id="page-profile">
-    <div class="info-box">💾 After saving, a <strong>profile.json</strong> file will download. Replace the file in your <strong>data/</strong> folder and re-upload to your hosting.</div>
+    <!-- <div class="info-box">💾 After saving, a <strong>profile.json</strong> file will download. Replace the file in your <strong>data/</strong> folder and re-upload to your hosting.</div> -->
     <div class="fcard">
       <div class="fctitle">👤 Personal Information</div>
       <div class="fgrow"><div class="fg"><label>Full Name *</label><input id="pf_name" type="text"/></div><div class="fg"><label>Initials</label><input id="pf_initials" type="text" maxlength="3"/></div></div>
@@ -297,7 +297,7 @@ tr:hover td{background:rgba(255,255,255,.013);}
 
   <!-- SKILLS -->
   <div class="page" id="page-skills">
-    <div class="info-box">💾 After saving, <strong>skills.json</strong> will download. Upload it to <strong>data/</strong> folder.</div>
+    <!-- <div class="info-box">💾 After saving, <strong>skills.json</strong> will download. Upload it to <strong>data/</strong> folder.</div> -->
     <div class="fcard">
       <div class="fctitle" style="display:flex;align-items:center;justify-content:space-between">⚡ Skills <button class="btn btnp btnsm" onclick="addSkill()">+ Add</button></div>
       <p style="font-size:.7rem;color:var(--muted);margin-bottom:.9rem">Use ↑↓ arrows or ⬆1 to reorder. Order shown here = order on portfolio.</p>
@@ -308,7 +308,7 @@ tr:hover td{background:rgba(255,255,255,.013);}
 
   <!-- PROJECTS LIST -->
   <div class="page" id="page-projects">
-    <div class="info-box">💾 Any changes download <strong>projects.json</strong> automatically. Upload it to <strong>data/</strong>.</div>
+    <!-- <div class="info-box">💾 Any changes download <strong>projects.json</strong> automatically. Upload it to <strong>data/</strong>.</div> -->
     <div class="tcard">
       <div class="tchead">
         <span class="tctitle">Projects (<span id="projCount">0</span>)</span>
@@ -320,7 +320,7 @@ tr:hover td{background:rgba(255,255,255,.013);}
 
   <!-- ADD/EDIT PROJECT -->
   <div class="page" id="page-addproject">
-    <div class="info-box">💾 Saving downloads <strong>projects.json</strong>. Upload it to <strong>data/</strong> folder to update your portfolio.</div>
+    <!-- <div class="info-box">💾 Saving downloads <strong>projects.json</strong>. Upload it to <strong>data/</strong> folder to update your portfolio.</div> -->
     <div class="fcard">
       <div class="fctitle" id="projFTitle">➕ Add New Project</div>
       <input type="hidden" id="proj_eid"/>
@@ -335,13 +335,13 @@ tr:hover td{background:rgba(255,255,255,.013);}
 
   <!-- EXPERIENCE LIST -->
   <div class="page" id="page-experience">
-    <div class="info-box">💾 Changes download <strong>experience.json</strong>. Upload to <strong>data/</strong>.</div>
+    <!-- <div class="info-box">💾 Changes download <strong>experience.json</strong>. Upload to <strong>data/</strong>.</div> -->
     <div class="tcard"><div class="tchead"><span class="tctitle">Experience (<span id="expCount">0</span>)</span><button class="btn btnp btnsm" onclick="openAddExp()">+ Add</button></div><div class="tw" id="expTable"></div></div>
   </div>
 
   <!-- ADD/EDIT EXPERIENCE -->
   <div class="page" id="page-addexp">
-    <div class="info-box">💾 Saving downloads <strong>experience.json</strong>. Upload to <strong>data/</strong>.</div>
+    <!-- <div class="info-box">💾 Saving downloads <strong>experience.json</strong>. Upload to <strong>data/</strong>.</div> -->
     <div class="fcard">
       <div class="fctitle" id="expFTitle">💼 Add Experience</div>
       <input type="hidden" id="exp_eid"/>
@@ -355,13 +355,13 @@ tr:hover td{background:rgba(255,255,255,.013);}
 
   <!-- EDUCATION LIST -->
   <div class="page" id="page-education">
-    <div class="info-box">💾 Changes download <strong>education.json</strong>. Upload to <strong>data/</strong>.</div>
+    <!-- <div class="info-box">💾 Changes download <strong>education.json</strong>. Upload to <strong>data/</strong>.</div> -->
     <div class="tcard"><div class="tchead"><span class="tctitle">Education (<span id="eduCount">0</span>)</span><button class="btn btnp btnsm" onclick="openAddEdu()">+ Add</button></div><div class="tw" id="eduTable"></div></div>
   </div>
 
   <!-- ADD/EDIT EDUCATION -->
   <div class="page" id="page-addedu">
-    <div class="info-box">💾 Saving downloads <strong>education.json</strong>. Upload to <strong>data/</strong>.</div>
+    <!-- <div class="info-box">💾 Saving downloads <strong>education.json</strong>. Upload to <strong>data/</strong>.</div> -->
     <div class="fcard">
       <div class="fctitle" id="eduFTitle">🎓 Add Education</div>
       <input type="hidden" id="edu_eid"/>
@@ -386,7 +386,7 @@ tr:hover td{background:rgba(255,255,255,.013);}
 
   <!-- ACCOUNT -->
   <div class="page" id="page-account">
-    <div class="info-box">💾 After changing password, a new <strong>auth.json</strong> will download. Upload it to <strong>data/</strong> to activate the new password.</div>
+    <!-- <div class="info-box">💾 After changing password, a new <strong>auth.json</strong> will download. Upload it to <strong>data/</strong> to activate the new password.</div> -->
     <div class="fcard" style="max-width:460px">
       <div class="fctitle">🔒 Change Password</div>
       <div class="mbox merr" id="accErr"></div>
