@@ -3,9 +3,98 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Asheesh Vishwakarma – PHP Developer</title>
+
+<!-- ═══════════════════════════════════════════
+     PRIMARY SEO META TAGS
+════════════════════════════════════════════ -->
+<title>Asheesh Vishwakarma | PHP Developer – Laravel & CodeIgniter Expert</title>
+<meta name="description" content="Asheesh Vishwakarma is a skilled PHP Developer specializing in Laravel, CodeIgniter, REST APIs, and full-stack web development. Available for freelance and full-time opportunities."/>
+<meta name="keywords" content="Asheesh Vishwakarma, PHP Developer, Laravel Developer, CodeIgniter Developer, REST API Developer, Full Stack PHP, Web Developer India, Hire PHP Developer, Backend Developer"/>
+<meta name="author" content="Asheesh Vishwakarma"/>
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
+<link rel="canonical" href="https://asheeshvishwakarma.com/"/>
+
+<!-- ═══════════════════════════════════════════
+     OPEN GRAPH (Facebook / LinkedIn / WhatsApp)
+════════════════════════════════════════════ -->
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://asheeshvishwakarma.com/"/>
+<meta property="og:title" content="Asheesh Vishwakarma | PHP Developer – Laravel & CodeIgniter Expert"/>
+<meta property="og:description" content="Skilled PHP Developer specializing in Laravel, CodeIgniter, and REST APIs. Building fast, scalable web applications. Available for hire."/>
+<meta property="og:image" content="https://asheeshvishwakarma.com/og-image.jpg"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:alt" content="Asheesh Vishwakarma – PHP Developer Portfolio"/>
+<meta property="og:site_name" content="Asheesh Vishwakarma Portfolio"/>
+<meta property="og:locale" content="en_IN"/>
+
+<!-- ═══════════════════════════════════════════
+     TWITTER / X CARD
+════════════════════════════════════════════ -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Asheesh Vishwakarma | PHP Developer – Laravel & CodeIgniter Expert"/>
+<meta name="twitter:description" content="Skilled PHP Developer specializing in Laravel, CodeIgniter, and REST APIs. Building fast, scalable web applications."/>
+<meta name="twitter:image" content="https://asheeshvishwakarma.com/og-image.jpg"/>
+<meta name="twitter:image:alt" content="Asheesh Vishwakarma – PHP Developer Portfolio"/>
+
+<!-- ═══════════════════════════════════════════
+     STRUCTURED DATA – Person (JSON-LD)
+════════════════════════════════════════════ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Asheesh Vishwakarma",
+  "url": "https://asheeshvishwakarma.com",
+  "jobTitle": "PHP Developer",
+  "description": "PHP Developer specializing in Laravel, CodeIgniter, REST APIs, and full-stack web development.",
+  "knowsAbout": ["PHP", "Laravel", "CodeIgniter", "REST API", "MySQL", "JavaScript", "Web Development"],
+  "sameAs": [
+    "https://linkedin.com/in/asheeshvishwakarma",
+    "https://github.com/asheeshvishwakarma"
+  ]
+}
+</script>
+
+<!-- ═══════════════════════════════════════════
+     STRUCTURED DATA – WebSite (Sitelinks Search)
+════════════════════════════════════════════ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Asheesh Vishwakarma Portfolio",
+  "url": "https://asheeshvishwakarma.com",
+  "description": "Portfolio of Asheesh Vishwakarma, PHP Developer specializing in Laravel & CodeIgniter."
+}
+</script>
+
+<!-- ═══════════════════════════════════════════
+     STRUCTURED DATA – BreadcrumbList
+════════════════════════════════════════════ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://asheeshvishwakarma.com/"},
+    {"@type":"ListItem","position":2,"name":"About","item":"https://asheeshvishwakarma.com/#about"},
+    {"@type":"ListItem","position":3,"name":"Projects","item":"https://asheeshvishwakarma.com/#projects"},
+    {"@type":"ListItem","position":4,"name":"Experience","item":"https://asheeshvishwakarma.com/#experience"},
+    {"@type":"ListItem","position":5,"name":"Contact","item":"https://asheeshvishwakarma.com/#contact"}
+  ]
+}
+</script>
+
+<!-- ═══════════════════════════════════════════
+     PERFORMANCE & PRECONNECTS
+════════════════════════════════════════════ -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net"/>
+
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
 <style>
 :root{--bg:#080810;--bg2:#0e0e1a;--bg3:#141420;--card:#16162a;--border:rgba(255,255,255,0.08);--accent:#8b5cf6;--accent2:#ec4899;--accent3:#06b6d4;--text:#f1f0ff;--muted:#7c7c9e;--soft:#a5a5c5;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -161,28 +250,28 @@ footer a{color:var(--accent);text-decoration:none;}footer strong{color:var(--tex
   <a href="#contact" onclick="closeMM()">Contact</a>
   <a href="admin.html" onclick="closeMM()" style="color:var(--accent3)">⚙ Admin</a>
 </div>
-<nav>
-  <div class="nav-logo" id="navLogo">AV.</div>
+<nav aria-label="Primary navigation">
+  <div class="nav-logo" id="navLogo" aria-label="Asheesh Vishwakarma – Home">AV.</div>
   <div class="nav-links">
     <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a>
     <a href="#experience">Experience</a><a href="#contact">Contact</a>
     <a href="admin.html">⚙ Admin</a>
     <a href="#contact" class="btn-hire" id="navHire">Hire Me</a>
   </div>
-  <button class="hamburger" id="hbtn"><span></span><span></span><span></span></button>
+  <button class="hamburger" id="hbtn" aria-label="Open navigation menu"><span></span><span></span><span></span></button>
 </nav>
-<section id="hero">
-  <div class="blob1"></div><div class="blob2"></div>
+<section id="hero" aria-label="Introduction">
+  <div class="blob1" aria-hidden="true"></div><div class="blob2" aria-hidden="true"></div>
   <div class="hero-inner">
-    <div class="hero-badge"><span class="dot-pulse"></span><span id="hBadge">Available for Work</span></div>
+    <div class="hero-badge"><span class="dot-pulse" aria-hidden="true"></span><span id="hBadge">Available for Work</span></div>
     <h1 class="hero-name"><span id="hFirst">Asheesh</span><br/><span class="grad-text" id="hLast">Vishwakarma</span></h1>
-    <p class="hero-role" id="hRole">PHP Developer — <strong id="hSpec">Laravel &amp; CodeIgniter</strong></p>
-    <p class="hero-desc" id="hDesc"></p>
+    <p class="hero-role" id="hRole">PHP Developer — <strong id="hSpec">Laravel &amp; CodeIgniter Expert</strong></p>
+    <p class="hero-desc" id="hDesc">Experienced PHP developer building robust, scalable web applications with Laravel and CodeIgniter. Specializing in REST APIs, backend systems, and full-stack development.</p>
     <div class="hero-cta"><a href="#projects" class="btn-p">View Projects</a><a href="#contact" class="btn-o">Get In Touch</a></div>
-    <div class="hero-stats" id="heroStats"></div>
+    <div class="hero-stats" id="heroStats" aria-label="Career highlights"></div>
   </div>
 </section>
-<section id="about">
+<section id="about" aria-label="About Asheesh Vishwakarma">
   <div class="about-grid">
     <div class="about-visual">
       <div class="av-card">
@@ -200,28 +289,28 @@ footer a{color:var(--accent);text-decoration:none;}footer strong{color:var(--tex
     </div>
   </div>
 </section>
-<section id="skills">
+<section id="skills" aria-label="Technical Skills">
   <span class="s-tag">Tech Stack</span><h2 class="s-title">Skills &amp; Technologies</h2>
   <p class="s-desc">Full-stack PHP developer skilled in modern frameworks, databases, and integrations.</p>
   <div class="skills-grid reveal" id="skillsGrid"></div>
 </section>
-<section id="projects">
+<section id="projects" aria-label="Projects Portfolio">
   <span class="s-tag">Portfolio</span><h2 class="s-title">My Projects</h2>
   <p class="s-desc">Real-world web applications delivered professionally across industries.</p>
   <div class="filter-bar" id="filterBar"><button class="fbtn active" data-cat="all">All</button></div>
   <div class="proj-grid reveal" id="projGrid"></div>
 </section>
-<section id="experience">
+<section id="experience" aria-label="Work Experience">
   <span class="s-tag">Career</span><h2 class="s-title">Work Experience</h2>
   <p class="s-desc">Professional journey building production web applications.</p>
   <div class="timeline reveal" id="expTimeline"></div>
 </section>
-<section id="education">
+<section id="education" aria-label="Education Background">
   <span class="s-tag">Education</span><h2 class="s-title">Academic Background</h2>
   <p class="s-desc">Formal education in computer science and information technology.</p>
   <div class="edu-grid reveal" id="eduGrid"></div>
 </section>
-<section id="contact">
+<section id="contact" aria-label="Contact Asheesh Vishwakarma">
   <span class="s-tag">Get In Touch</span><h2 class="s-title">Let's Work Together</h2>
   <p class="s-desc">Have a project in mind? Drop a message and I'll get back to you.</p>
   <div class="contact-grid reveal">
