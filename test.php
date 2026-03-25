@@ -1,0 +1,5 @@
+<?php
+
+echo 'Php Works';
+
+?>
