@@ -178,6 +178,13 @@ section+section{border-top:1px solid var(--line)}
 .edu{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1rem}
 .edu div{padding:1.2rem 1.3rem;border:1px solid var(--line);border-radius:12px;background:var(--soft)}
 .edu b{display:block}
+.certs{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-top:1rem}
+.cert{display:flex;gap:1rem;align-items:center;padding:1.1rem 1.2rem;border:1px solid var(--line);border-radius:12px;background:var(--soft);text-decoration:none}
+a.cert:hover{border-color:var(--blue)}
+.cert .seal{width:44px;height:44px;border-radius:50%;background:var(--chipbg);color:var(--chipfg);display:grid;place-items:center;flex-shrink:0}
+.cert .seal svg{width:22px;height:22px}
+.cert b{display:block;line-height:1.3;color:var(--paper);font-weight:600;font-size:1rem}
+.cert span{color:var(--muted);font-size:.88rem}
 .edu span{color:var(--muted);font-size:.9rem}
 
 /* contact */
@@ -217,11 +224,13 @@ footer.site a:hover{color:var(--paper)}
   .hero .wrap,.about,.contact{grid-template-columns:1fr}
   .portrait{max-width:300px}
   .stack{grid-template-columns:repeat(2,1fr)}
-  .prow{grid-template-columns:1fr auto;gap:.6rem 1rem}
-  .prow .tech{grid-column:1}
-  .prow .tech:empty{display:none}
-  .prow .status{grid-row:1;grid-column:2;justify-self:end}
-  .prow .plink{grid-column:2;justify-self:end}
+  .prow{grid-template-columns:1fr auto;grid-template-areas:"status status" "main main" "tech link";gap:.5rem 1rem;padding:1.2rem .2rem}
+  .prow .pmain{grid-area:main}
+  .prow .status{grid-area:status;justify-self:start;font-size:.8rem;padding:.15rem .6rem;border:1px solid currentColor;border-radius:999px}
+  .prow .tech{grid-area:tech;font-size:.85rem;color:var(--muted)}
+  .prow .tech:empty::before{content:""}
+  .prow .plink{grid-area:link;justify-self:end;align-self:end}
+  .prow h3 small{display:inline-block}
 }
 @media (max-width:760px){
   section{padding:4rem 0}
@@ -331,6 +340,8 @@ footer.site a:hover{color:var(--paper)}
     <ol class="timeline" id="timeline"></ol>
     <h2 style="font-size:1.4rem;margin-top:1rem">Education</h2>
     <div class="edu" id="edu"></div>
+    <div id="certWrap" hidden><h2 style="font-size:1.4rem;margin-top:2.6rem">Certifications</h2>
+    <div class="certs" id="certs"></div></div>
   </div>
 </section>
 
@@ -440,6 +451,10 @@ async function boot(){
   $('timeline').innerHTML=EX.map(x=>'<li class="job'+(x.current?' cur':'')+'"><div class="when">'+esc(x.duration)+(x.current?' · Current':'')+'</div><h3>'+esc(x.title)+'</h3><div class="at">'+esc(x.company)+(x.location?', '+esc(x.location):'')+'</div><ul>'+(x.points||[]).map(p=>'<li>'+esc(p)+'</li>').join('')+'</ul></li>').join('');
   ED.sort((a,b)=>(a.order||99)-(b.order||99));
   $('edu').innerHTML=ED.map(e=>'<div><b>'+esc(e.degree)+'</b><span>'+esc(e.college)+(e.university?', '+esc(e.university):'')+(e.year?' · '+esc(e.year):'')+'</span></div>').join('');
+  jget('certificates.json').then(CE=>{CE.sort((a,b)=>(a.order||99)-(b.order||99));if(!CE.length)return;$('certWrap').hidden=false;
+    const seal='<span class="seal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 7 5-3 5 3-1.5-7"/></svg></span>';
+    $('certs').innerHTML=CE.map(c=>{const inner=seal+'<span><b>'+esc(c.title)+'</b><span>'+esc(c.issuer||'')+(c.year?' · '+esc(c.year):'')+(c.url?' · View certificate':'')+'</span></span>';
+      return c.url?'<a class="cert" href="'+esc(c.url)+'" target="_blank" rel="noopener">'+inner+'</a>':'<div class="cert">'+inner+'</div>'}).join('')}).catch(()=>{});
 
   // contact
   const reach=[];
@@ -460,7 +475,7 @@ function renderProjects(){
   $('plist').innerHTML=list.length?list.map(p=>{
     const st=p.status||'live';
     const link=p.url?'<a class="plink" href="'+esc(p.url)+'" target="_blank" rel="noopener">Visit site</a>':'<span class="plink off">Private</span>';
-    return '<li class="prow"><div><h3>'+esc(p.title)+'<small>'+esc(p.category||'')+'</small></h3><p>'+esc(p.description)+'</p></div><div class="tech">'+esc(p.tech||'')+'</div><span class="status '+st+'"><span class="dot"></span>'+(STATUS[st]||st)+'</span>'+link+'</li>'}).join('')
+    return '<li class="prow"><div class="pmain"><h3>'+esc(p.title)+'<small>'+esc(p.category||'')+'</small></h3><p>'+esc(p.description)+'</p></div><div class="tech">'+esc(p.tech||'')+'</div><span class="status '+st+'"><span class="dot"></span>'+(STATUS[st]||st)+'</span>'+link+'</li>'}).join('')
     :'<li class="empty">No projects in this category yet.</li>';
 }
 $('moreBtn').onclick=()=>{showAll=true;renderProjects()};

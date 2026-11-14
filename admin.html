@@ -224,7 +224,7 @@ td .s{color:var(--muted);font-size:.82rem}
 /* ═════════ helpers ═════════ */
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const FILES={profile:'profile.json',skills:'skills.json',projects:'projects.json',experience:'experience.json',education:'education.json'};
+const FILES={profile:'profile.json',skills:'skills.json',projects:'projects.json',experience:'experience.json',education:'education.json',certificates:'certificates.json'};
 const SESS='av_admin_session', GHK='av_admin_github', ENQ_KEY='av_enquiries';
 let DB={}, ORIG={}, AUTH=null, DIRTY=new Set(), PAGE='dashboard', EDIT=null;
 
@@ -244,6 +244,7 @@ const ICON={
  projects:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
  experience:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
  education:'<path d="m2 9 10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/>',
+ certificates:'<circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 7 5-3 5 3-1.5-7"/>',
  messages:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
  publishing:'<path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 15v4h14v-4"/>',
  account:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>'};
@@ -255,6 +256,7 @@ const PAGES={
  projects:{t:'Projects',s:'Everything listed in the Projects section',file:'projects'},
  experience:{t:'Experience',s:'Jobs shown on the timeline',file:'experience'},
  education:{t:'Education',s:'Degrees shown under Experience',file:'education'},
+ certificates:{t:'Certifications',s:'Courses and certificates shown under Education',file:'certificates'},
  messages:{t:'Messages',s:'Enquiries sent from the contact form'},
  publishing:{t:'Publishing',s:'Connect GitHub so changes go live without uploading files'},
  account:{t:'Password',s:'Change the admin password'}};
@@ -322,7 +324,7 @@ function logout(){if(DIRTY.size&&!window.confirm('You have unpublished changes. 
 async function openApp(){
   try{const keys=Object.keys(FILES);const vals=await Promise.all(keys.map(k=>fetchJSON(FILES[k])));keys.forEach((k,i)=>{DB[k]=vals[i];ORIG[k]=JSON.stringify(vals[i])})}
   catch(e){toast('Couldn\'t load your website data. Refresh the page.',true);return}
-  byOrder(DB.skills);byOrder(DB.projects);byOrder(DB.experience);byOrder(DB.education);
+  byOrder(DB.skills);byOrder(DB.projects);byOrder(DB.experience);byOrder(DB.education);byOrder(DB.certificates);
   $('login').hidden=true;$('app').hidden=false;$('who').textContent=JSON.parse(sessionStorage.getItem(SESS)).email;
   route();
 }
@@ -332,14 +334,14 @@ function route(){
   const [p,arg]=(location.hash.slice(1)||'dashboard').split('/');
   PAGE=PAGES[p]?p:'dashboard'; $('sb').classList.remove('open');
   $('pTitle').textContent=PAGES[PAGE].t; $('pSub').textContent=PAGES[PAGE].s;
-  ({dashboard:pgDash,profile:pgProfile,skills:pgSkills,projects:()=>arg?pgProjectForm(arg):pgProjects(),experience:()=>arg?pgExpForm(arg):pgExp(),education:()=>arg?pgEduForm(arg):pgEdu(),messages:pgMessages,publishing:pgPublishing,account:pgAccount})[PAGE]();
+  ({dashboard:pgDash,profile:pgProfile,skills:pgSkills,projects:()=>arg?pgProjectForm(arg):pgProjects(),experience:()=>arg?pgExpForm(arg):pgExp(),education:()=>arg?pgEduForm(arg):pgEdu(),certificates:()=>arg?pgCertForm(arg):pgCerts(),messages:pgMessages,publishing:pgPublishing,account:pgAccount})[PAGE]();
   updateChrome(); window.scrollTo(0,0);
   const h=$('content').querySelector('input,textarea'); if(h&&arg)h.focus();
 }
 function updateChrome(){
   const unread=enqs().filter(x=>!x.read).length;
-  const count={skills:DB.skills?.length,projects:DB.projects?.length,experience:DB.experience?.length,education:DB.education?.length,messages:unread||''};
-  const groups=[['','dashboard'],['Website content','profile','skills','projects','experience','education'],['Inbox','messages'],['Settings','publishing','account']];
+  const count={skills:DB.skills?.length,projects:DB.projects?.length,experience:DB.experience?.length,education:DB.education?.length,certificates:DB.certificates?.length,messages:unread||''};
+  const groups=[['','dashboard'],['Website content','profile','skills','projects','experience','education','certificates'],['Inbox','messages'],['Settings','publishing','account']];
   $('nav').innerHTML=groups.map(g=>(g[0]?'<div class="grp">'+g[0]+'</div>':'')+g.slice(1).map(k=>'<a href="#'+k+'" class="'+(k===PAGE?'on':'')+'"'+(k===PAGE?' aria-current="page"':'')+'>'+svg(k)+PAGES[k].t+(DIRTY.has(k)?'<span class="dirty" title="Unpublished changes"></span>':'')+(count[k]?'<span class="n">'+count[k]+'</span>':'')+'</a>').join('')).join('');
   const c=gh(); $('conn').className='conn'+(c&&c.token?' ok':''); $('conn').querySelector('span').textContent=c&&c.token?'Publishing to GitHub':'Not connected';
   $('pubAll').hidden=!DIRTY.size; $('pubAll').textContent=DIRTY.size>1?'Publish all changes ('+DIRTY.size+')':'Publish changes';
@@ -477,6 +479,18 @@ function pgEduForm(id){
 function saveEdu(e,id){e.preventDefault();const v=k=>$(k).value.trim();const data={degree:v('d_deg'),college:v('d_col'),university:v('d_uni'),year:v('d_year')};
   if(id==='new'){DB.education.push({id:nextId(DB.education),order:DB.education.length+1,icon:'🎓',...data})}else Object.assign(DB.education.find(x=>String(x.id)===id),data);
   markDirty('education');toast('Degree saved. Publish to show it on your website.');location.hash='education'}
+
+/* ═════════ certifications ═════════ */
+function pgCerts(){C('<div class="card"><h2>Certificates <a class="btn sm pri" href="#certificates/new">Add certificate</a></h2><div class="tw"><table><tbody id="cRows"></tbody></table></div></div>'+saveBar('certificates'));drawCerts()}
+function drawCerts(){const A=DB.certificates;$('cRows').innerHTML=A.map((x,i)=>'<tr><td style="width:40px"><div class="mv"><button aria-label="Move up" onclick="mv(\'certificates\','+i+',-1,drawCerts)">▲</button><button aria-label="Move down" onclick="mv(\'certificates\','+i+',1,drawCerts)">▼</button></div></td><td><div class="t">'+esc(x.title)+'</div><div class="s">'+esc(x.issuer)+(x.year?' · '+esc(x.year):'')+(x.url?' · <a href="'+esc(x.url)+'" target="_blank" rel="noopener">certificate</a>':'')+'</div></td><td><div class="acts-cell"><a class="btn sm" href="#certificates/'+x.id+'">Edit</a><button class="btn sm danger" onclick="delItem(\'certificates\','+i+',drawCerts)">Delete</button></div></td></tr>').join('')||'<tr><td class="empty">No certificates yet.</td></tr>'}
+function pgCertForm(id){
+  const isNew=id==='new', x=isNew?{title:'',issuer:'NPTEL',year:'',url:''}:DB.certificates.find(e=>String(e.id)===id);
+  if(!x){location.hash='certificates';return}
+  $('pTitle').textContent=isNew?'Add certificate':'Edit certificate';
+  C('<div class="card"><form onsubmit="saveCert(event,\''+id+'\')"><div class="field"><label for="c_title">Course or certificate</label><input id="c_title" required value="'+esc(x.title)+'" placeholder="e.g. Ethical Hacking"/></div><div class="g2"><div class="field"><label for="c_issuer">Issued by</label><input id="c_issuer" required value="'+esc(x.issuer)+'" placeholder="e.g. NPTEL"/></div><div class="field"><label for="c_year">Year or score</label><input id="c_year" value="'+esc(x.year)+'" placeholder="e.g. 2023 · Elite"/></div></div><div class="field"><label for="c_url">Certificate link</label><input id="c_url" type="url" value="'+esc(x.url)+'" placeholder="https://"/><div class="hint">Optional. Paste the verification link so visitors can open the certificate.</div></div><div class="bar"><a class="btn" href="#certificates">Cancel</a><button class="btn pri">'+(isNew?'Add certificate':'Save certificate')+'</button></div></form></div>')}
+function saveCert(e,id){e.preventDefault();const v=k=>$(k).value.trim();const data={title:v('c_title'),issuer:v('c_issuer'),year:v('c_year'),url:v('c_url')};
+  if(id==='new')DB.certificates.push({id:nextId(DB.certificates),order:DB.certificates.length+1,...data});else Object.assign(DB.certificates.find(x=>String(x.id)===id),data);
+  markDirty('certificates');toast('Certificate saved. Publish to show it on your website.');location.hash='certificates'}
 
 /* ═════════ messages ═════════ */
 function enqs(){try{return JSON.parse(localStorage.getItem(ENQ_KEY)||'[]')}catch(e){return[]}}
