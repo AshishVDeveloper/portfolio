@@ -54,6 +54,10 @@
       "desc": "Business websites and online stores with payment gateways."
     },
     {
+      "title": "APIs & integrations",
+      "desc": "REST APIs, mobile app backends, payment gateways like Razorpay, and third-party services like IndiaMART."
+    },
+    {
       "title": "Enhancement & support",
       "desc": "Bug fixes, speed improvements and new features for existing apps."
     }

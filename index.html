@@ -121,7 +121,7 @@ section+section{border-top:1px solid var(--line)}
 .info dd{font-weight:500}
 .info a{text-decoration:none}
 .info a:hover{color:var(--blue)}
-.services{margin-top:3rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.services{margin-top:3rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .services div{padding:1.3rem 1.2rem;background:var(--soft2)}
 .services b{display:block;margin-bottom:.35rem}
 .services p{color:var(--muted);font-size:.88rem;line-height:1.5}
@@ -228,6 +228,7 @@ footer.site a:hover{color:var(--paper)}
 
 @media (max-width:1000px){
   .hero .wrap,.about,.contact{grid-template-columns:1fr}
+  .services{grid-template-columns:repeat(2,1fr)}
   .portrait{max-width:300px}
   .stack{grid-template-columns:repeat(2,1fr)}
   .prow{grid-template-columns:1fr auto;grid-template-areas:"status status" "main main" "tech link";gap:.5rem 1rem;padding:1.2rem .2rem}
@@ -250,6 +251,7 @@ footer.site a:hover{color:var(--paper)}
   .portrait{max-width:none;width:100%;aspect-ratio:1/1}
   .portrait img{object-position:center top}
   .edu,.row2,.info{grid-template-columns:1fr}
+  .services{grid-template-columns:1fr}
   .support{grid-template-columns:1fr;padding:1.6rem;gap:1.6rem}
   .qr{width:100%;max-width:260px;margin:0 auto}
   .stack{grid-template-columns:1fr;gap:1.6rem}
