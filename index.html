@@ -130,7 +130,7 @@ section+section{border-top:1px solid var(--line)}
 .stack{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:2.4rem}
 .stack h3{font-family:var(--body);font-size:1rem;font-weight:600;color:var(--muted);padding-bottom:.7rem;margin-bottom:.4rem;border-bottom:1px solid var(--line)}
 .tool{display:flex;align-items:center;gap:.8rem;padding:.6rem 0}
-.tool .ic{width:38px;height:38px;border-radius:9px;background:var(--deep);border:1px solid var(--line);display:grid;place-items:center;font-size:1.1rem;flex-shrink:0}
+.tool .ic{width:38px;height:38px;border-radius:9px;background:#F3F6FB;border:1px solid var(--line);display:grid;place-items:center;font-size:1.1rem;flex-shrink:0}
 .tool .ic img{width:22px;height:22px}
 .tool b{font-weight:500;display:block;line-height:1.25}
 .tool small{color:var(--muted);font-size:.8rem}
@@ -233,7 +233,12 @@ footer.site a:hover{color:var(--paper)}
   .nav .btn{display:none}
   .hero{padding:3.5rem 0}
   .edu,.row2,.info{grid-template-columns:1fr}
-  .stack{grid-template-columns:1fr}
+  .stack{grid-template-columns:1fr;gap:1.6rem}
+  .stack>div{display:grid;grid-template-columns:1fr 1fr;gap:0 .9rem}
+  .stack h3{grid-column:1/-1}
+  .tool{gap:.6rem;min-width:0}
+  .tool .ic{width:34px;height:34px}
+  .tool b{font-size:.95rem;overflow-wrap:anywhere}
   .facts{gap:1.6rem}
 }
 </style>
