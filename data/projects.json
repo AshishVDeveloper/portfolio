@@ -13,7 +13,8 @@
       "MySQL",
       "Payment Gateway"
     ],
-    "featured": true
+    "featured": true,
+    "status": "completed"
   },
   {
     "id": 11,
@@ -29,7 +30,8 @@
       "Corporate",
       "Web App"
     ],
-    "featured": false
+    "featured": false,
+    "status": "live"
   },
   {
     "id": 12,
@@ -45,7 +47,8 @@
       "ERP",
       "Business Management"
     ],
-    "featured": false
+    "featured": false,
+    "status": "live"
   },
   {
     "id": 13,
@@ -61,7 +64,8 @@
       "MySQL",
       "Product Management"
     ],
-    "featured": false
+    "featured": false,
+    "status": "live"
   },
   {
     "id": 14,
@@ -77,7 +81,8 @@
       "Web App",
       "User Management"
     ],
-    "featured": false
+    "featured": false,
+    "status": "live"
   },
   {
     "id": 15,
@@ -93,7 +98,8 @@
       "Textile",
       "Business App"
     ],
-    "featured": false
+    "featured": false,
+    "status": "live"
   },
   {
     "id": 1,
@@ -110,7 +116,8 @@
       "REST API",
       "IndiaMART API"
     ],
-    "featured": true
+    "featured": true,
+    "status": "live"
   },
   {
     "id": 2,
@@ -127,7 +134,8 @@
       "MySQL",
       "Excel Upload"
     ],
-    "featured": true
+    "featured": true,
+    "status": "live"
   },
   {
     "id": 3,
@@ -143,7 +151,8 @@
       "REST API",
       "MySQL"
     ],
-    "featured": false
+    "featured": false,
+    "status": "live"
   },
   {
     "id": 4,
@@ -159,7 +168,8 @@
       "ERP",
       "CRM"
     ],
-    "featured": false
+    "featured": false,
+    "status": "live"
   },
   {
     "id": 5,
@@ -175,7 +185,8 @@
       "eCommerce",
       "Payment Gateway"
     ],
-    "featured": true
+    "featured": true,
+    "status": "live"
   },
   {
     "id": 6,
@@ -191,7 +202,8 @@
       "Booking",
       "Payment Gateway"
     ],
-    "featured": false
+    "featured": false,
+    "status": "live"
   },
   {
     "id": 7,
@@ -206,7 +218,8 @@
       "PHP",
       "Event Management"
     ],
-    "featured": false
+    "featured": false,
+    "status": "live"
   },
   {
     "id": 8,
@@ -221,7 +234,8 @@
       "PHP",
       "MySQL"
     ],
-    "featured": false
+    "featured": false,
+    "status": "live"
   },
   {
     "id": 9,
@@ -247,72 +261,68 @@
       "CRM",
       "Logistics"
     ],
-    "featured": true
+    "featured": true,
+    "status": "live"
   },
   {
     "id": 16,
     "order": 1,
     "title": "Order Management System",
-    "tech": "PHP",
-    "url": "#",
+    "tech": "",
+    "url": "",
     "category": "Web App",
-    "description": "An order management system covering order intake, processing, tracking and reporting. Currently under active development.",
+    "description": "An order management system covering order intake, processing, tracking and reporting.",
     "tags": [
-      "PHP",
-      "MySQL",
-      "Order Management",
-      "Under Development"
+      "Order Management"
     ],
-    "featured": true
+    "featured": true,
+    "status": "building"
   },
   {
     "id": 17,
     "order": 2,
     "title": "Metso CRM",
-    "tech": "PHP",
-    "url": "#",
+    "tech": "",
+    "url": "",
     "category": "CRM",
-    "description": "A CRM to manage leads, customers and sales activity. Currently under active development.",
+    "description": "A CRM to manage leads, customers and sales activity.",
     "tags": [
-      "PHP",
-      "MySQL",
-      "CRM",
-      "Under Development"
+      "CRM"
     ],
-    "featured": true
+    "featured": true,
+    "status": "building"
   },
   {
     "id": 18,
     "order": 3,
     "title": "Garment ERP",
     "tech": "Python FastAPI · React · PostgreSQL",
-    "url": "#",
+    "url": "",
     "category": "ERP",
-    "description": "An ERP for the garment industry managing production, inventory, orders and operations. Built with a Python FastAPI backend, a React frontend and a PostgreSQL database, with an AI voice assistant built in. Currently under active development.",
+    "description": "An ERP for the garment industry managing production, inventory, orders and operations. Built with a Python FastAPI backend, a React frontend and a PostgreSQL database, with an AI voice assistant built in.",
     "tags": [
       "Python",
       "FastAPI",
       "React",
       "PostgreSQL",
       "AI Voice Assistant",
-      "ERP",
-      "Under Development"
+      "ERP"
     ],
-    "featured": true
+    "featured": true,
+    "status": "building"
   },
   {
     "id": 19,
     "order": 4,
     "title": "Client Hub",
-    "tech": "PHP",
-    "url": "#",
+    "tech": "",
+    "url": "",
     "category": "Web App",
     "description": "A central portal to manage clients, their details and interactions in one place.",
     "tags": [
-      "PHP",
-      "MySQL",
       "Client Management"
     ],
-    "featured": false
+    "featured": false,
+    "status": "completed"
   }
 ]

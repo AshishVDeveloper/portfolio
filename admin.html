@@ -2,963 +2,529 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Portfolio Admin – AV</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Portfolio admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
-:root{--bg:#080810;--bg2:#0e0e1a;--bg3:#141420;--card:#16162a;--border:rgba(255,255,255,0.08);--accent:#8b5cf6;--accent2:#ec4899;--accent3:#06b6d4;--text:#f1f0ff;--muted:#7c7c9e;--soft:#a5a5c5;--ok:#34d399;--err:#f87171;--warn:#fbbf24;}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;}
-body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;min-height:100vh;}
-::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-thumb{background:var(--accent);border-radius:10px;}
-/* LOGIN */
-#loginScreen{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:1rem;}
-#loginScreen.hidden{display:none;}
-.lbox{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:2.5rem 2rem;width:100%;max-width:400px;}
-.llogo{font-family:'Outfit',sans-serif;font-weight:900;font-size:2rem;background:linear-gradient(135deg,#8b5cf6,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:.3rem;}
-.lsub{text-align:center;color:var(--muted);font-size:.82rem;margin-bottom:2rem;}
-.ltabs{display:flex;gap:.4rem;margin-bottom:1.8rem;background:var(--bg3);border-radius:10px;padding:.22rem;}
-.ltab{flex:1;padding:.46rem;border-radius:8px;border:none;background:transparent;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-size:.76rem;font-weight:600;cursor:pointer;transition:all .2s;}
-.ltab.active{background:var(--card);color:var(--text);}
-.lf{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.95rem;}
-.lf label{font-size:.7rem;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;}
-.lf input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:.76rem 1rem;border-radius:11px;font-family:'Space Grotesk',sans-serif;font-size:.87rem;outline:none;transition:border-color .2s,box-shadow .2s;-webkit-text-fill-color:var(--text);width:100%;}
-.lf input:focus{border-color:rgba(139,92,246,.5);box-shadow:0 0 0 3px rgba(139,92,246,.08);}
-.lbtn{background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff;border:none;padding:.85rem;border-radius:11px;font-family:'Space Grotesk',sans-serif;font-size:.92rem;font-weight:700;cursor:pointer;width:100%;margin-top:.4rem;transition:all .2s;}
-.lbtn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(139,92,246,.4);}
-.lbtn:disabled{opacity:.7;cursor:not-allowed;transform:none;}
-.mbox{border-radius:9px;padding:.62rem .88rem;font-size:.81rem;margin-bottom:.8rem;display:none;}
-.mbox.show{display:block;}
-.merr{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);color:var(--err);}
-.mok{background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);color:var(--ok);}
-.pwhint{font-size:.7rem;color:var(--muted);margin-top:.28rem;}
-/* LAYOUT */
-#adminApp{display:none;}
-#adminApp.show{display:block;}
-.layout{display:grid;grid-template-columns:252px 1fr;min-height:100vh;}
-/* SIDEBAR */
-.sb{background:var(--bg2);border-right:1px solid var(--border);padding:1.5rem 1.1rem;display:flex;flex-direction:column;gap:1.3rem;position:sticky;top:0;height:100vh;overflow-y:auto;}
-.sblogo{font-family:'Outfit',sans-serif;font-weight:900;font-size:1.2rem;letter-spacing:-1px;background:linear-gradient(135deg,#8b5cf6,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.sblogo small{display:block;font-size:.6rem;color:var(--muted);-webkit-text-fill-color:var(--muted);font-weight:500;margin-top:.1rem;}
-.sbuser{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:.62rem .82rem;display:flex;align-items:center;justify-content:space-between;gap:.4rem;}
-.sbuser span{color:var(--accent3);font-weight:600;font-size:.68rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.sbout{background:none;border:none;color:var(--err);cursor:pointer;font-size:.7rem;font-weight:700;padding:.18rem .42rem;border-radius:5px;white-space:nowrap;}
-.sbout:hover{background:rgba(248,113,113,.1);}
-.sbsec{font-size:.58rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;padding:.35rem 0 .15rem 1rem;}
-.sbnav{display:flex;flex-direction:column;gap:.22rem;}
-.sbi{display:flex;align-items:center;gap:.68rem;padding:.64rem 1rem;border-radius:11px;cursor:pointer;color:var(--muted);font-size:.82rem;font-weight:500;transition:all .2s;border:1px solid transparent;background:none;width:100%;text-align:left;}
-.sbi:hover{color:var(--text);background:var(--bg3);}
-.sbi.active{color:var(--accent);background:rgba(139,92,246,.1);border-color:rgba(139,92,246,.2);}
-.sbico{font-size:.88rem;width:17px;text-align:center;flex-shrink:0;}
-.sbbadge{margin-left:auto;background:rgba(139,92,246,.15);color:var(--accent);font-size:.58rem;font-weight:700;padding:.08rem .42rem;border-radius:50px;}
-.sbbadge.red{background:rgba(248,113,113,.15);color:var(--err);}
-.sbdiv{height:1px;background:var(--border);margin:.12rem 0;}
-.sbback{display:flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;font-size:.78rem;padding:.6rem 1rem;border-radius:10px;border:1px solid var(--border);transition:all .2s;margin-top:auto;}
-.sbback:hover{color:var(--text);background:var(--bg3);}
-/* MAIN */
-.main{padding:1.8rem;overflow-x:hidden;}
-.topbar{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.8rem;flex-wrap:wrap;gap:.8rem;}
-.tbl{display:flex;align-items:center;gap:.75rem;}
-.hbtn{display:none;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:.36rem .6rem;cursor:pointer;font-size:.95rem;color:var(--text);}
-.pt{font-family:'Outfit',sans-serif;font-size:1.4rem;font-weight:800;letter-spacing:-.5px;}
-.ps{color:var(--muted);font-size:.76rem;margin-top:.16rem;}
-.page{display:none;}.page.active{display:block;}
-/* INFO BOX */
-.info-box{background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.2);border-radius:10px;padding:.8rem 1rem;font-size:.8rem;color:#c4b5fd;margin-bottom:1.5rem;line-height:1.6;}
-.info-box strong{color:var(--text);}
-/* STATS */
-.srow{display:grid;grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:.8rem;margin-bottom:1.8rem;}
-.sc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem;}
-.sclbl{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;}
-.scnum{font-family:'Outfit',sans-serif;font-size:1.9rem;font-weight:900;}
-.cv{color:var(--accent)}.cp{color:var(--accent2)}.cc{color:var(--accent3)}.cg{color:var(--ok)}.cr{color:var(--err)}
-/* TABLE */
-.tcard{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:1.4rem;}
-.tchead{padding:.9rem 1.2rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:.55rem;}
-.tctitle{font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:700;}
-.srch{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:.36rem .78rem;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-size:.78rem;outline:none;width:165px;-webkit-text-fill-color:var(--text);}
-.srch:focus{border-color:rgba(139,92,246,.4);}
-.srch::placeholder{color:var(--muted);}
-.tw{overflow-x:auto;}
-table{width:100%;border-collapse:collapse;min-width:460px;}
-th{text-align:left;padding:.62rem .95rem;font-size:.65rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;border-bottom:1px solid var(--border);background:var(--bg2);white-space:nowrap;}
-td{padding:.75rem .95rem;font-size:.81rem;border-bottom:1px solid var(--border);vertical-align:middle;}
-tr:last-child td{border-bottom:none;}
-tr:hover td{background:rgba(255,255,255,.013);}
-.tdm{font-weight:600;font-size:.84rem;}
-.tds{font-size:.7rem;color:var(--muted);margin-top:.13rem;}
-.tdurl{color:var(--accent);text-decoration:none;font-size:.71rem;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;}
-.badge{display:inline-flex;align-items:center;padding:.16rem .5rem;border-radius:50px;font-size:.61rem;font-weight:700;letter-spacing:.04em;white-space:nowrap;}
-.ba{color:var(--accent);background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.2);}
-.bt{color:var(--accent3);background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.15);}
-.bf{color:var(--accent2);background:rgba(236,72,153,.1);border:1px solid rgba(236,72,153,.2);}
-.bn{color:var(--muted);background:var(--bg3);border:1px solid var(--border);}
-.bg2c{color:var(--ok);background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.2);}
-.br2{color:var(--err);background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.2);}
-.act{display:flex;gap:.32rem;flex-wrap:nowrap;}
-.ib{height:27px;border-radius:7px;border:1px solid var(--border);background:var(--bg3);color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:.72rem;transition:all .2s;padding:0 .42rem;white-space:nowrap;}
-.ib:hover{border-color:rgba(139,92,246,.4);color:var(--accent);background:rgba(139,92,246,.08);}
-.ib.del:hover{border-color:rgba(248,113,113,.4);color:var(--err);background:rgba(248,113,113,.08);}
-.ib.up:hover{border-color:rgba(52,211,153,.4);color:var(--ok);background:rgba(52,211,153,.08);}
-.ib.dn:hover{border-color:rgba(251,191,36,.4);color:var(--warn);background:rgba(251,191,36,.08);}
-.ib.top2:hover{border-color:rgba(6,182,212,.4);color:var(--accent3);background:rgba(6,182,212,.08);}
-.ordb{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;background:var(--bg3);border:1px solid var(--border);border-radius:5px;font-size:.7rem;font-weight:700;color:var(--muted);}
-.emptyrow{text-align:center;padding:2.2rem;color:var(--muted);font-size:.84rem;}
-.unreadr td{background:rgba(139,92,246,.04);}
-/* BUTTONS */
-.btn{padding:.5rem 1.15rem;border-radius:10px;font-family:'Space Grotesk',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;border:none;display:inline-flex;align-items:center;gap:.38rem;}
-.btnp{background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff;box-shadow:0 3px 12px rgba(139,92,246,.28);}
-.btnp:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 18px rgba(139,92,246,.42);}
-.btnp:disabled{opacity:.65;cursor:not-allowed;}
-.btno{background:transparent;border:1px solid var(--border);color:var(--soft);}
-.btno:hover{border-color:var(--accent);color:var(--accent);}
-.btnd{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.2);color:var(--err);}
-.btnd:hover{background:rgba(248,113,113,.2);}
-.btnsm{padding:.32rem .78rem;font-size:.73rem;}
-/* FORMS */
-.fcard{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.6rem;margin-bottom:1.4rem;}
-.fctitle{font-family:'Outfit',sans-serif;font-size:.93rem;font-weight:700;margin-bottom:1.2rem;padding-bottom:.7rem;border-bottom:1px solid var(--border);}
-.fg{display:flex;flex-direction:column;gap:.36rem;margin-bottom:.9rem;}
-.fg label{font-size:.68rem;font-weight:700;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;}
-.fg input,.fg textarea,.fg select{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:.68rem .92rem;border-radius:10px;font-family:'Space Grotesk',sans-serif;font-size:.84rem;outline:none;transition:border-color .2s,box-shadow .2s;resize:vertical;-webkit-text-fill-color:var(--text);}
-.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:rgba(139,92,246,.5);box-shadow:0 0 0 3px rgba(139,92,246,.08);}
-.fg textarea{min-height:90px;}
-.fg select option{background:var(--bg2);}
-.fgrow{display:grid;grid-template-columns:1fr 1fr;gap:.95rem;}
-.fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.95rem;}
-.cbrow{display:flex;align-items:center;gap:.58rem;padding:.68rem .92rem;background:var(--bg3);border:1px solid var(--border);border-radius:10px;}
-.cbrow input[type=checkbox]{width:15px;height:15px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;}
-.cbrow label{font-size:.84rem;cursor:pointer;}
-.factions{display:flex;gap:.65rem;justify-content:flex-end;margin-top:1.2rem;flex-wrap:wrap;}
-/* POINTS */
-.ptlist{display:flex;flex-direction:column;gap:.42rem;margin-bottom:.65rem;}
-.ptitem{display:flex;align-items:center;gap:.38rem;}
-.ptitem input{flex:1;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:.55rem .8rem;border-radius:9px;font-family:'Space Grotesk',sans-serif;font-size:.82rem;outline:none;-webkit-text-fill-color:var(--text);}
-.ptitem input:focus{border-color:rgba(139,92,246,.4);}
-.rmpt{width:26px;height:26px;border-radius:7px;border:1px solid rgba(248,113,113,.2);background:rgba(248,113,113,.08);color:var(--err);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.78rem;flex-shrink:0;}
-.rmpt:hover{background:rgba(248,113,113,.2);}
-.addpt{background:transparent;border:1px dashed var(--border);color:var(--muted);padding:.5rem;border-radius:9px;font-family:'Space Grotesk',sans-serif;font-size:.76rem;cursor:pointer;width:100%;transition:all .2s;}
-.addpt:hover{border-color:rgba(139,92,246,.4);color:var(--accent);}
-/* SKILLS */
-.skgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:.6rem;margin-bottom:.75rem;}
-.skitem{display:grid;grid-template-columns:26px 40px 1fr 1fr 26px;gap:.32rem;align-items:center;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:.52rem .65rem;}
-.skitem input{background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:.78rem;outline:none;padding:.16rem .25rem;-webkit-text-fill-color:var(--text);min-width:0;width:100%;}
-.skord{font-size:.66rem;color:var(--muted);font-weight:700;text-align:center;}
-/* STATS */
-.steditor{display:flex;flex-direction:column;gap:.52rem;margin-bottom:.75rem;}
-.strow{display:grid;grid-template-columns:88px 1fr 26px;gap:.42rem;align-items:center;}
-.strow input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:.52rem .72rem;border-radius:9px;font-family:'Space Grotesk',sans-serif;font-size:.82rem;outline:none;-webkit-text-fill-color:var(--text);}
-/* ENQUIRY */
-.enqdetail{background:var(--bg3);border:1px solid var(--border);border-radius:11px;padding:1.1rem;margin-bottom:.75rem;}
-.enqrow{display:flex;gap:.9rem;margin-bottom:.45rem;flex-wrap:wrap;}
-.enqlbl{font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;min-width:60px;padding-top:.13rem;}
-.enqval{font-size:.83rem;color:var(--text);font-weight:500;}
-.enqmsg{background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:.85rem;font-size:.83rem;color:var(--soft);line-height:1.7;margin-top:.45rem;}
-/* TOAST */
-#toast{position:fixed;bottom:1.6rem;right:1.6rem;z-index:9999;border-radius:12px;padding:.76rem 1.25rem;font-size:.81rem;font-weight:500;transform:translateY(70px);opacity:0;transition:all .3s;display:flex;align-items:center;gap:.52rem;max-width:280px;background:var(--card);border:1px solid var(--border);pointer-events:none;}
-#toast.show{transform:translateY(0);opacity:1;}
-#toast.ok{border-color:rgba(52,211,153,.3);color:var(--ok);}
-#toast.err{border-color:rgba(248,113,113,.3);color:var(--err);}
-#toast.info{border-color:rgba(139,92,246,.3);color:#a78bfa;}
-/* MODAL */
-.overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:1rem;}
-.overlay.open{display:flex;}
-.modal{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:1.6rem;width:100%;max-width:430px;max-height:90vh;overflow-y:auto;}
-.mhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;}
-.mtitle{font-family:'Outfit',sans-serif;font-size:1rem;font-weight:700;}
-.mclose{background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;line-height:1;}
-.mbody{color:var(--muted);font-size:.84rem;line-height:1.7;margin-bottom:1.3rem;}
-.mbody strong{color:var(--text);}
-.mfoot{display:flex;gap:.65rem;justify-content:flex-end;}
-/* RESPONSIVE */
-@media(max-width:900px){.layout{grid-template-columns:1fr;}.sb{display:none;position:fixed;z-index:300;width:252px;height:100vh;left:0;top:0;}.sb.open{display:flex;}.hbtn{display:block;}.fgrow,.fg3{grid-template-columns:1fr;}.main{padding:1.2rem;}.skgrid{grid-template-columns:1fr;}}
-@media(max-width:480px){table{min-width:400px;}.srow{grid-template-columns:repeat(2,1fr);}.act{flex-wrap:wrap;}}
+:root{--ink:#0B1F3A;--deep:#0F2A4D;--panel:#0d2443;--line:#1E3A63;--blue:#2F8CFF;--amber:#F5B041;--mint:#3DDC97;--red:#FF7A7A;--paper:#E8EFF9;--muted:#8FA3BF;
+  --display:'Unbounded',system-ui,sans-serif;--body:'IBM Plex Sans',system-ui,sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--ink);color:var(--paper);font:400 .95rem/1.55 var(--body);-webkit-font-smoothing:antialiased}
+a{color:var(--blue)}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:4px}
+h1,h2{font-family:var(--display);font-weight:700;letter-spacing:-.01em;line-height:1.15}
+button{font:inherit;cursor:pointer}
+[hidden]{display:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* buttons & fields */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;padding:.6rem 1rem;border-radius:9px;border:1px solid var(--line);background:transparent;color:var(--paper);font-weight:600;font-size:.9rem;text-decoration:none;white-space:nowrap}
+.btn:hover{border-color:var(--muted)}
+.btn.pri{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.pri:hover{background:#1f78e6}
+.btn.danger{color:var(--red);border-color:rgba(255,122,122,.35)}
+.btn.danger:hover{background:rgba(255,122,122,.1)}
+.btn.sm{padding:.35rem .65rem;font-size:.82rem;border-radius:7px}
+.btn.icon{padding:.35rem .5rem;min-width:32px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+label{display:block;font-size:.84rem;color:var(--muted);margin-bottom:.3rem}
+input,textarea,select{width:100%;background:var(--ink);border:1px solid var(--line);border-radius:9px;color:var(--paper);font:400 .95rem var(--body);padding:.6rem .75rem}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--blue)}
+textarea{resize:vertical;min-height:90px;line-height:1.5}
+.field{margin-bottom:1rem}
+.hint{font-size:.8rem;color:var(--muted);margin-top:.3rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:0 1rem}
+.check{display:flex;align-items:center;gap:.55rem;margin-bottom:1rem}
+.check input{width:18px;height:18px;accent-color:var(--blue)}
+.check label{margin:0;color:var(--paper)}
+.msg{border-radius:9px;padding:.6rem .85rem;font-size:.88rem;margin-bottom:1rem}
+.msg.err{background:rgba(255,122,122,.1);border:1px solid rgba(255,122,122,.3);color:var(--red)}
+.msg.ok{background:rgba(61,220,151,.1);border:1px solid rgba(61,220,151,.3);color:var(--mint)}
+.msg.info{background:rgba(47,140,255,.08);border:1px solid rgba(47,140,255,.25);color:#b9d8ff}
+
+/* login */
+#login{min-height:100vh;display:grid;place-items:center;padding:1.5rem}
+.lbox{width:100%;max-width:400px;background:var(--deep);border:1px solid var(--line);border-radius:16px;padding:2rem}
+.lbox h1{font-size:1.35rem;margin-bottom:.3rem}
+.lbox>p{color:var(--muted);margin-bottom:1.5rem}
+.lbox .btn.pri{width:100%;padding:.75rem}
+.linkbtn{background:none;border:0;color:var(--blue);font-size:.88rem;margin-top:1rem;padding:0}
+
+/* layout */
+.app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+.sb{background:var(--panel);border-right:1px solid var(--line);padding:1.3rem 1rem;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;gap:1rem}
+.brand{display:flex;align-items:center;gap:.6rem;font-family:var(--display);font-weight:800;font-size:1rem;padding:0 .4rem}
+.brand i{width:30px;height:30px;border-radius:8px;background:var(--blue);display:grid;place-items:center;font-style:normal;font-size:.75rem;color:#fff}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav .grp{font-size:.78rem;color:var(--muted);padding:.9rem .7rem .3rem}
+.nav a{display:flex;align-items:center;gap:.65rem;padding:.55rem .7rem;border-radius:8px;color:var(--muted);text-decoration:none;font-weight:500;border-left:3px solid transparent}
+.nav a:hover{color:var(--paper);background:rgba(47,140,255,.06)}
+.nav a.on{color:var(--paper);background:rgba(47,140,255,.14);border-left-color:var(--blue)}
+.nav a .n{margin-left:auto;font-size:.75rem;color:var(--muted);background:var(--ink);padding:0 .45rem;border-radius:6px;min-width:22px;text-align:center}
+.nav a .dirty{margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--amber)}
+.nav a .dirty+.n{margin-left:.4rem}
+.nav svg{width:18px;height:18px;flex-shrink:0}
+.sbfoot{margin-top:auto;display:flex;flex-direction:column;gap:.5rem;font-size:.85rem}
+.sbfoot .who{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 .4rem}
+
+.main{min-width:0}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:1rem;padding:1rem 1.8rem;background:rgba(11,31,58,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top h1{font-size:1.2rem}
+.top .sub{color:var(--muted);font-size:.85rem}
+.top .acts{margin-left:auto;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;justify-content:flex-end}
+.conn{display:inline-flex;align-items:center;gap:.45rem;font-size:.82rem;color:var(--muted);text-decoration:none;padding:.35rem .6rem;border:1px solid var(--line);border-radius:999px}
+.conn i{width:8px;height:8px;border-radius:50%;background:var(--amber)}
+.conn.ok i{background:var(--mint)}
+.burger{display:none;background:none;border:1px solid var(--line);color:var(--paper);border-radius:8px;width:38px;height:38px;font-size:1.1rem}
+.content{padding:1.8rem;max-width:1100px}
+.card{background:var(--deep);border:1px solid var(--line);border-radius:14px;padding:1.4rem;margin-bottom:1.2rem}
+.card h2{font-family:var(--body);font-size:1.05rem;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.bar{display:flex;gap:.6rem;justify-content:flex-end;flex-wrap:wrap;margin-top:.4rem}
+
+/* dashboard */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:1.2rem}
+.stats a{background:var(--deep);padding:1.1rem 1.2rem;text-decoration:none;color:var(--paper)}
+.stats a:hover{background:#12325a}
+.stats b{display:block;font-family:var(--display);font-size:1.6rem}
+.stats span{color:var(--muted);font-size:.85rem}
+
+/* tables */
+.tw{overflow-x:auto;margin:0 -1.4rem -1.4rem}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{text-align:left;font-weight:500;color:var(--muted);padding:.6rem 1.4rem;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:.7rem 1.4rem;border-bottom:1px solid rgba(30,58,99,.6);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+tbody tr:hover{background:rgba(47,140,255,.05)}
+td .t{font-weight:600}
+td .s{color:var(--muted);font-size:.82rem}
+.acts-cell{display:flex;gap:.35rem;justify-content:flex-end}
+.pill{display:inline-flex;align-items:center;gap:.4rem;font-size:.8rem;white-space:nowrap}
+.pill::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+.pill.building{color:var(--amber)}.pill.live{color:var(--mint)}.pill.completed{color:#9cc7ff}
+.star{color:var(--amber)}
+.tools{display:flex;gap:.5rem;flex-wrap:wrap}
+.tools input,.tools select{width:auto;min-width:170px;padding:.45rem .7rem}
+.empty{padding:2rem 1.4rem;color:var(--muted);text-align:center}
+
+/* list editors */
+.rows{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.7rem}
+.r{display:grid;gap:.5rem;align-items:center}
+.r.stat{grid-template-columns:110px 1fr auto}
+.r.svc{grid-template-columns:1fr 2fr auto}
+.r.pt{grid-template-columns:1fr auto}
+.r.sk{grid-template-columns:auto 52px 1.3fr 1fr 1fr 1.4fr auto;padding:.5rem;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+.r input{margin:0}
+.skprev{width:36px;height:36px;border-radius:8px;border:1px solid var(--line);display:grid;place-items:center;background:var(--ink);font-size:1.05rem}
+.skprev img{width:22px;height:22px}
+.mv{display:flex;flex-direction:column;gap:2px}
+.mv button{background:none;border:1px solid var(--line);color:var(--muted);border-radius:5px;font-size:.65rem;width:24px;height:17px;line-height:1}
+.mv button:hover{color:var(--paper)}
+
+/* enquiries */
+.enq{border-top:1px solid var(--line);padding:1rem 0}
+.enq:first-child{border-top:0}
+.enq.unread .t::after{content:"New";margin-left:.5rem;font-size:.72rem;background:var(--blue);color:#fff;padding:.05rem .4rem;border-radius:5px;vertical-align:2px}
+.enq p{margin:.4rem 0;white-space:pre-wrap}
+
+/* modal & toast */
+.modal{position:fixed;inset:0;background:rgba(5,12,25,.7);display:grid;place-items:center;z-index:100;padding:1rem}
+.modal .box{background:var(--deep);border:1px solid var(--line);border-radius:14px;padding:1.5rem;max-width:420px;width:100%}
+.modal h2{font-family:var(--body);font-size:1.1rem;font-weight:600;margin-bottom:.5rem}
+.modal p{color:var(--muted);margin-bottom:1.2rem}
+#toast{position:fixed;right:1.2rem;bottom:1.2rem;background:var(--paper);color:var(--ink);padding:.75rem 1rem;border-radius:10px;font-weight:500;z-index:200;max-width:min(420px,90vw);opacity:0;visibility:hidden;transform:translateY(10px);transition:.25s}
+#toast.show{opacity:1;visibility:visible;transform:none}
+#toast.err{background:#ffc2c2}
+.spin{width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  .sb{position:fixed;left:0;top:0;bottom:0;width:260px;z-index:60;transform:translateX(-100%);transition:transform .25s}
+  .sb.open{transform:none;box-shadow:0 0 0 100vmax rgba(5,12,25,.6)}
+  .burger{display:block}
+  .top{padding:.8rem 1rem}
+  .top .sub{display:none}
+  .content{padding:1rem}
+  .g2,.g3{grid-template-columns:1fr}
+  .r.sk{grid-template-columns:auto 44px 1fr auto}
+  .r.sk .opt{grid-column:2/4}
+  .r.svc{grid-template-columns:1fr auto}
+  .r.svc input:nth-child(2){grid-column:1}
+  .conn span{display:none}
+  th,td{padding-left:.8rem;padding-right:.8rem}
+  .tw{margin:0 -1.4rem -1.4rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
-<div id="toast"></div>
-<!-- DELETE MODAL -->
-<div class="overlay" id="delOverlay">
-  <div class="modal">
-    <div class="mhead"><span class="mtitle">🗑 Confirm Delete</span><button class="mclose" onclick="closeModal('delOverlay')">✕</button></div>
-    <div class="mbody">Delete <strong id="delName"></strong>? This cannot be undone.</div>
-    <div class="mfoot"><button class="btn btno" onclick="closeModal('delOverlay')">Cancel</button><button class="btn btnd" onclick="confirmDel()">Delete</button></div>
-  </div>
-</div>
-<!-- ENQUIRY MODAL -->
-<div class="overlay" id="enqOverlay">
-  <div class="modal" style="max-width:520px">
-    <div class="mhead"><span class="mtitle" id="enqMTitle">📨 Enquiry</span><button class="mclose" onclick="closeModal('enqOverlay')">✕</button></div>
-    <div id="enqMBody"></div>
-    <div class="mfoot"><button class="btn btno" onclick="closeModal('enqOverlay')">Close</button><button class="btn btnd btnsm" id="enqDelBtn">Delete</button></div>
-  </div>
-</div>
-<!-- LOGIN SCREEN -->
-<div id="loginScreen">
+
+<!-- LOGIN -->
+<div id="login">
   <div class="lbox">
-    <div class="llogo">AV.</div>
-    <div class="lsub">Portfolio Admin Panel</div>
-    <div class="ltabs">
-      <button class="ltab active" id="tabLogin" onclick="switchTab('login')">Login</button>
-      <button class="ltab" id="tabForgot" onclick="switchTab('forgot')">Forgot</button>
-      <button class="ltab" id="tabChange" onclick="switchTab('change')">Change PW</button>
+    <div id="loginForm">
+      <h1>Portfolio admin</h1>
+      <p>Sign in to edit your website.</p>
+      <div class="msg err" id="lErr" hidden></div>
+      <form onsubmit="doLogin(event)">
+        <div class="field"><label for="lEmail">Email</label><input id="lEmail" type="email" autocomplete="username" required/></div>
+        <div class="field"><label for="lPass">Password</label><input id="lPass" type="password" autocomplete="current-password" required/></div>
+        <button class="btn pri" id="lBtn">Sign in</button>
+      </form>
+      <button class="linkbtn" onclick="showReset(true)">Forgot password?</button>
     </div>
-    <!-- LOGIN -->
-    <div id="formLogin">
-      <div class="mbox merr" id="loginErr"></div>
-      <div class="lf"><label>Email Address</label><input id="lEmail" type="email" placeholder="Email id" autocomplete="username"/></div>
-      <div class="lf"><label>Password</label><input id="lPass" type="password" placeholder="••••••••" autocomplete="current-password"/></div>
-      <button class="lbtn" id="loginBtn" onclick="doLogin()">🔐 Login to Admin</button>
-    </div>
-    <!-- FORGOT -->
-    <div id="formForgot" style="display:none">
-      <div class="mbox merr" id="forgotErr"></div>
-      <div class="mbox mok" id="forgotOk"></div>
-      <p style="font-size:.8rem;color:var(--muted);margin-bottom:1rem;line-height:1.6">Enter your registered email to see reset instructions.</p>
-      <div class="lf"><label>Registered Email</label><input id="fEmail" type="email" placeholder="Email id"/></div>
-      <button class="lbtn" onclick="doForgot()">Show Info</button>
-      <div id="forgotResult" style="display:none;margin-top:1rem;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1rem;font-size:.78rem;color:var(--muted);line-height:1.8;"></div>
-    </div>
-    <!-- CHANGE PW -->
-    <div id="formChange" style="display:none">
-      <div class="mbox merr" id="changeErr"></div>
-      <div class="mbox mok" id="changeOk"></div>
-      <div class="lf"><label>Email Address</label><input id="cpEmail" type="email" placeholder="email id"/></div>
-      <div class="lf"><label>Current Password</label><input id="cpCurrent" type="password" placeholder="Current password"/></div>
-      <div class="lf"><label>New Password</label><input id="cpNew" type="password" placeholder="New password (min 6 chars)"/></div>
-      <div class="lf"><label>Confirm New Password</label><input id="cpConfirm" type="password" placeholder="Repeat new password"/>
-        <!-- <div class="pwhint">Stored as MD5(email|password) — downloads new auth.json</div> -->
-      </div>
-      <button class="lbtn" onclick="doChangePW()">Update Password</button>
+    <div id="resetForm" hidden>
+      <h1>Reset password</h1>
+      <p>Prove you own the website with a GitHub token that can edit your portfolio repository, then choose a new password.</p>
+      <div class="msg err" id="rErr" hidden></div>
+      <div class="msg ok" id="rOk" hidden></div>
+      <form onsubmit="doReset(event)">
+        <div class="field"><label for="rToken">GitHub token</label><input id="rToken" type="password" autocomplete="off" required/><div class="hint">See <b>Publishing</b> after you sign in for how to create one.</div></div>
+        <div class="field"><label for="rNew">New password</label><input id="rNew" type="password" autocomplete="new-password" minlength="8" required/></div>
+        <div class="field"><label for="rConf">Repeat new password</label><input id="rConf" type="password" autocomplete="new-password" required/></div>
+        <button class="btn pri" id="rBtn">Reset password</button>
+      </form>
+      <button class="linkbtn" onclick="showReset(false)">Back to sign in</button>
     </div>
   </div>
 </div>
-<!-- ADMIN APP -->
-<div id="adminApp">
-<div class="layout">
-<aside class="sb" id="sb">
-  <div>
-    <div class="sblogo">AV Admin<small>Portfolio Manager</small></div>
-    <div class="sbuser"><span id="sbEmail">—</span><button class="sbout" onclick="doLogout()">Logout</button></div>
-  </div>
-  <nav class="sbnav">
-    <button class="sbi active" data-p="dash" onclick="go('dash')"><span class="sbico">📊</span>Dashboard</button>
-    <div class="sbdiv"></div>
-    <div class="sbsec">Content</div>
-    <button class="sbi" data-p="profile" onclick="go('profile')"><span class="sbico">👤</span>Profile &amp; Hero</button>
-    <button class="sbi" data-p="skills" onclick="go('skills')"><span class="sbico">⚡</span>Skills<span class="sbbadge" id="sb-skills">0</span></button>
-    <button class="sbi" data-p="projects" onclick="go('projects')"><span class="sbico">🗂</span>Projects<span class="sbbadge" id="sb-projects">0</span></button>
-    <button class="sbi" data-p="experience" onclick="go('experience')"><span class="sbico">💼</span>Experience<span class="sbbadge" id="sb-exp">0</span></button>
-    <button class="sbi" data-p="education" onclick="go('education')"><span class="sbico">🎓</span>Education<span class="sbbadge" id="sb-edu">0</span></button>
-    <div class="sbdiv"></div>
-    <div class="sbsec">Messages</div>
-    <button class="sbi" data-p="enquiries" onclick="go('enquiries')"><span class="sbico">📨</span>Enquiries<span class="sbbadge red" id="sb-enq">0</span></button>
-    <div class="sbdiv"></div>
-    <div class="sbsec">Account</div>
-    <button class="sbi" data-p="account" onclick="go('account')"><span class="sbico">🔒</span>Change Password</button>
-  </nav>
-  <a href="index.html" class="sbback">← Back to Portfolio</a>
-</aside>
-<main class="main">
-  <div class="topbar">
-    <div class="tbl">
-      <button class="hbtn" id="hbtn">☰</button>
-      <div><div class="pt" id="ptitle">Dashboard</div><div class="ps" id="psub">Overview</div></div>
-    </div>
-    <div id="paction"></div>
-  </div>
 
-  <!-- DASHBOARD -->
-  <div class="page active" id="page-dash">
-    <div class="srow" id="dashStats"></div>
-    <div class="fgrow">
-      <div class="tcard"><div class="tchead"><span class="tctitle">Projects</span><button class="btn btno btnsm" onclick="go('projects')">All →</button></div><div class="tw" id="dashProj"></div></div>
-      <div class="tcard"><div class="tchead"><span class="tctitle">Recent Enquiries</span><button class="btn btno btnsm" onclick="go('enquiries')">All →</button></div><div class="tw" id="dashEnq"></div></div>
+<!-- APP -->
+<div class="app" id="app" hidden>
+  <aside class="sb" id="sb">
+    <div class="brand"><i>AV</i>Portfolio admin</div>
+    <nav class="nav" id="nav" aria-label="Admin sections"></nav>
+    <div class="sbfoot">
+      <a class="btn sm" href="index.html" target="_blank" rel="noopener">View website</a>
+      <button class="btn sm" onclick="logout()">Sign out</button>
+      <div class="who" id="who"></div>
     </div>
-  </div>
-
-  <!-- PROFILE -->
-  <div class="page" id="page-profile">
-    <!-- <div class="info-box">💾 After saving, a <strong>profile.json</strong> file will download. Replace the file in your <strong>data/</strong> folder and re-upload to your hosting.</div> -->
-    <div class="fcard">
-      <div class="fctitle">👤 Personal Information</div>
-      <div class="fgrow"><div class="fg"><label>Full Name *</label><input id="pf_name" type="text"/></div><div class="fg"><label>Initials</label><input id="pf_initials" type="text" maxlength="3"/></div></div>
-      <div class="fgrow"><div class="fg"><label>Job Title</label><input id="pf_tagline" type="text"/></div><div class="fg"><label>Specialization</label><input id="pf_spec" type="text"/></div></div>
-      <div class="fgrow"><div class="fg"><label>Email</label><input id="pf_email" type="email"/></div><div class="fg"><label>Phone</label><input id="pf_phone" type="text"/></div></div>
-      <div class="fgrow"><div class="fg"><label>Location</label><input id="pf_location" type="text"/></div><div class="fg"><label>Status</label><input id="pf_status" type="text"/></div></div>
-      <div class="fg"><label>Availability Badge</label><input id="pf_avail" type="text"/></div>
-      <div class="fg"><label>Hero Description</label><textarea id="pf_hero_desc" rows="3"></textarea></div>
-      <div class="fg"><label>About Paragraph 1</label><textarea id="pf_about1" rows="3"></textarea></div>
-      <div class="fg"><label>About Paragraph 2</label><textarea id="pf_about2" rows="3"></textarea></div>
-    </div>
-    <div class="fcard"><div class="fctitle">📊 Hero Stats</div><div class="steditor" id="stEditor"></div><button class="addpt" onclick="addStat()">+ Add Stat</button></div>
-    <div class="factions"><button class="btn btno" onclick="loadProfile()">↺ Reset</button><button class="btn btnp" onclick="saveProfile()">💾 Save &amp; Download profile.json</button></div>
-  </div>
-
-  <!-- SKILLS -->
-  <div class="page" id="page-skills">
-    <!-- <div class="info-box">💾 After saving, <strong>skills.json</strong> will download. Upload it to <strong>data/</strong> folder.</div> -->
-    <div class="fcard">
-      <div class="fctitle" style="display:flex;align-items:center;justify-content:space-between">⚡ Skills <button class="btn btnp btnsm" onclick="addSkill()">+ Add</button></div>
-      <p style="font-size:.7rem;color:var(--muted);margin-bottom:.9rem">Use ↑↓ arrows or ⬆1 to reorder. Order shown here = order on portfolio.</p>
-      <div class="skgrid" id="skEditor"></div>
-    </div>
-    <div class="factions"><button class="btn btno" onclick="loadSkills()">↺ Reset</button><button class="btn btnp" onclick="saveSkills()">💾 Save &amp; Download skills.json</button></div>
-  </div>
-
-  <!-- PROJECTS LIST -->
-  <div class="page" id="page-projects">
-    <!-- <div class="info-box">💾 Any changes download <strong>projects.json</strong> automatically. Upload it to <strong>data/</strong>.</div> -->
-    <div class="tcard">
-      <div class="tchead">
-        <span class="tctitle">Projects (<span id="projCount">0</span>)</span>
-        <div style="display:flex;gap:.45rem"><input class="srch" type="text" placeholder="Search…" oninput="searchProjects(this.value)"/><button class="btn btnp btnsm" onclick="openAddProject()">+ Add</button></div>
+  </aside>
+  <div class="main">
+    <header class="top">
+      <button class="burger" id="burger" aria-label="Open menu">☰</button>
+      <div><h1 id="pTitle">Dashboard</h1><div class="sub" id="pSub"></div></div>
+      <div class="acts">
+        <a class="conn" id="conn" href="#publishing"><i></i><span>Not connected</span></a>
+        <button class="btn pri" id="pubAll" onclick="publishAll()" hidden>Publish all changes</button>
       </div>
-      <div class="tw" id="projTable"></div>
-    </div>
+    </header>
+    <div class="content" id="content"></div>
   </div>
-
-  <!-- ADD/EDIT PROJECT -->
-  <div class="page" id="page-addproject">
-    <!-- <div class="info-box">💾 Saving downloads <strong>projects.json</strong>. Upload it to <strong>data/</strong> folder to update your portfolio.</div> -->
-    <div class="fcard">
-      <div class="fctitle" id="projFTitle">➕ Add New Project</div>
-      <input type="hidden" id="proj_eid"/>
-      <div class="fgrow"><div class="fg"><label>Title *</label><input id="proj_title" type="text" placeholder="e.g. TINT CRM"/></div><div class="fg"><label>Technology *</label><input id="proj_tech" type="text" placeholder="e.g. Laravel"/></div></div>
-      <div class="fgrow"><div class="fg"><label>Live URL *</label><input id="proj_url" type="url" placeholder="https://"/></div><div class="fg"><label>Category *</label><select id="proj_cat"><option value="">Select…</option><option>CRM</option><option>E-Commerce</option><option>ERP</option><option>Booking</option><option>Event</option><option>Web App</option><option>Other</option></select></div></div>
-      <div class="fgrow"><div class="fg"><label>Sort Order # (lower = first)</label><input id="proj_order" type="number" min="1"/></div><div class="fg"><label>Tags (comma-separated)</label><input id="proj_tags" type="text" placeholder="Laravel, PHP, MySQL"/></div></div>
-      <div class="fg"><label>Description *</label><textarea id="proj_desc" rows="4"></textarea></div>
-      <div class="fg"><div class="cbrow"><input type="checkbox" id="proj_feat"/><label for="proj_feat">Mark as Featured (⭐ on portfolio)</label></div></div>
-      <div class="factions"><button class="btn btno" onclick="go('projects')">Cancel</button><button class="btn btno" onclick="resetProjForm()">Reset</button><button class="btn btnp" onclick="saveProject()">💾 Save &amp; Download</button></div>
-    </div>
-  </div>
-
-  <!-- EXPERIENCE LIST -->
-  <div class="page" id="page-experience">
-    <!-- <div class="info-box">💾 Changes download <strong>experience.json</strong>. Upload to <strong>data/</strong>.</div> -->
-    <div class="tcard"><div class="tchead"><span class="tctitle">Experience (<span id="expCount">0</span>)</span><button class="btn btnp btnsm" onclick="openAddExp()">+ Add</button></div><div class="tw" id="expTable"></div></div>
-  </div>
-
-  <!-- ADD/EDIT EXPERIENCE -->
-  <div class="page" id="page-addexp">
-    <!-- <div class="info-box">💾 Saving downloads <strong>experience.json</strong>. Upload to <strong>data/</strong>.</div> -->
-    <div class="fcard">
-      <div class="fctitle" id="expFTitle">💼 Add Experience</div>
-      <input type="hidden" id="exp_eid"/>
-      <div class="fgrow"><div class="fg"><label>Job Title *</label><input id="exp_title" type="text"/></div><div class="fg"><label>Company *</label><input id="exp_company" type="text"/></div></div>
-      <div class="fg3"><div class="fg"><label>Location</label><input id="exp_location" type="text"/></div><div class="fg"><label>Duration *</label><input id="exp_duration" type="text" placeholder="June 2022 – Present"/></div><div class="fg"><label>Sort Order #</label><input id="exp_order" type="number" min="1"/></div></div>
-      <div class="fg"><div class="cbrow"><input type="checkbox" id="exp_current"/><label for="exp_current">Currently working here</label></div></div>
-      <div class="fg"><label>Responsibilities</label><div class="ptlist" id="expPts"></div><button class="addpt" onclick="addExpPt()">+ Add Point</button></div>
-      <div class="factions"><button class="btn btno" onclick="go('experience')">Cancel</button><button class="btn btnp" onclick="saveExp()">💾 Save &amp; Download</button></div>
-    </div>
-  </div>
-
-  <!-- EDUCATION LIST -->
-  <div class="page" id="page-education">
-    <!-- <div class="info-box">💾 Changes download <strong>education.json</strong>. Upload to <strong>data/</strong>.</div> -->
-    <div class="tcard"><div class="tchead"><span class="tctitle">Education (<span id="eduCount">0</span>)</span><button class="btn btnp btnsm" onclick="openAddEdu()">+ Add</button></div><div class="tw" id="eduTable"></div></div>
-  </div>
-
-  <!-- ADD/EDIT EDUCATION -->
-  <div class="page" id="page-addedu">
-    <!-- <div class="info-box">💾 Saving downloads <strong>education.json</strong>. Upload to <strong>data/</strong>.</div> -->
-    <div class="fcard">
-      <div class="fctitle" id="eduFTitle">🎓 Add Education</div>
-      <input type="hidden" id="edu_eid"/>
-      <div class="fg"><label>Degree *</label><input id="edu_degree" type="text"/></div>
-      <div class="fgrow"><div class="fg"><label>College *</label><input id="edu_college" type="text"/></div><div class="fg"><label>University</label><input id="edu_uni" type="text"/></div></div>
-      <div class="fg3"><div class="fg"><label>Year</label><input id="edu_year" type="text" placeholder="Oct 2020 or Completed"/></div><div class="fg"><label>Icon (emoji)</label><input id="edu_icon" type="text" placeholder="🎓" maxlength="4"/></div><div class="fg"><label>Sort Order #</label><input id="edu_order" type="number" min="1"/></div></div>
-      <div class="factions"><button class="btn btno" onclick="go('education')">Cancel</button><button class="btn btnp" onclick="saveEdu()">💾 Save &amp; Download</button></div>
-    </div>
-  </div>
-
-  <!-- ENQUIRIES — 100% localStorage, no download needed -->
-  <div class="page" id="page-enquiries">
-    <div class="info-box">📨 Enquiries are stored in your <strong>browser's localStorage</strong> — they appear automatically when someone submits the contact form on the same device/browser. No file upload needed.<br/>⚠ <strong>Important:</strong> Enquiries are tied to the browser. Open admin on the same browser where the portfolio is visited to see all messages.</div>
-    <div class="tcard">
-      <div class="tchead">
-        <span class="tctitle">Enquiries (<span id="enqCount">0</span>) &nbsp;<span id="enqUnread" style="color:var(--err);font-size:.78rem"></span></span>
-        <div style="display:flex;gap:.45rem;align-items:center"><input class="srch" type="text" placeholder="Search…" oninput="searchEnq(this.value)"/><button class="btn btnd btnsm" onclick="clearReadEnq()">Clear Read</button></div>
-      </div>
-      <div class="tw" id="enqTable"></div>
-    </div>
-  </div>
-
-  <!-- ACCOUNT -->
-  <div class="page" id="page-account">
-    <!-- <div class="info-box">💾 After changing password, a new <strong>auth.json</strong> will download. Upload it to <strong>data/</strong> to activate the new password.</div> -->
-    <div class="fcard" style="max-width:460px">
-      <div class="fctitle">🔒 Change Password</div>
-      <div class="mbox merr" id="accErr"></div>
-      <div class="mbox mok" id="accOk"></div>
-      <div class="fg"><label>Current Password *</label><input id="acc_cur" type="password" placeholder="Current password"/></div>
-      <div class="fg"><label>New Password *</label><input id="acc_new" type="password" placeholder="Min 6 characters"/></div>
-      <div class="fg"><label>Confirm New Password *</label><input id="acc_confirm" type="password" placeholder="Repeat new password"/>
-        <div class="pwhint">Stored as MD5(email|password)</div>
-      </div>
-      <div class="factions"><button class="btn btnp" onclick="doAdminChangePW()">🔒 Update &amp; Download auth.json</button></div>
-    </div>
-  </div>
-
-</main>
 </div>
-</div>
+
+<div class="modal" id="modal" hidden><div class="box" role="dialog" aria-modal="true" aria-labelledby="mTitle"><h2 id="mTitle"></h2><p id="mText"></p><div class="bar"><button class="btn" id="mNo">Cancel</button><button class="btn danger" id="mYes">Delete</button></div></div></div>
+<div id="toast" role="status" aria-live="polite"></div>
 
 <script>
-// ══════════════════════════════════════════
-// MD5 (pure JS — no library)
-// ══════════════════════════════════════════
-function md5(s){function L(k,d){return(k<<d)|(k>>>(32-d))}function K(G,k){var I,d,F,H,x;F=(G&2147483648);H=(k&2147483648);I=(G&1073741824);d=(k&1073741824);x=(G&1073741823)+(k&1073741823);if(I&d){return(x^2147483648^F^H)}if(I|d){if(x&1073741824){return(x^3221225472^F^H)}else{return(x^1073741824^F^H)}}else{return(x^F^H)}}function r(G,F,k,H,I,d,x){G=K(G,K(K(F&k|~F&H,I),x));return K(L(G,d),F)}function q(G,F,k,H,I,d,x){G=K(G,K(K(F&H|k&~H,I),x));return K(L(G,d),F)}function p(G,F,k,H,I,d,x){G=K(G,K(K(F^k^H,I),x));return K(L(G,d),F)}function n(G,F,k,H,I,d,x){G=K(G,K(K(k^(F|~H),I),x));return K(L(G,d),F)}function u(G){var F=G.length,k=F+8;var H=(k-(k%64))/64;var I=(H+1)*16;var d=new Array(I-1);var x=0;var B=0;while(B<F){var C=(B-(B%4))/4;x=B%4*8;d[C]=(d[C]|(G.charCodeAt(B)<<x));B++}var J=(B-(B%4))/4;x=B%4*8;d[J]=(d[J]|(128<<x));d[I-2]=F<<3;d[I-1]=F>>>29;return d}function m(G){var F="";var k="";var H;for(H=0;H<=3;H++){k=G>>>(H*8)&255;k="0"+k.toString(16);F=F+k.substr(k.length-2,2)}return F}s=unescape(encodeURIComponent(s));var M=u(s);var N,O,P,Q;var S=1732584193,T=4023233417,U=2562383102,V=271733878;var b=7,a=12,Z=17,y=22,X=5,w=9,v=14,u2=20,ss=4,t=11,o=16,l=23,f=6,h=10,j=15,g=21;for(var x=0;x<M.length;x+=16){N=S;O=T;P=U;Q=V;S=r(S,T,U,V,M[x+0],b,3614090360);V=r(V,S,T,U,M[x+1],a,3905402710);U=r(U,V,S,T,M[x+2],Z,606105819);T=r(T,U,V,S,M[x+3],y,3250441966);S=r(S,T,U,V,M[x+4],b,4118548399);V=r(V,S,T,U,M[x+5],a,1200080426);U=r(U,V,S,T,M[x+6],Z,2821735955);T=r(T,U,V,S,M[x+7],y,4249261313);S=r(S,T,U,V,M[x+8],b,1770035416);V=r(V,S,T,U,M[x+9],a,2336552879);U=r(U,V,S,T,M[x+10],Z,4294925233);T=r(T,U,V,S,M[x+11],y,2304563134);S=r(S,T,U,V,M[x+12],b,1804603682);V=r(V,S,T,U,M[x+13],a,4254626195);U=r(U,V,S,T,M[x+14],Z,2792965006);T=r(T,U,V,S,M[x+15],y,1236535329);S=q(S,T,U,V,M[x+1],X,4129170786);V=q(V,S,T,U,M[x+6],w,3225465664);U=q(U,V,S,T,M[x+11],v,643717713);T=q(T,U,V,S,M[x+0],u2,3921069994);S=q(S,T,U,V,M[x+5],X,3593408605);V=q(V,S,T,U,M[x+10],w,38016083);U=q(U,V,S,T,M[x+15],v,3634488961);T=q(T,U,V,S,M[x+4],u2,3889429448);S=q(S,T,U,V,M[x+9],X,568446438);V=q(V,S,T,U,M[x+14],w,3275163606);U=q(U,V,S,T,M[x+3],v,4107603335);T=q(T,U,V,S,M[x+8],u2,1163531501);S=q(S,T,U,V,M[x+13],X,2850285829);V=q(V,S,T,U,M[x+2],w,4243563512);U=q(U,V,S,T,M[x+7],v,1735328473);T=q(T,U,V,S,M[x+12],u2,2368359562);S=p(S,T,U,V,M[x+5],ss,4294588738);V=p(V,S,T,U,M[x+8],t,2272392833);U=p(U,V,S,T,M[x+11],o,1839030562);T=p(T,U,V,S,M[x+14],l,4259657740);S=p(S,T,U,V,M[x+1],ss,2763975236);V=p(V,S,T,U,M[x+4],t,1272893353);U=p(U,V,S,T,M[x+7],o,4139469664);T=p(T,U,V,S,M[x+10],l,3200236656);S=p(S,T,U,V,M[x+13],ss,681279174);V=p(V,S,T,U,M[x+0],t,3936430074);U=p(U,V,S,T,M[x+3],o,3572445317);T=p(T,U,V,S,M[x+6],l,76029189);S=p(S,T,U,V,M[x+9],ss,3654602809);V=p(V,S,T,U,M[x+12],t,3873151461);U=p(U,V,S,T,M[x+15],o,530742520);T=p(T,U,V,S,M[x+2],l,3299628645);S=n(S,T,U,V,M[x+0],f,4096336452);V=n(V,S,T,U,M[x+7],h,1126891415);U=n(U,V,S,T,M[x+14],j,2878612391);T=n(T,U,V,S,M[x+5],g,4237533241);S=n(S,T,U,V,M[x+12],f,1700485571);V=n(V,S,T,U,M[x+3],h,2399980690);U=n(U,V,S,T,M[x+10],j,4293915773);T=n(T,U,V,S,M[x+1],g,2240044497);S=n(S,T,U,V,M[x+8],f,1873313359);V=n(V,S,T,U,M[x+15],h,4264355552);U=n(U,V,S,T,M[x+6],j,2734768916);T=n(T,U,V,S,M[x+13],g,1309151649);S=n(S,T,U,V,M[x+4],f,4149444226);V=n(V,S,T,U,M[x+11],h,3174756917);U=n(U,V,S,T,M[x+2],j,718787259);T=n(T,U,V,S,M[x+9],g,3951481745);S=K(S,N);T=K(T,O);U=K(U,P);V=K(V,Q)}return(m(S)+m(T)+m(U)+m(V))}
+/* ═════════ helpers ═════════ */
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const FILES={profile:'profile.json',skills:'skills.json',projects:'projects.json',experience:'experience.json',education:'education.json'};
+const SESS='av_admin_session', GHK='av_admin_github', ENQ_KEY='av_enquiries';
+let DB={}, ORIG={}, AUTH=null, DIRTY=new Set(), PAGE='dashboard', EDIT=null;
 
-// ══════════════════════════════════════════
-// ENQUIRY KEY — must match index.html
-// ══════════════════════════════════════════
-const ENQ_KEY = 'av_enquiries';
+function toast(m,err){const t=$('toast');t.textContent=m;t.className='show'+(err?' err':'');clearTimeout(t._t);t._t=setTimeout(()=>t.className='',err?6000:3500)}
+function confirmBox(title,text,yes='Delete'){return new Promise(res=>{$('mTitle').textContent=title;$('mText').textContent=text;$('mYes').textContent=yes;$('modal').hidden=false;$('mYes').focus();
+  const done=v=>{$('modal').hidden=true;res(v)};$('mYes').onclick=()=>done(true);$('mNo').onclick=()=>done(false);$('modal').onclick=e=>{if(e.target.id==='modal')done(false)}})}
+const nextId=a=>a.reduce((m,x)=>Math.max(m,+x.id||0),0)+1;
+const byOrder=a=>a.sort((x,y)=>(x.order||999)-(y.order||999));
+const renumber=a=>a.forEach((x,i)=>x.order=i+1);
+async function sha256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+const randSalt=()=>[...crypto.getRandomValues(new Uint8Array(16))].map(x=>x.toString(16).padStart(2,'0')).join('');
+async function fetchJSON(f){const r=await fetch('data/'+f+'?t='+Date.now());if(!r.ok)throw new Error(f+' '+r.status);return r.json()}
+const ICON={
+ dashboard:'<path d="M3 13h8V3H3zm10 8h8V11h-8zM3 21h8v-6H3zm10-18v6h8V3z"/>',
+ profile:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+ skills:'<path d="m13 2-9 12h7l-1 8 9-12h-7z"/>',
+ projects:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+ experience:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+ education:'<path d="m2 9 10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/>',
+ messages:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+ publishing:'<path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 15v4h14v-4"/>',
+ account:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>'};
+const svg=k=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+ICON[k]+'</svg>';
+const PAGES={
+ dashboard:{t:'Dashboard',s:'What\'s on your website right now'},
+ profile:{t:'Profile',s:'Your name, role, intro, services and contact details',file:'profile'},
+ skills:{t:'Tech stack',s:'Technologies shown in the Tech stack section',file:'skills'},
+ projects:{t:'Projects',s:'Everything listed in the Projects section',file:'projects'},
+ experience:{t:'Experience',s:'Jobs shown on the timeline',file:'experience'},
+ education:{t:'Education',s:'Degrees shown under Experience',file:'education'},
+ messages:{t:'Messages',s:'Enquiries sent from the contact form'},
+ publishing:{t:'Publishing',s:'Connect GitHub so changes go live without uploading files'},
+ account:{t:'Password',s:'Change the admin password'}};
 
-// ══════════════════════════════════════════
-// STATE
-// ══════════════════════════════════════════
-let AUTH={};
-let SESS_KEY='av_admin_sess';
-let CUR_EMAIL='';
-let DB={profile:{},skills:[],projects:[],experience:[],education:[],enquiries:[]};
-let delCtx={type:null,id:null};
-const BASE='data/';
+/* ═════════ GitHub publishing ═════════ */
+function gh(){try{return JSON.parse(localStorage.getItem(GHK)||'null')}catch(e){return null}}
+function ghDefaults(){const h=location.hostname, onPages=h.endsWith('.github.io');
+  return {owner:onPages?h.split('.')[0]:'AshishVDeveloper',repo:onPages&&location.pathname.split('/').filter(Boolean)[0]||'portfolio',branch:'main'}}
+async function ghApi(cfg,path,opt={}){
+  const r=await fetch('https://api.github.com/repos/'+cfg.owner+'/'+cfg.repo+path,{...opt,headers:{Accept:'application/vnd.github+json',Authorization:'Bearer '+cfg.token,'X-GitHub-Api-Version':'2022-11-28',...(opt.headers||{})}});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok){const e=new Error(j.message||('GitHub error '+r.status));e.status=r.status;throw e}
+  return j}
+const b64=s=>btoa(String.fromCharCode(...new TextEncoder().encode(s)));
+async function ghPut(cfg,file,data,msg){
+  const path='/contents/data/'+file; let sha;
+  try{sha=(await ghApi(cfg,path+'?ref='+encodeURIComponent(cfg.branch))).sha}catch(e){if(e.status!==404)throw e}
+  return ghApi(cfg,path,{method:'PUT',body:JSON.stringify({message:msg,content:b64(JSON.stringify(data,null,2)+'\n'),branch:cfg.branch,...(sha?{sha}:{})})})}
+async function ghCheck(cfg){const r=await ghApi(cfg,'');if(!r.permissions||!r.permissions.push)throw new Error('This token can read the repository but can\'t change it. Give it "Contents: Read and write" access.');return r}
+function errText(e){if(e.status===401)return'GitHub rejected the token. It may have expired — create a new one in Publishing.';if(e.status===404)return'Repository not found, or the token has no access to it. Check the repository name in Publishing.';if(e.status===409)return'The file changed on GitHub at the same time. Publish again.';return e.message||'Something went wrong.'}
 
-// ══════════════════════════════════════════
-// AUTH
-// ══════════════════════════════════════════
-async function loadAuth(){
-  try{ AUTH=await jfetch('auth.json'); }
-  catch(e){ AUTH={email:'av.developer73@gmail.com',password_md5:'f17f769bfe250dc2c4671295bb102018'}; }
-}
-function checkSession(){
-  try{ const s=JSON.parse(sessionStorage.getItem(SESS_KEY)||'{}'); if(s.email&&s.ts&&(Date.now()-s.ts)<8*3600*1000){ CUR_EMAIL=s.email; return true; } }catch(e){}
-  return false;
-}
-function setSession(e){ CUR_EMAIL=e; sessionStorage.setItem(SESS_KEY,JSON.stringify({email:e,ts:Date.now()})); }
-function clearSession(){ sessionStorage.removeItem(SESS_KEY); }
+function download(file,data){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)+'\n'],{type:'application/json'}));a.download=file;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)}
 
-async function doLogin(){
-  const email=document.getElementById('lEmail').value.trim();
-  const pass=document.getElementById('lPass').value;
-  const btn=document.getElementById('loginBtn');
-  setMsg('loginErr','',false);
-  if(!email||!pass){ setMsg('loginErr','Email and password required.'); return; }
-  btn.disabled=true; btn.textContent='Checking…';
-  await loadAuth();
-  if(email.toLowerCase()===AUTH.email.toLowerCase() && md5(email+'|'+pass)===AUTH.password_md5){
-    setSession(email); showAdmin();
-  } else {
-    setMsg('loginErr','Invalid email or password.');
-    document.getElementById('lPass').value='';
-  }
-  btn.disabled=false; btn.textContent='🔐 Login to Admin';
+async function publish(key,btn){
+  const file=key==='auth'?'auth.json':FILES[key], data=key==='auth'?AUTH:DB[key], cfg=gh();
+  if(!cfg||!cfg.token){download(file,data);markClean(key);toast('Downloaded '+file+'. Upload it to the data folder on GitHub, or connect GitHub in Publishing to skip this step.');return true}
+  const label=btn&&btn.innerHTML; if(btn){btn.disabled=true;btn.innerHTML='<span class="spin"></span>Publishing…'}
+  try{await ghPut(cfg,file,data,'Update '+file+' from admin panel');markClean(key);toast('Published. Your website updates in about a minute.');return true}
+  catch(e){toast(errText(e),true);return false}
+  finally{if(btn){btn.disabled=false;btn.innerHTML=label}}
 }
-function doLogout(){
-  clearSession();
-  document.getElementById('adminApp').classList.remove('show');
-  document.getElementById('loginScreen').classList.remove('hidden');
-  switchTab('login');
-  document.getElementById('lEmail').value=''; document.getElementById('lPass').value='';
-}
-async function doForgot(){
-  const email=document.getElementById('fEmail').value.trim();
-  if(!email){ setMsg('forgotErr','Enter your email.'); return; }
-  await loadAuth();
-  if(email.toLowerCase()!==AUTH.email.toLowerCase()){ setMsg('forgotErr','Email not registered.'); return; }
-  document.getElementById('forgotResult').style.display='block';
-  document.getElementById('forgotResult').innerHTML='<strong style="color:var(--text)">Account found!</strong><br/>Email: <strong style="color:var(--accent3)">'+AUTH.email+'</strong><br/>Hash: <code style="color:var(--accent);word-break:break-all">'+AUTH.password_md5+'</code><br/><br/>Use <strong>Change PW</strong> tab to reset with current credentials.';
-  setMsg('forgotOk','Account found — see below.',true,true);
-}
-async function doChangePW(){
-  const email=document.getElementById('cpEmail').value.trim();
-  const cur=document.getElementById('cpCurrent').value;
-  const nw=document.getElementById('cpNew').value;
-  const cf=document.getElementById('cpConfirm').value;
-  setMsg('changeErr','',false); setMsg('changeOk','',false,true);
-  if(!email||!cur||!nw||!cf){ setMsg('changeErr','All fields required.'); return; }
-  if(nw.length<6){ setMsg('changeErr','Min 6 characters.'); return; }
-  if(nw!==cf){ setMsg('changeErr','Passwords do not match.'); return; }
-  await loadAuth();
-  if(email.toLowerCase()!==AUTH.email.toLowerCase()||md5(email+'|'+cur)!==AUTH.password_md5){ setMsg('changeErr','Current credentials incorrect.'); return; }
-  AUTH.password_md5=md5(email+'|'+nw);
-  dlJson('auth.json',AUTH);
-  setMsg('changeOk','Password updated! Upload the downloaded auth.json to data/ folder.',true,true);
-  document.getElementById('cpCurrent').value=''; document.getElementById('cpNew').value=''; document.getElementById('cpConfirm').value='';
-}
-async function doAdminChangePW(){
-  const cur=document.getElementById('acc_cur').value;
-  const nw=document.getElementById('acc_new').value;
-  const cf=document.getElementById('acc_confirm').value;
-  setMsg('accErr','',false); setMsg('accOk','',false,true);
-  if(!cur||!nw||!cf){ setMsg('accErr','All fields required.'); return; }
-  if(nw.length<6){ setMsg('accErr','Min 6 characters.'); return; }
-  if(nw!==cf){ setMsg('accErr','Passwords do not match.'); return; }
-  if(md5(CUR_EMAIL+'|'+cur)!==AUTH.password_md5){ setMsg('accErr','Current password incorrect.'); return; }
-  AUTH.password_md5=md5(CUR_EMAIL+'|'+nw);
-  dlJson('auth.json',AUTH);
-  setMsg('accOk','Downloaded auth.json — upload it to data/ folder to activate.',true,true);
-  document.getElementById('acc_cur').value=''; document.getElementById('acc_new').value=''; document.getElementById('acc_confirm').value='';
-}
-function setMsg(id,msg,show=true,isOk=false){
-  const el=document.getElementById(id); if(!el)return;
-  el.textContent=msg; el.classList.toggle('show',show);
-  el.classList.toggle('mok',isOk&&show); el.classList.toggle('merr',!isOk&&show);
-}
-function switchTab(t){
-  ['login','forgot','change'].forEach(n=>{
-    document.getElementById('form'+n.charAt(0).toUpperCase()+n.slice(1)).style.display=n===t?'block':'none';
-    document.getElementById('tab'+n.charAt(0).toUpperCase()+n.slice(1)).classList.toggle('active',n===t);
-  });
-}
-document.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!document.getElementById('loginScreen').classList.contains('hidden')) doLogin(); });
+async function publishAll(){const b=$('pubAll');for(const k of [...DIRTY]){if(!await publish(k,b))return}}
+function markDirty(k){DIRTY.add(k);updateChrome()}
+function markClean(k){if(k==='auth')return;DIRTY.delete(k);ORIG[k]=JSON.stringify(DB[k]);updateChrome()}
+window.addEventListener('beforeunload',e=>{if(DIRTY.size){e.preventDefault();e.returnValue=''}});
 
-// ══════════════════════════════════════════
-// DOWNLOAD JSON HELPER
-// ══════════════════════════════════════════
-function dlJson(filename,data){
-  /*const b=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-  const u=URL.createObjectURL(b);
-  const a=document.createElement('a'); a.href=u; a.download=filename;
-  document.body.appendChild(a); a.click();
-  document.body.removeChild(a); URL.revokeObjectURL(u);*/
+/* ═════════ auth ═════════ */
+async function loadAuth(){AUTH=await fetchJSON('auth.json')}
+async function checkPass(email,pass){
+  if(!AUTH||email.trim().toLowerCase()!==String(AUTH.email).toLowerCase())return false;
+  if(AUTH.password_sha256)return await sha256(AUTH.salt+'|'+email.trim().toLowerCase()+'|'+pass)===AUTH.password_sha256;
+  if(AUTH.password_md5)return md5(email.trim()+'|'+pass)===AUTH.password_md5;
+  return false}
+async function newAuth(pass){const salt=randSalt(), email=String(AUTH.email).toLowerCase();return {email:AUTH.email,salt,password_sha256:await sha256(salt+'|'+email+'|'+pass)}}
+async function doLogin(e){
+  e.preventDefault(); const b=$('lBtn'); b.disabled=true; $('lErr').hidden=true;
+  try{if(!AUTH)await loadAuth();
+    if(await checkPass($('lEmail').value,$('lPass').value)){sessionStorage.setItem(SESS,JSON.stringify({email:AUTH.email,ts:Date.now()}));await openApp()}
+    else{$('lErr').textContent='Email or password is incorrect.';$('lErr').hidden=false}}
+  catch(err){$('lErr').textContent='Couldn\'t load the login settings (data/auth.json). Refresh and try again.';$('lErr').hidden=false}
+  b.disabled=false}
+function showReset(on){$('loginForm').hidden=on;$('resetForm').hidden=!on}
+async function doReset(e){
+  e.preventDefault(); $('rErr').hidden=$('rOk').hidden=true;
+  const n=$('rNew').value; if(n!==$('rConf').value){$('rErr').textContent='The two passwords don\'t match.';$('rErr').hidden=false;return}
+  const b=$('rBtn'); b.disabled=true;
+  try{if(!AUTH)await loadAuth(); const cfg={...ghDefaults(),...(gh()||{}),token:$('rToken').value.trim()};
+    await ghCheck(cfg); AUTH=await newAuth(n); await ghPut(cfg,'auth.json',AUTH,'Reset admin password');
+    $('rOk').textContent='Password changed. It works in about a minute, once GitHub updates the site.';$('rOk').hidden=false}
+  catch(err){$('rErr').textContent=errText(err);$('rErr').hidden=false}
+  b.disabled=false}
+function logout(){if(DIRTY.size&&!window.confirm('You have unpublished changes. Sign out anyway?'))return;DIRTY.clear();sessionStorage.removeItem(SESS);location.hash='';location.reload()}
+
+/* ═════════ boot & routing ═════════ */
+async function openApp(){
+  try{const keys=Object.keys(FILES);const vals=await Promise.all(keys.map(k=>fetchJSON(FILES[k])));keys.forEach((k,i)=>{DB[k]=vals[i];ORIG[k]=JSON.stringify(vals[i])})}
+  catch(e){toast('Couldn\'t load your website data. Refresh the page.',true);return}
+  byOrder(DB.skills);byOrder(DB.projects);byOrder(DB.experience);byOrder(DB.education);
+  $('login').hidden=true;$('app').hidden=false;$('who').textContent=JSON.parse(sessionStorage.getItem(SESS)).email;
+  route();
 }
-
-// ══════════════════════════════════════════
-// FETCH & BOOT
-// ══════════════════════════════════════════
-async function jfetch(f){ const r=await fetch(BASE+f+'?t='+Date.now()); return r.json(); }
-
-async function bootAdmin(){
-  const[P,SK,PR,EX,ED]=await Promise.all([
-    jfetch('profile.json'),jfetch('skills.json'),jfetch('projects.json'),
-    jfetch('experience.json'),jfetch('education.json')
-  ]);
-  DB.profile=P; DB.skills=SK; DB.projects=PR; DB.experience=EX; DB.education=ED;
-  // ── ENQUIRIES from localStorage (key: av_enquiries) ──
-  try{ DB.enquiries=JSON.parse(localStorage.getItem(ENQ_KEY)||'[]'); }
-  catch(e){ DB.enquiries=[]; }
-  updateBadges(); loadProfile(); loadSkills(); renderDash();
+window.addEventListener('hashchange',route);
+function route(){
+  if($('app').hidden)return;
+  const [p,arg]=(location.hash.slice(1)||'dashboard').split('/');
+  PAGE=PAGES[p]?p:'dashboard'; $('sb').classList.remove('open');
+  $('pTitle').textContent=PAGES[PAGE].t; $('pSub').textContent=PAGES[PAGE].s;
+  ({dashboard:pgDash,profile:pgProfile,skills:pgSkills,projects:()=>arg?pgProjectForm(arg):pgProjects(),experience:()=>arg?pgExpForm(arg):pgExp(),education:()=>arg?pgEduForm(arg):pgEdu(),messages:pgMessages,publishing:pgPublishing,account:pgAccount})[PAGE]();
+  updateChrome(); window.scrollTo(0,0);
+  const h=$('content').querySelector('input,textarea'); if(h&&arg)h.focus();
 }
+function updateChrome(){
+  const unread=enqs().filter(x=>!x.read).length;
+  const count={skills:DB.skills?.length,projects:DB.projects?.length,experience:DB.experience?.length,education:DB.education?.length,messages:unread||''};
+  const groups=[['','dashboard'],['Website content','profile','skills','projects','experience','education'],['Inbox','messages'],['Settings','publishing','account']];
+  $('nav').innerHTML=groups.map(g=>(g[0]?'<div class="grp">'+g[0]+'</div>':'')+g.slice(1).map(k=>'<a href="#'+k+'" class="'+(k===PAGE?'on':'')+'"'+(k===PAGE?' aria-current="page"':'')+'>'+svg(k)+PAGES[k].t+(DIRTY.has(k)?'<span class="dirty" title="Unpublished changes"></span>':'')+(count[k]?'<span class="n">'+count[k]+'</span>':'')+'</a>').join('')).join('');
+  const c=gh(); $('conn').className='conn'+(c&&c.token?' ok':''); $('conn').querySelector('span').textContent=c&&c.token?'Publishing to GitHub':'Not connected';
+  $('pubAll').hidden=!DIRTY.size; $('pubAll').textContent=DIRTY.size>1?'Publish all changes ('+DIRTY.size+')':'Publish changes';
+}
+$('burger').onclick=()=>$('sb').classList.toggle('open');
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('sb').classList.remove('open');if(!$('modal').hidden)$('mNo').click()}});
+const C=html=>$('content').innerHTML=html;
+const saveBar=(k)=>'<div class="bar">'+(DIRTY.has(k)?'<button class="btn" onclick="discard(\''+k+'\')">Discard changes</button>':'')+'<button class="btn pri" onclick="publish(\''+k+'\',this)">Publish '+PAGES[k].t.toLowerCase()+'</button></div>';
+async function discard(k){if(!await confirmBox('Discard changes?','Your unpublished edits to '+PAGES[k].t.toLowerCase()+' will be lost.','Discard'))return;DB[k]=JSON.parse(ORIG[k]);DIRTY.delete(k);route()}
 
-async function showAdmin(){
-  document.getElementById('loginScreen').classList.add('hidden');
-  document.getElementById('adminApp').classList.add('show');
-  document.getElementById('sbEmail').textContent=CUR_EMAIL;
-  await bootAdmin();
+/* ═════════ dashboard ═════════ */
+function pgDash(){
+  const P=DB.profile, pr=DB.projects, b=pr.filter(p=>p.status==='building'), unread=enqs().filter(x=>!x.read).length, c=gh();
+  C((c&&c.token?'':'<div class="msg info">Changes are saved as files you upload to GitHub yourself. <a href="#publishing">Connect GitHub</a> once and every Publish button updates your website directly.</div>')+
+  (DIRTY.size?'<div class="msg info">You have unpublished changes in: '+[...DIRTY].map(k=>'<a href="#'+k+'">'+PAGES[k].t+'</a>').join(', ')+'.</div>':'')+
+  '<div class="stats">'+[['projects',pr.length,'Projects'],['projects',b.length,'In development'],['skills',DB.skills.length,'Technologies'],['experience',DB.experience.length,'Jobs'],['messages',unread,'New messages']].map(s=>'<a href="#'+s[0]+'"><b>'+s[1]+'</b><span>'+s[2]+'</span></a>').join('')+'</div>'+
+  '<div class="card"><h2>Shown at the top of your website <a class="btn sm" href="#profile">Edit profile</a></h2><p><b>'+esc(P.name)+'</b> — '+esc(P.tagline)+(P.company?' at '+esc(P.company):'')+'</p><p class="hint">'+esc(P.availability||'')+'</p></div>'+
+  '<div class="card"><h2>Now building <a class="btn sm" href="#projects/new">Add project</a></h2>'+(b.length?'<div class="tw"><table><tbody>'+b.map(p=>'<tr><td><div class="t">'+esc(p.title)+'</div><div class="s">'+esc(p.tech||'Stack not set')+'</div></td><td><span class="pill building">In development</span></td><td><div class="acts-cell"><a class="btn sm" href="#projects/'+p.id+'">Edit</a></div></td></tr>').join('')+'</tbody></table></div>':'<p class="hint">No projects are marked "In development". The website shows your featured projects instead.</p>')+'</div>');
 }
 
-// ── Save enquiries back to localStorage ──
-function saveEnqLocal(data){
-  try{ localStorage.setItem(ENQ_KEY,JSON.stringify(data)); }catch(e){}
+/* ═════════ profile ═════════ */
+function pgProfile(){
+  const P=DB.profile, f=(id,l,v,t='text',h='')=>'<div class="field"><label for="pf_'+id+'">'+l+'</label><input id="pf_'+id+'" type="'+t+'" value="'+esc(v)+'" data-k="'+id+'"/>'+(h?'<div class="hint">'+h+'</div>':'')+'</div>',
+      ta=(id,l,v,h='')=>'<div class="field"><label for="pf_'+id+'">'+l+'</label><textarea id="pf_'+id+'" data-k="'+id+'">'+esc(v)+'</textarea>'+(h?'<div class="hint">'+h+'</div>':'')+'</div>';
+  C('<div class="card"><h2>About you</h2><div class="g2">'+f('name','Full name',P.name)+f('initials','Initials (logo)',P.initials)+f('tagline','Job title',P.tagline)+f('company','Company',P.company||'')+'</div>'+
+    f('availability','Availability line',P.availability,'text','Green line above your name, e.g. "Open to freelance projects".')+
+    ta('hero_desc','Intro under your name',P.hero_desc)+
+    f('rotating','"I build …" phrases',(P.rotating||[]).join(', '),'text','Separate with commas. They rotate in the "I build" line.')+
+    ta('about_p1','About — first paragraph',P.about_p1)+ta('about_p2','About — second paragraph',P.about_p2)+'</div>'+
+   '<div class="card"><h2>Contact & photo</h2><div class="g2">'+f('email','Email (contact form sends here)',P.email,'email')+f('whatsapp','WhatsApp number with country code',P.whatsapp||'','tel','e.g. 919004200401')+f('phone','Phone',P.phone)+f('location','Location',P.location)+f('github','GitHub profile link',P.github||'','url')+f('photo','Photo path or link',P.photo||'','text','e.g. assets/asheesh.jpg')+'</div></div>'+
+   '<div class="card"><h2>Numbers under the intro <button class="btn sm" onclick="addRow(\'stats\')">Add number</button></h2><div class="rows" id="statRows"></div></div>'+
+   '<div class="card"><h2>Services <button class="btn sm" onclick="addRow(\'services\')">Add service</button></h2><div class="rows" id="svcRows"></div></div>'+saveBar('profile'));
+  drawProfileRows();
+  $('content').querySelectorAll('[data-k]').forEach(el=>el.oninput=()=>{const k=el.dataset.k;P[k]=k==='rotating'?el.value.split(',').map(s=>s.trim()).filter(Boolean):el.value;markDirty('profile')});
+}
+function drawProfileRows(){
+  const P=DB.profile; P.stats=P.stats||[]; P.services=P.services||[];
+  $('statRows').innerHTML=P.stats.map((s,i)=>'<div class="r stat"><input aria-label="Number" value="'+esc(s.num)+'" oninput="DB.profile.stats['+i+'].num=this.value;markDirty(\'profile\')"/><input aria-label="Label" value="'+esc(s.label)+'" oninput="DB.profile.stats['+i+'].label=this.value;markDirty(\'profile\')"/><button class="btn danger icon" aria-label="Remove" onclick="DB.profile.stats.splice('+i+',1);markDirty(\'profile\');drawProfileRows()">✕</button></div>').join('')||'<p class="hint">No numbers yet.</p>';
+  $('svcRows').innerHTML=P.services.map((s,i)=>'<div class="r svc"><input aria-label="Service" value="'+esc(s.title)+'" oninput="DB.profile.services['+i+'].title=this.value;markDirty(\'profile\')"/><input aria-label="Description" value="'+esc(s.desc)+'" oninput="DB.profile.services['+i+'].desc=this.value;markDirty(\'profile\')"/><button class="btn danger icon" aria-label="Remove" onclick="DB.profile.services.splice('+i+',1);markDirty(\'profile\');drawProfileRows()">✕</button></div>').join('')||'<p class="hint">No services yet.</p>';
+}
+function addRow(t){DB.profile[t].push(t==='stats'?{num:'',label:''}:{title:'',desc:''});markDirty('profile');drawProfileRows();const r=$(t==='stats'?'statRows':'svcRows').lastElementChild.querySelector('input');r&&r.focus()}
+
+/* ═════════ skills ═════════ */
+const GROUPS=['Backend','Frontend','Database','Tools','AI'];
+function pgSkills(){
+  C('<div class="card"><h2>Technologies <button class="btn sm pri" onclick="addSkill()">Add technology</button></h2><p class="hint" style="margin:-.5rem 0 1rem">Logo uses the <a href="https://devicon.dev" target="_blank" rel="noopener">devicon</a> name, e.g. <b>php/php-original</b>. Leave it empty to show the emoji instead.</p><div class="rows" id="skRows"></div></div>'+saveBar('skills'));
+  drawSkills();
+}
+function drawSkills(){
+  const S=DB.skills;
+  $('skRows').innerHTML=S.map((s,i)=>'<div class="r sk"><div class="mv"><button aria-label="Move up" onclick="mv(\'skills\','+i+',-1,drawSkills)">▲</button><button aria-label="Move down" onclick="mv(\'skills\','+i+',1,drawSkills)">▼</button></div>'+
+   '<div class="skprev" id="skp'+i+'">'+skIcon(s)+'</div>'+
+   '<input aria-label="Name" placeholder="Name" value="'+esc(s.name)+'" oninput="sk('+i+',\'name\',this.value)"/>'+
+   '<input class="opt" aria-label="Short label" placeholder="Label, e.g. Framework" value="'+esc(s.sub)+'" oninput="sk('+i+',\'sub\',this.value)"/>'+
+   '<select class="opt" aria-label="Group" onchange="sk('+i+',\'group\',this.value)">'+GROUPS.map(g=>'<option'+(g===(s.group||'Tools')?' selected':'')+'>'+g+'</option>').join('')+'</select>'+
+   '<input class="opt" aria-label="Logo (devicon)" placeholder="Logo, e.g. react/react-original" value="'+esc(s.logo||'')+'" oninput="sk('+i+',\'logo\',this.value.trim(),1)"/>'+
+   '<div class="acts-cell"><input aria-label="Emoji" style="width:52px;text-align:center" value="'+esc(s.icon||'')+'" oninput="sk('+i+',\'icon\',this.value,1)"/><button class="btn danger icon" aria-label="Delete '+esc(s.name)+'" onclick="delItem(\'skills\','+i+',drawSkills)">✕</button></div></div>').join('')||'<p class="empty">No technologies yet.</p>';
+}
+const skIcon=s=>s.logo?'<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/'+esc(s.logo)+'.svg" alt="" onerror="this.replaceWith(document.createTextNode(\''+esc(s.icon||'?')+'\'))"/>':esc(s.icon||'•');
+function sk(i,k,v,prev){DB.skills[i][k]=v;markDirty('skills');if(prev)$('skp'+i).innerHTML=skIcon(DB.skills[i])}
+function addSkill(){DB.skills.push({id:nextId(DB.skills),order:DB.skills.length+1,icon:'🧩',name:'',sub:'',group:'Tools',logo:''});markDirty('skills');drawSkills();$('skRows').lastElementChild.querySelectorAll('input')[0].focus()}
+function mv(k,i,d,redraw){const a=DB[k],j=i+d;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];renumber(a);markDirty(k);redraw()}
+async function delItem(k,i,redraw){const it=DB[k][i];if(!await confirmBox('Delete '+(it.name||it.title||it.degree||'this item')+'?','It disappears from your website when you publish.'))return;DB[k].splice(i,1);renumber(DB[k]);markDirty(k);redraw?redraw():route()}
+
+/* ═════════ projects ═════════ */
+const ST={building:'In development',live:'Live',completed:'Completed'};
+let PQ='',PS='';
+function pgProjects(){
+  C('<div class="card"><h2>All projects <a class="btn sm pri" href="#projects/new">Add project</a></h2><div class="tools" style="margin-bottom:1rem"><input type="search" placeholder="Search projects" aria-label="Search projects" value="'+esc(PQ)+'" oninput="PQ=this.value;drawProjects()"/><select aria-label="Filter by status" onchange="PS=this.value;drawProjects()"><option value="">All statuses</option>'+Object.entries(ST).map(([k,v])=>'<option value="'+k+'"'+(PS===k?' selected':'')+'>'+v+'</option>').join('')+'</select></div><div class="tw"><table><thead><tr><th>Order</th><th>Project</th><th>Status</th><th>Category</th><th><span class="sr">Actions</span></th></tr></thead><tbody id="pRows"></tbody></table></div></div>'+saveBar('projects'));
+  drawProjects();
+}
+function drawProjects(){
+  const q=PQ.toLowerCase(), A=DB.projects;
+  const rows=A.map((p,i)=>[p,i]).filter(([p])=>(!PS||p.status===PS)&&(!q||(p.title+' '+p.tech+' '+p.category).toLowerCase().includes(q)));
+  $('pRows').innerHTML=rows.length?rows.map(([p,i])=>'<tr><td><div class="mv"><button aria-label="Move up" onclick="mv(\'projects\','+i+',-1,drawProjects)">▲</button><button aria-label="Move down" onclick="mv(\'projects\','+i+',1,drawProjects)">▼</button></div></td>'+
+    '<td><div class="t">'+(p.featured?'<span class="star" title="Featured">★</span> ':'')+esc(p.title)+'</div><div class="s">'+esc(p.tech||'Stack not set')+(p.url?' · <a href="'+esc(p.url)+'" target="_blank" rel="noopener">site</a>':'')+'</div></td>'+
+    '<td><span class="pill '+esc(p.status||'live')+'">'+(ST[p.status]||'Live')+'</span></td><td>'+esc(p.category)+'</td>'+
+    '<td><div class="acts-cell"><a class="btn sm" href="#projects/'+p.id+'">Edit</a><button class="btn sm danger" onclick="delItem(\'projects\','+i+',drawProjects)">Delete</button></div></td></tr>').join('')
+    :'<tr><td colspan="5" class="empty">No projects match. <a href="#projects/new">Add a project</a></td></tr>';
+}
+function pgProjectForm(id){
+  const isNew=id==='new', p=isNew?{title:'',tech:'',url:'',category:'',status:'building',tags:[],description:'',featured:false}:DB.projects.find(x=>String(x.id)===id);
+  if(!p){location.hash='projects';return}
+  $('pTitle').textContent=isNew?'Add project':'Edit project';
+  const cats=[...new Set(DB.projects.map(x=>x.category).filter(Boolean))];
+  C('<div class="card"><form id="pf" onsubmit="saveProject(event,\''+id+'\')"><div class="g2">'+
+    '<div class="field"><label for="p_title">Project name</label><input id="p_title" required value="'+esc(p.title)+'"/></div>'+
+    '<div class="field"><label for="p_cat">Category</label><input id="p_cat" list="cats" required value="'+esc(p.category)+'"/><datalist id="cats">'+cats.map(c=>'<option value="'+esc(c)+'">').join('')+'</datalist></div>'+
+    '<div class="field"><label for="p_tech">Tech stack</label><input id="p_tech" value="'+esc(p.tech)+'" placeholder="e.g. Python FastAPI · React · PostgreSQL"/></div>'+
+    '<div class="field"><label for="p_status">Status</label><select id="p_status">'+Object.entries(ST).map(([k,v])=>'<option value="'+k+'"'+((p.status||'live')===k?' selected':'')+'>'+v+'</option>').join('')+'</select><div class="hint">"In development" projects appear in the Now building panel.</div></div>'+
+    '<div class="field"><label for="p_url">Website link</label><input id="p_url" type="url" value="'+esc(p.url)+'" placeholder="https://"/><div class="hint">Leave empty for private client projects.</div></div>'+
+    '<div class="field"><label for="p_tags">Tags</label><input id="p_tags" value="'+esc((p.tags||[]).join(', '))+'" placeholder="Laravel, MySQL, Razorpay"/></div></div>'+
+    '<div class="field"><label for="p_desc">Description</label><textarea id="p_desc" required rows="4">'+esc(p.description)+'</textarea><div class="hint">The first sentence is shown in the Now building panel.</div></div>'+
+    '<div class="check"><input type="checkbox" id="p_feat"'+(p.featured?' checked':'')+'/><label for="p_feat">Featured project</label></div>'+
+    '<div class="bar"><a class="btn" href="#projects">Cancel</a><button class="btn pri">'+(isNew?'Add project':'Save project')+'</button></div></form></div>');
+}
+function saveProject(e,id){
+  e.preventDefault(); const v=k=>$(k).value.trim();
+  const data={title:v('p_title'),category:v('p_cat'),tech:v('p_tech'),status:$('p_status').value,url:v('p_url'),tags:v('p_tags').split(',').map(s=>s.trim()).filter(Boolean),description:v('p_desc'),featured:$('p_feat').checked};
+  if(id==='new'){DB.projects.unshift({id:nextId(DB.projects),order:1,...data});renumber(DB.projects)}
+  else Object.assign(DB.projects.find(x=>String(x.id)===id),data);
+  markDirty('projects'); toast((id==='new'?'Project added':'Project saved')+'. Publish to show it on your website.'); location.hash='projects';
 }
 
-function updateBadges(){
-  document.getElementById('sb-skills').textContent=DB.skills.length;
-  document.getElementById('sb-projects').textContent=DB.projects.length;
-  document.getElementById('sb-exp').textContent=DB.experience.length;
-  document.getElementById('sb-edu').textContent=DB.education.length;
-  const unread=DB.enquiries.filter(e=>!e.read).length;
-  document.getElementById('sb-enq').textContent=DB.enquiries.length+(unread?' ('+unread+' new)':'');
-  document.getElementById('sb-enq').className='sbbadge'+(unread>0?' red':'');
-}
+/* ═════════ experience ═════════ */
+function pgExp(){
+  C('<div class="card"><h2>Jobs <a class="btn sm pri" href="#experience/new">Add job</a></h2><div class="tw"><table><tbody id="eRows"></tbody></table></div></div>'+saveBar('experience'));drawExp()}
+function drawExp(){const A=DB.experience;$('eRows').innerHTML=A.map((x,i)=>'<tr><td style="width:40px"><div class="mv"><button aria-label="Move up" onclick="mv(\'experience\','+i+',-1,drawExp)">▲</button><button aria-label="Move down" onclick="mv(\'experience\','+i+',1,drawExp)">▼</button></div></td><td><div class="t">'+esc(x.title)+'</div><div class="s">'+esc(x.company)+' · '+esc(x.duration)+'</div></td><td>'+(x.current?'<span class="pill live">Current</span>':'')+'</td><td><div class="acts-cell"><a class="btn sm" href="#experience/'+x.id+'">Edit</a><button class="btn sm danger" onclick="delItem(\'experience\','+i+',drawExp)">Delete</button></div></td></tr>').join('')||'<tr><td class="empty">No jobs yet.</td></tr>'}
+let PTS=[];
+function pgExpForm(id){
+  const isNew=id==='new', x=isNew?{title:'',company:'',location:'',duration:'',current:false,points:['']}:DB.experience.find(e=>String(e.id)===id);
+  if(!x){location.hash='experience';return}
+  $('pTitle').textContent=isNew?'Add job':'Edit job'; PTS=[...(x.points||[])];
+  C('<div class="card"><form onsubmit="saveExp(event,\''+id+'\')"><div class="g2"><div class="field"><label for="x_title">Job title</label><input id="x_title" required value="'+esc(x.title)+'"/></div><div class="field"><label for="x_company">Company</label><input id="x_company" required value="'+esc(x.company)+'"/></div>'+
+   '<div class="field"><label for="x_loc">Location</label><input id="x_loc" value="'+esc(x.location)+'"/></div><div class="field"><label for="x_dur">Dates</label><input id="x_dur" required value="'+esc(x.duration)+'" placeholder="Oct 2026 – Present"/></div></div>'+
+   '<div class="check"><input type="checkbox" id="x_cur"'+(x.current?' checked':'')+'/><label for="x_cur">I work here now</label></div>'+
+   '<label>What you do / did</label><div class="rows" id="ptRows"></div><button type="button" class="btn sm" onclick="PTS.push(\'\');drawPts(1)">Add point</button>'+
+   '<div class="bar"><a class="btn" href="#experience">Cancel</a><button class="btn pri">'+(isNew?'Add job':'Save job')+'</button></div></form></div>');drawPts()}
+function drawPts(focus){$('ptRows').innerHTML=PTS.map((p,i)=>'<div class="r pt"><input aria-label="Point '+(i+1)+'" value="'+esc(p)+'" oninput="PTS['+i+']=this.value"/><button type="button" class="btn danger icon" aria-label="Remove point" onclick="PTS.splice('+i+',1);drawPts()">✕</button></div>').join('');if(focus)$('ptRows').lastElementChild.querySelector('input').focus()}
+function saveExp(e,id){
+  e.preventDefault(); const v=k=>$(k).value.trim();
+  const data={title:v('x_title'),company:v('x_company'),location:v('x_loc'),duration:v('x_dur'),current:$('x_cur').checked,points:PTS.map(s=>s.trim()).filter(Boolean)};
+  if(id==='new'){DB.experience.unshift({id:nextId(DB.experience),order:1,...data});renumber(DB.experience)}else Object.assign(DB.experience.find(x=>String(x.id)===id),data);
+  markDirty('experience');toast('Job saved. Publish to show it on your website.');location.hash='experience'}
 
-// ══════════════════════════════════════════
-// PAGE NAV
-// ══════════════════════════════════════════
-const PMETA={
-  dash:{title:'Dashboard',sub:'Overview'},
-  profile:{title:'Profile & Hero',sub:'Edit personal info — downloads profile.json'},
-  skills:{title:'Skills',sub:'Manage tech stack — downloads skills.json'},
-  projects:{title:'Projects',sub:'Manage projects — downloads projects.json'},
-  addproject:{title:'Add / Edit Project',sub:''},
-  experience:{title:'Experience',sub:'Manage career — downloads experience.json'},
-  addexp:{title:'Add / Edit Experience',sub:''},
-  education:{title:'Education',sub:'Manage degrees — downloads education.json'},
-  addedu:{title:'Add / Edit Education',sub:''},
-  enquiries:{title:'Enquiries',sub:'Stored in browser localStorage — no upload needed'},
-  account:{title:'Change Password',sub:'Downloads new auth.json — upload to data/'},
-};
-function go(name){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.sbi').forEach(b=>b.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
-  const b=document.querySelector('[data-p="'+name+'"]'); if(b)b.classList.add('active');
-  const m=PMETA[name]||{title:name,sub:''};
-  document.getElementById('ptitle').textContent=m.title;
-  document.getElementById('psub').textContent=m.sub;
-  const act=document.getElementById('paction'); act.innerHTML='';
-  if(name==='projects') act.innerHTML='<button class="btn btnp" onclick="openAddProject()">+ Add Project</button>';
-  if(name==='experience') act.innerHTML='<button class="btn btnp" onclick="openAddExp()">+ Add Experience</button>';
-  if(name==='education') act.innerHTML='<button class="btn btnp" onclick="openAddEdu()">+ Add Education</button>';
-  if(name==='projects') renderProjTable(DB.projects);
-  if(name==='experience') renderExpTable();
-  if(name==='education') renderEduTable();
-  if(name==='enquiries'){ DB.enquiries=JSON.parse(localStorage.getItem(ENQ_KEY)||'[]'); updateBadges(); renderEnqTable(DB.enquiries); }
-  document.getElementById('sb').classList.remove('open');
-}
+/* ═════════ education ═════════ */
+function pgEdu(){C('<div class="card"><h2>Degrees <a class="btn sm pri" href="#education/new">Add degree</a></h2><div class="tw"><table><tbody id="dRows"></tbody></table></div></div>'+saveBar('education'));drawEdu()}
+function drawEdu(){const A=DB.education;$('dRows').innerHTML=A.map((x,i)=>'<tr><td style="width:40px"><div class="mv"><button aria-label="Move up" onclick="mv(\'education\','+i+',-1,drawEdu)">▲</button><button aria-label="Move down" onclick="mv(\'education\','+i+',1,drawEdu)">▼</button></div></td><td><div class="t">'+esc(x.degree)+'</div><div class="s">'+esc(x.college)+(x.year?' · '+esc(x.year):'')+'</div></td><td><div class="acts-cell"><a class="btn sm" href="#education/'+x.id+'">Edit</a><button class="btn sm danger" onclick="delItem(\'education\','+i+',drawEdu)">Delete</button></div></td></tr>').join('')||'<tr><td class="empty">No degrees yet.</td></tr>'}
+function pgEduForm(id){
+  const isNew=id==='new', x=isNew?{degree:'',college:'',university:'',year:'',icon:'🎓'}:DB.education.find(e=>String(e.id)===id);
+  if(!x){location.hash='education';return}
+  $('pTitle').textContent=isNew?'Add degree':'Edit degree';
+  C('<div class="card"><form onsubmit="saveEdu(event,\''+id+'\')"><div class="field"><label for="d_deg">Degree</label><input id="d_deg" required value="'+esc(x.degree)+'"/></div><div class="g2"><div class="field"><label for="d_col">College</label><input id="d_col" required value="'+esc(x.college)+'"/></div><div class="field"><label for="d_uni">University</label><input id="d_uni" value="'+esc(x.university)+'"/></div><div class="field"><label for="d_year">Year</label><input id="d_year" value="'+esc(x.year)+'" placeholder="2020 or Completed"/></div></div><div class="bar"><a class="btn" href="#education">Cancel</a><button class="btn pri">'+(isNew?'Add degree':'Save degree')+'</button></div></form></div>')}
+function saveEdu(e,id){e.preventDefault();const v=k=>$(k).value.trim();const data={degree:v('d_deg'),college:v('d_col'),university:v('d_uni'),year:v('d_year')};
+  if(id==='new'){DB.education.push({id:nextId(DB.education),order:DB.education.length+1,icon:'🎓',...data})}else Object.assign(DB.education.find(x=>String(x.id)===id),data);
+  markDirty('education');toast('Degree saved. Publish to show it on your website.');location.hash='education'}
 
-// ══════════════════════════════════════════
-// DASHBOARD
-// ══════════════════════════════════════════
-function renderDash(){
-  const unread=DB.enquiries.filter(e=>!e.read).length;
-  document.getElementById('dashStats').innerHTML=
-    '<div class="sc"><div class="sclbl">Projects</div><div class="scnum cv">'+DB.projects.length+'</div></div>'+
-    '<div class="sc"><div class="sclbl">Skills</div><div class="scnum cc">'+DB.skills.length+'</div></div>'+
-    '<div class="sc"><div class="sclbl">Experience</div><div class="scnum cg">'+DB.experience.length+'</div></div>'+
-    '<div class="sc"><div class="sclbl">Education</div><div class="scnum cv">'+DB.education.length+'</div></div>'+
-    '<div class="sc"><div class="sclbl">Enquiries</div><div class="scnum cp">'+DB.enquiries.length+'</div></div>'+
-    '<div class="sc"><div class="sclbl">Unread</div><div class="scnum cr">'+unread+'</div></div>';
-  const rp=[...DB.projects].sort((a,b)=>(a.order||99)-(b.order||99)).slice(0,5);
-  document.getElementById('dashProj').innerHTML=rp.length?
-    '<table><thead><tr><th>#</th><th>Title</th><th>Cat</th><th>Actions</th></tr></thead><tbody>'+
-    rp.map(p=>'<tr><td><span class="ordb">'+p.order+'</span></td><td class="tdm">'+p.title+'</td>'+
-      '<td><span class="badge ba">'+p.category+'</span></td>'+
-      '<td><div class="act"><button class="ib" onclick="openEditProject('+p.id+')">✏️</button>'+
-      '<button class="ib del" onclick="askDel(\'project\','+p.id+',\''+esc(p.title)+'\')">🗑️</button></div></td></tr>'
-    ).join('')+'</tbody></table>':'<div class="emptyrow">No projects.</div>';
-  const re=[...DB.enquiries].slice(0,5);
-  document.getElementById('dashEnq').innerHTML=re.length?
-    '<table><thead><tr><th>Name</th><th>Subject</th><th>Status</th></tr></thead><tbody>'+
-    re.map(e=>'<tr class="'+(e.read?'':'unreadr')+'"><td class="tdm">'+e.name+'</td>'+
-      '<td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.79rem">'+e.subject+'</td>'+
-      '<td>'+(e.read?'<span class="badge bn">Read</span>':'<span class="badge br2">New</span>')+'</td></tr>'
-    ).join('')+'</tbody></table>':'<div class="emptyrow">No enquiries yet.</div>';
-}
-function esc(s){ return (s||'').replace(/'/g,"\\'"); }
+/* ═════════ messages ═════════ */
+function enqs(){try{return JSON.parse(localStorage.getItem(ENQ_KEY)||'[]')}catch(e){return[]}}
+function setEnqs(a){localStorage.setItem(ENQ_KEY,JSON.stringify(a));updateChrome()}
+function pgMessages(){
+  const A=enqs(), email=DB.profile.email;
+  C('<div class="msg info">Every message from the contact form is emailed to <b>'+esc(email)+'</b>. The first time someone sends one, FormSubmit emails you a one-time <b>Activate</b> link — click it, or messages won\'t be delivered. <a href="https://mail.google.com/mail/u/0/#search/from%3Aformsubmit" target="_blank" rel="noopener">Open in Gmail</a></div>'+
+   '<div class="card"><h2>Sent from this browser ('+A.length+')'+(A.length?'<button class="btn sm danger" onclick="clearEnq()">Clear all</button>':'')+'</h2><p class="hint" style="margin:-.5rem 0 .6rem">Copies are only kept on the device where the form was sent — use these to test the form.</p>'+
+   (A.length?A.map((x,i)=>'<div class="enq'+(x.read?'':' unread')+'"><div class="t">'+esc(x.name)+' — '+esc(x.subject)+'</div><div class="s">'+esc(x.email)+(x.phone?' · '+esc(x.phone):'')+' · '+esc(x.date)+' · '+(x.email_sent?'emailed':'<span style="color:var(--red)">email failed</span>')+'</div><p>'+esc(x.message)+'</p><div class="bar" style="justify-content:flex-start"><a class="btn sm" href="mailto:'+esc(x.email)+'?subject='+encodeURIComponent('Re: '+x.subject)+'">Reply</a>'+(x.read?'':'<button class="btn sm" onclick="readEnq('+i+')">Mark as read</button>')+'<button class="btn sm danger" onclick="delEnq('+i+')">Delete</button></div></div>').join(''):'<p class="empty">No messages on this browser.</p>')+'</div>')}
+function readEnq(i){const a=enqs();a[i].read=true;setEnqs(a);pgMessages()}
+async function delEnq(i){if(!await confirmBox('Delete this message?','It is removed from this browser only.'))return;const a=enqs();a.splice(i,1);setEnqs(a);pgMessages()}
+async function clearEnq(){if(!await confirmBox('Delete all messages?','They are removed from this browser only.'))return;setEnqs([]);pgMessages()}
 
-// ══════════════════════════════════════════
-// PROFILE
-// ══════════════════════════════════════════
-function loadProfile(){
-  const p=DB.profile;
-  ['name','initials','tagline','specialization','email','phone','location','status'].forEach(k=>{ const el=document.getElementById('pf_'+k); if(el) el.value=p[k]||''; });
-  document.getElementById('pf_avail').value=p.availability||'';
-  document.getElementById('pf_hero_desc').value=p.hero_desc||'';
-  document.getElementById('pf_about1').value=p.about_p1||'';
-  document.getElementById('pf_about2').value=p.about_p2||'';
-  renderStatEd(p.stats||[]);
-}
-function saveProfile(){
-  DB.profile={...DB.profile,name:v('pf_name'),initials:v('pf_initials'),tagline:v('pf_tagline'),specialization:v('pf_spec'),email:v('pf_email'),phone:v('pf_phone'),location:v('pf_location'),status:v('pf_status'),availability:v('pf_avail'),hero_desc:v('pf_hero_desc'),about_p1:v('pf_about1'),about_p2:v('pf_about2'),stats:readStats()};
-  dlJson('profile.json',DB.profile); toast('✓ profile.json downloaded! Upload to data/ folder.','ok');
-}
-function renderStatEd(stats){
-  document.getElementById('stEditor').innerHTML=stats.map((s,i)=>
-    '<div class="strow"><input placeholder="3+" value="'+e2(s.num||'')+'"/><input placeholder="Years Exp." value="'+e2(s.label||'')+'"/><button class="rmpt" onclick="removeStat('+i+')">✕</button></div>'
-  ).join('');
-}
-function addStat(){ const st=readStats(); st.push({num:'',label:''}); renderStatEd(st); }
-function removeStat(i){ const st=readStats(); st.splice(i,1); renderStatEd(st); }
-function readStats(){ return[...document.querySelectorAll('.strow')].map(r=>{ const[a,b]=r.querySelectorAll('input'); return{num:a.value.trim(),label:b.value.trim()}; }); }
+/* ═════════ publishing ═════════ */
+function pgPublishing(){
+  const c={...ghDefaults(),...(gh()||{})};
+  C('<div class="card"><h2>Connect GitHub</h2>'+(c.token?'<div class="msg ok">Connected. Publish buttons update <b>'+esc(c.owner+'/'+c.repo)+'</b> directly.</div>':'')+
+   '<ol style="margin:0 0 1.2rem 1.2rem;color:var(--muted)"><li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → New fine-grained token</a>.</li><li>Name it "Portfolio admin", pick an expiry, and under <b>Repository access</b> choose <b>Only select repositories → '+esc(c.repo)+'</b>.</li><li>Under <b>Permissions → Contents</b>, choose <b>Read and write</b>. Click <b>Generate token</b> and paste it below.</li></ol>'+
+   '<form onsubmit="saveGh(event)"><div class="g3"><div class="field"><label for="g_owner">GitHub username</label><input id="g_owner" required value="'+esc(c.owner)+'"/></div><div class="field"><label for="g_repo">Repository</label><input id="g_repo" required value="'+esc(c.repo)+'"/></div><div class="field"><label for="g_branch">Branch</label><input id="g_branch" required value="'+esc(c.branch)+'"/></div></div>'+
+   '<div class="field"><label for="g_token">Token</label><input id="g_token" type="password" autocomplete="off" placeholder="'+(c.token?'Saved — paste a new one to replace it':'github_pat_…')+'"/><div class="hint">The token is stored only in this browser. Anyone using this browser could publish to your site, so sign out on shared computers.</div></div>'+
+   '<div class="bar">'+(c.token?'<button type="button" class="btn danger" onclick="disconnectGh()">Disconnect</button>':'')+'<button class="btn pri" id="gBtn">'+(c.token?'Save and test':'Connect')+'</button></div></form></div>')}
+async function saveGh(e){
+  e.preventDefault(); const old=gh()||{}, cfg={owner:$('g_owner').value.trim(),repo:$('g_repo').value.trim(),branch:$('g_branch').value.trim(),token:$('g_token').value.trim()||old.token};
+  if(!cfg.token){toast('Paste a token first.',true);return}
+  const b=$('gBtn');b.disabled=true;b.textContent='Testing…';
+  try{await ghCheck(cfg);localStorage.setItem(GHK,JSON.stringify(cfg));toast('GitHub connected. Publish buttons now update your website.');pgPublishing();updateChrome()}
+  catch(err){toast(errText(err),true);b.disabled=false;b.textContent='Connect'}}
+async function disconnectGh(){if(!await confirmBox('Disconnect GitHub?','Publish buttons will download files instead.','Disconnect'))return;localStorage.removeItem(GHK);pgPublishing();updateChrome()}
 
-// ══════════════════════════════════════════
-// SKILLS
-// ══════════════════════════════════════════
-function loadSkills(){ DB.skills.sort((a,b)=>(a.order||99)-(b.order||99)); renderSkEd(DB.skills); }
-function renderSkEd(sk){
-  document.getElementById('skEditor').innerHTML=sk.map((s,i)=>
-    '<div class="skitem" id="sk-'+i+'"><span class="skord">'+(i+1)+'</span>'+
-    '<input placeholder="🐘" value="'+e2(s.icon||'')+'" style="text-align:center;font-size:1.1rem"/>'+
-    '<input placeholder="PHP" value="'+e2(s.name||'')+'"/>'+
-    '<input placeholder="Sub" value="'+e2(s.sub||'')+'"/>'+
-    '<button class="rmpt" onclick="removeSkill('+i+')">✕</button></div>'
-  ).join('');
-}
-function addSkill(){ const sk=readSkills(); sk.unshift({id:Date.now(),order:1,icon:'',name:'',sub:''}); renum(sk); renderSkEd(sk); }
-function removeSkill(i){ const sk=readSkills(); sk.splice(i,1); renum(sk); renderSkEd(sk); }
-function renum(sk){ sk.forEach((s,i)=>s.order=i+1); }
-function readSkills(){ return[...document.querySelectorAll('#skEditor .skitem')].map((row,i)=>{ const inp=row.querySelectorAll('input'); return{id:DB.skills[i]?DB.skills[i].id:Date.now()+i,order:i+1,icon:inp[0].value.trim(),name:inp[1].value.trim(),sub:inp[2].value.trim()}; }); }
-function saveSkills(){ DB.skills=readSkills(); renum(DB.skills); dlJson('skills.json',DB.skills); updateBadges(); toast('✓ skills.json downloaded! Upload to data/.','ok'); }
+/* ═════════ account ═════════ */
+function pgAccount(){
+  C('<div class="card" style="max-width:480px"><h2>Change password</h2><div class="msg err" id="aErr" hidden></div><form onsubmit="changePw(event)"><input type="text" autocomplete="username" value="'+esc(AUTH.email)+'" hidden/>'+
+   '<div class="field"><label for="a_cur">Current password</label><input id="a_cur" type="password" autocomplete="current-password" required/></div>'+
+   '<div class="field"><label for="a_new">New password</label><input id="a_new" type="password" autocomplete="new-password" minlength="8" required/><div class="hint">At least 8 characters.</div></div>'+
+   '<div class="field"><label for="a_conf">Repeat new password</label><input id="a_conf" type="password" autocomplete="new-password" required/></div>'+
+   '<div class="bar"><button class="btn pri" id="aBtn">Change password</button></div></form></div>')}
+async function changePw(e){
+  e.preventDefault(); const err=m=>{$('aErr').textContent=m;$('aErr').hidden=false}; $('aErr').hidden=true;
+  if(!await checkPass(AUTH.email,$('a_cur').value))return err('Current password is incorrect.');
+  if($('a_new').value!==$('a_conf').value)return err('The two new passwords don\'t match.');
+  const prev=AUTH; AUTH=await newAuth($('a_new').value);
+  if(await publish('auth',$('aBtn'))){e.target.reset();toast(gh()?'Password changed. It works in about a minute.':'Downloaded auth.json. Upload it to the data folder to activate the new password.')}else AUTH=prev}
 
-// ══════════════════════════════════════════
-// PROJECTS
-// ══════════════════════════════════════════
-function renderProjTable(data){
-  const sorted=[...data].sort((a,b)=>(a.order||99)-(b.order||99));
-  document.getElementById('projCount').textContent=data.length;
-  document.getElementById('projTable').innerHTML=sorted.length?
-    '<table><thead><tr><th>#</th><th>Title</th><th>Category</th><th>Tech</th><th>Featured</th><th>URL</th><th>Actions</th></tr></thead><tbody>'+
-    sorted.map(p=>'<tr>'+
-      '<td><span class="ordb">'+p.order+'</span></td>'+
-      '<td><div class="tdm">'+p.title+'</div></td>'+
-      '<td><span class="badge ba">'+p.category+'</span></td>'+
-      '<td><span class="badge bt">'+p.tech+'</span></td>'+
-      '<td>'+(p.featured?'<span class="badge bf">⭐</span>':'<span class="badge bn">No</span>')+'</td>'+
-      '<td><a href="'+p.url+'" target="_blank" class="tdurl">'+p.url+'</a></td>'+
-      '<td><div class="act">'+
-        '<button class="ib top2" onclick="setTop(\'project\','+p.id+')" title="Move to Top">⬆1</button>'+
-        '<button class="ib up" onclick="moveOrd(\'project\','+p.id+',-1)" title="Move Up">↑</button>'+
-        '<button class="ib dn" onclick="moveOrd(\'project\','+p.id+',1)" title="Move Down">↓</button>'+
-        '<button class="ib" onclick="openEditProject('+p.id+')" title="Edit">✏️</button>'+
-        '<button class="ib del" onclick="askDel(\'project\','+p.id+',\''+esc(p.title)+'\')" title="Delete">🗑️</button>'+
-      '</div></td></tr>'
-    ).join('')+'</tbody></table>':'<div class="emptyrow">No projects yet.</div>';
-}
-function searchProjects(q){ const ql=q.toLowerCase(); renderProjTable(DB.projects.filter(p=>p.title.toLowerCase().includes(ql)||p.category.toLowerCase().includes(ql)||p.tech.toLowerCase().includes(ql))); }
-function openAddProject(){
-  resetProjForm();
-  document.getElementById('proj_order').value=DB.projects.length+1;
-  document.getElementById('projFTitle').textContent='➕ Add New Project';
-  go('addproject');
-}
-function openEditProject(id){
-  const p=DB.projects.find(x=>x.id===id); if(!p) return;
-  document.getElementById('proj_eid').value=id;
-  document.getElementById('proj_title').value=p.title;
-  document.getElementById('proj_tech').value=p.tech;
-  document.getElementById('proj_url').value=p.url;
-  document.getElementById('proj_cat').value=p.category;
-  document.getElementById('proj_desc').value=p.description;
-  document.getElementById('proj_tags').value=(p.tags||[]).join(', ');
-  document.getElementById('proj_feat').checked=!!p.featured;
-  document.getElementById('proj_order').value=p.order||1;
-  document.getElementById('projFTitle').textContent='✏️ Edit: '+p.title;
-  go('addproject');
-}
-function resetProjForm(){
-  ['proj_eid','proj_title','proj_tech','proj_url','proj_desc','proj_tags'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('proj_cat').value=''; document.getElementById('proj_feat').checked=false; document.getElementById('proj_order').value=1;
-}
-function saveProject(){
-  const title=v('proj_title'),url=v('proj_url'),cat=v('proj_cat');
-  if(!title||!url||!cat){ toast('Fill required fields (Title, URL, Category)','err'); return; }
-  const editId=v('proj_eid');
-  const tags=v('proj_tags').split(',').map(t=>t.trim()).filter(Boolean);
-  const data={title,tech:v('proj_tech'),url,category:cat,description:v('proj_desc'),tags,featured:document.getElementById('proj_feat').checked,order:parseInt(v('proj_order'))||1};
-  if(editId){ const i=DB.projects.findIndex(p=>p.id==editId); if(i!==-1) DB.projects[i]={...DB.projects[i],...data}; }
-  else DB.projects.unshift({id:Date.now(),...data});
-  dlJson('projects.json',DB.projects); updateBadges();
-  toast(editId?'✓ Updated! Upload projects.json to data/':'✓ Added! Upload projects.json to data/','ok');
-  setTimeout(()=>go('projects'),500);
-}
+/* ═════════ legacy MD5 (old passwords only) ═════════ */
+function md5(r){function n(r,n){var t=(65535&r)+(65535&n);return(r>>16)+(n>>16)+(t>>16)<<16|65535&t}function t(r,t,u,e,o,c){return n((f=n(n(t,r),n(e,c)))<<o|f>>>32-o,u);var f}function u(r,n,u,e,o,c,f){return t(n&u|~n&e,r,n,o,c,f)}function e(r,n,u,e,o,c,f){return t(n&e|u&~e,r,n,o,c,f)}function o(r,n,u,e,o,c,f){return t(n^u^e,r,n,o,c,f)}function c(r,n,u,e,o,c,f){return t(u^(n|~e),r,n,o,c,f)}r=unescape(encodeURIComponent(r));var f,i,a,h,l,g=[],v=8*r.length;for(f=0;f<r.length;f++)g[f>>2]|=(255&r.charCodeAt(f))<<f%4*8;g[v>>5]|=128<<v%32,g[14+(v+64>>>9<<4)]=v;var d=1732584193,A=-271733879,s=-1732584194,m=271733878;for(f=0;f<g.length;f+=16)i=d,a=A,h=s,l=m,d=u(d,A,s,m,g[f],7,-680876936),m=u(m,d,A,s,g[f+1],12,-389564586),s=u(s,m,d,A,g[f+2],17,606105819),A=u(A,s,m,d,g[f+3],22,-1044525330),d=u(d,A,s,m,g[f+4],7,-176418897),m=u(m,d,A,s,g[f+5],12,1200080426),s=u(s,m,d,A,g[f+6],17,-1473231341),A=u(A,s,m,d,g[f+7],22,-45705983),d=u(d,A,s,m,g[f+8],7,1770035416),m=u(m,d,A,s,g[f+9],12,-1958414417),s=u(s,m,d,A,g[f+10],17,-42063),A=u(A,s,m,d,g[f+11],22,-1990404162),d=u(d,A,s,m,g[f+12],7,1804603682),m=u(m,d,A,s,g[f+13],12,-40341101),s=u(s,m,d,A,g[f+14],17,-1502002290),d=e(d,A=u(A,s,m,d,g[f+15],22,1236535329),s,m,g[f+1],5,-165796510),m=e(m,d,A,s,g[f+6],9,-1069501632),s=e(s,m,d,A,g[f+11],14,643717713),A=e(A,s,m,d,g[f],20,-373897302),d=e(d,A,s,m,g[f+5],5,-701558691),m=e(m,d,A,s,g[f+10],9,38016083),s=e(s,m,d,A,g[f+15],14,-660478335),A=e(A,s,m,d,g[f+4],20,-405537848),d=e(d,A,s,m,g[f+9],5,568446438),m=e(m,d,A,s,g[f+14],9,-1019803690),s=e(s,m,d,A,g[f+3],14,-187363961),A=e(A,s,m,d,g[f+8],20,1163531501),d=e(d,A,s,m,g[f+13],5,-1444681467),m=e(m,d,A,s,g[f+2],9,-51403784),s=e(s,m,d,A,g[f+7],14,1735328473),d=o(d,A=e(A,s,m,d,g[f+12],20,-1926607734),s,m,g[f+5],4,-378558),m=o(m,d,A,s,g[f+8],11,-2022574463),s=o(s,m,d,A,g[f+11],16,1839030562),A=o(A,s,m,d,g[f+14],23,-35309556),d=o(d,A,s,m,g[f+1],4,-1530992060),m=o(m,d,A,s,g[f+4],11,1272893353),s=o(s,m,d,A,g[f+7],16,-155497632),A=o(A,s,m,d,g[f+10],23,-1094730640),d=o(d,A,s,m,g[f+13],4,681279174),m=o(m,d,A,s,g[f],11,-358537222),s=o(s,m,d,A,g[f+3],16,-722521979),A=o(A,s,m,d,g[f+6],23,76029189),d=o(d,A,s,m,g[f+9],4,-640364487),m=o(m,d,A,s,g[f+12],11,-421815835),s=o(s,m,d,A,g[f+15],16,530742520),d=c(d,A=o(A,s,m,d,g[f+2],23,-995338651),s,m,g[f],6,-198630844),m=c(m,d,A,s,g[f+7],10,1126891415),s=c(s,m,d,A,g[f+14],15,-1416354905),A=c(A,s,m,d,g[f+5],21,-57434055),d=c(d,A,s,m,g[f+12],6,1700485571),m=c(m,d,A,s,g[f+3],10,-1894986606),s=c(s,m,d,A,g[f+10],15,-1051523),A=c(A,s,m,d,g[f+1],21,-2054922799),d=c(d,A,s,m,g[f+8],6,1873313359),m=c(m,d,A,s,g[f+15],10,-30611744),s=c(s,m,d,A,g[f+6],15,-1560198380),A=c(A,s,m,d,g[f+13],21,1309151649),d=c(d,A,s,m,g[f+4],6,-145523070),m=c(m,d,A,s,g[f+11],10,-1120210379),s=c(s,m,d,A,g[f+2],15,718787259),A=c(A,s,m,d,g[f+9],21,-343485551),d=n(d,i),A=n(A,a),s=n(s,h),m=n(m,l);var C=[d,A,s,m],R="";for(f=0;f<4*C.length;f++)R+="0123456789abcdef".charAt(C[f>>2]>>f%4*8+4&15)+"0123456789abcdef".charAt(C[f>>2]>>f%4*8&15);return R}
 
-// SORT ORDER
-function getArr(type){ return type==='project'?DB.projects:type==='exp'?DB.experience:DB.education; }
-function getFile(type){ return type==='project'?'projects.json':type==='exp'?'experience.json':'education.json'; }
-function setTop(type,id){
-  const arr=getArr(type);
-  arr.forEach(x=>x.order=(x.order||1)+1);
-  const idx=arr.findIndex(x=>x.id===id); if(idx!==-1) arr[idx].order=1;
-  arr.sort((a,b)=>(a.order||99)-(b.order||99)); arr.forEach((x,i)=>x.order=i+1);
-  dlJson(getFile(type),arr); refreshTable(type); toast('✓ Moved to top! Upload '+getFile(type)+' to data/','ok');
-}
-function moveOrd(type,id,dir){
-  const arr=getArr(type); arr.sort((a,b)=>(a.order||99)-(b.order||99));
-  const idx=arr.findIndex(x=>x.id===id); if(idx===-1) return;
-  const si=idx+dir; if(si<0||si>=arr.length) return;
-  const tmp=arr[idx].order; arr[idx].order=arr[si].order; arr[si].order=tmp;
-  arr.sort((a,b)=>(a.order||99)-(b.order||99)); arr.forEach((x,i)=>x.order=i+1);
-  dlJson(getFile(type),arr); refreshTable(type);
-}
-function refreshTable(type){
-  if(type==='project') renderProjTable(DB.projects);
-  else if(type==='exp') renderExpTable();
-  else renderEduTable();
-  renderDash();
-}
-
-// ══════════════════════════════════════════
-// EXPERIENCE
-// ══════════════════════════════════════════
-function renderExpTable(){
-  const data=[...DB.experience].sort((a,b)=>(a.order||99)-(b.order||99));
-  document.getElementById('expCount').textContent=data.length;
-  document.getElementById('expTable').innerHTML=data.length?
-    '<table><thead><tr><th>#</th><th>Title</th><th>Company</th><th>Duration</th><th>Status</th><th>Actions</th></tr></thead><tbody>'+
-    data.map(ex=>'<tr>'+
-      '<td><span class="ordb">'+ex.order+'</span></td>'+
-      '<td><div class="tdm">'+ex.title+'</div></td>'+
-      '<td><div class="tds">'+ex.company+(ex.location?', '+ex.location:'')+'</div></td>'+
-      '<td style="font-size:.78rem;color:var(--muted)">'+ex.duration+'</td>'+
-      '<td>'+(ex.current?'<span class="badge bg2c">● Current</span>':'<span class="badge bn">Past</span>')+'</td>'+
-      '<td><div class="act">'+
-        '<button class="ib top2" onclick="setTop(\'exp\','+ex.id+')">⬆1</button>'+
-        '<button class="ib up" onclick="moveOrd(\'exp\','+ex.id+',-1)">↑</button>'+
-        '<button class="ib dn" onclick="moveOrd(\'exp\','+ex.id+',1)">↓</button>'+
-        '<button class="ib" onclick="openEditExp('+ex.id+')">✏️</button>'+
-        '<button class="ib del" onclick="askDel(\'exp\','+ex.id+',\''+esc(ex.title)+'\')">🗑️</button>'+
-      '</div></td></tr>'
-    ).join('')+'</tbody></table>':'<div class="emptyrow">No experience added.</div>';
-}
-function openAddExp(){
-  document.getElementById('exp_eid').value='';
-  ['exp_title','exp_company','exp_location','exp_duration'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('exp_current').checked=false;
-  document.getElementById('exp_order').value=DB.experience.length+1;
-  document.getElementById('expPts').innerHTML=''; addExpPt();
-  document.getElementById('expFTitle').textContent='💼 Add Experience';
-  go('addexp');
-}
-function openEditExp(id){
-  const ex=DB.experience.find(x=>x.id===id); if(!ex) return;
-  document.getElementById('exp_eid').value=id;
-  document.getElementById('exp_title').value=ex.title;
-  document.getElementById('exp_company').value=ex.company;
-  document.getElementById('exp_location').value=ex.location||'';
-  document.getElementById('exp_duration').value=ex.duration;
-  document.getElementById('exp_current').checked=!!ex.current;
-  document.getElementById('exp_order').value=ex.order||1;
-  document.getElementById('expPts').innerHTML='';
-  (ex.points||[]).forEach(pt=>addExpPt(pt));
-  document.getElementById('expFTitle').textContent='✏️ Edit: '+ex.title;
-  go('addexp');
-}
-function addExpPt(val=''){
-  const wrap=document.getElementById('expPts');
-  const d=document.createElement('div'); d.className='ptitem';
-  d.innerHTML='<input type="text" placeholder="e.g. Built REST APIs…" value="'+e2(val)+'"/><button class="rmpt" onclick="this.parentElement.remove()">✕</button>';
-  wrap.appendChild(d);
-}
-function saveExp(){
-  const title=v('exp_title'),company=v('exp_company');
-  if(!title||!company){ toast('Title and Company required','err'); return; }
-  const editId=v('exp_eid');
-  const points=[...document.querySelectorAll('#expPts .ptitem input')].map(i=>i.value.trim()).filter(Boolean);
-  const data={title,company,location:v('exp_location'),duration:v('exp_duration'),current:document.getElementById('exp_current').checked,points,order:parseInt(v('exp_order'))||1};
-  if(editId){ const i=DB.experience.findIndex(ex=>ex.id==editId); if(i!==-1) DB.experience[i]={...DB.experience[i],...data}; }
-  else DB.experience.unshift({id:Date.now(),...data});
-  dlJson('experience.json',DB.experience); updateBadges();
-  toast(editId?'✓ Updated! Upload experience.json to data/':'✓ Added! Upload experience.json to data/','ok');
-  setTimeout(()=>go('experience'),500);
-}
-
-// ══════════════════════════════════════════
-// EDUCATION
-// ══════════════════════════════════════════
-function renderEduTable(){
-  const data=[...DB.education].sort((a,b)=>(a.order||99)-(b.order||99));
-  document.getElementById('eduCount').textContent=data.length;
-  document.getElementById('eduTable').innerHTML=data.length?
-    '<table><thead><tr><th>#</th><th>Degree</th><th>College</th><th>Year</th><th>Actions</th></tr></thead><tbody>'+
-    data.map(ed=>'<tr>'+
-      '<td><span class="ordb">'+ed.order+'</span></td>'+
-      '<td><div class="tdm">'+(ed.icon||'🎓')+' '+ed.degree+'</div></td>'+
-      '<td><div class="tds">'+ed.college+'</div></td>'+
-      '<td><span class="badge bn">'+ed.year+'</span></td>'+
-      '<td><div class="act">'+
-        '<button class="ib top2" onclick="setTop(\'edu\','+ed.id+')">⬆1</button>'+
-        '<button class="ib up" onclick="moveOrd(\'edu\','+ed.id+',-1)">↑</button>'+
-        '<button class="ib dn" onclick="moveOrd(\'edu\','+ed.id+',1)">↓</button>'+
-        '<button class="ib" onclick="openEditEdu('+ed.id+')">✏️</button>'+
-        '<button class="ib del" onclick="askDel(\'edu\','+ed.id+',\''+esc(ed.degree)+'\')">🗑️</button>'+
-      '</div></td></tr>'
-    ).join('')+'</tbody></table>':'<div class="emptyrow">No education added.</div>';
-}
-function openAddEdu(){
-  ['edu_degree','edu_college','edu_uni','edu_year'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('edu_icon').value='🎓';
-  document.getElementById('edu_eid').value='';
-  document.getElementById('edu_order').value=DB.education.length+1;
-  document.getElementById('eduFTitle').textContent='🎓 Add Education';
-  go('addedu');
-}
-function openEditEdu(id){
-  const ed=DB.education.find(x=>x.id===id); if(!ed) return;
-  document.getElementById('edu_eid').value=id;
-  document.getElementById('edu_degree').value=ed.degree;
-  document.getElementById('edu_college').value=ed.college;
-  document.getElementById('edu_uni').value=ed.university;
-  document.getElementById('edu_year').value=ed.year;
-  document.getElementById('edu_icon').value=ed.icon||'🎓';
-  document.getElementById('edu_order').value=ed.order||1;
-  document.getElementById('eduFTitle').textContent='✏️ Edit: '+ed.degree;
-  go('addedu');
-}
-function saveEdu(){
-  const degree=v('edu_degree'),college=v('edu_college');
-  if(!degree||!college){ toast('Degree and College required','err'); return; }
-  const editId=v('edu_eid');
-  const data={degree,college,university:v('edu_uni'),year:v('edu_year'),icon:v('edu_icon')||'🎓',order:parseInt(v('edu_order'))||1};
-  if(editId){ const i=DB.education.findIndex(ed=>ed.id==editId); if(i!==-1) DB.education[i]={...DB.education[i],...data}; }
-  else DB.education.unshift({id:Date.now(),...data});
-  dlJson('education.json',DB.education); updateBadges();
-  toast(editId?'✓ Updated! Upload education.json to data/':'✓ Added! Upload education.json to data/','ok');
-  setTimeout(()=>go('education'),500);
-}
-
-// ══════════════════════════════════════════
-// ENQUIRIES (localStorage — key: av_enquiries)
-// ══════════════════════════════════════════
-function renderEnqTable(data){
-  const unread=data.filter(e=>!e.read).length;
-  document.getElementById('enqCount').textContent=data.length;
-  document.getElementById('enqUnread').textContent=unread>0?unread+' unread':'✓ All read';
-  document.getElementById('enqTable').innerHTML=data.length?
-    '<table><thead><tr><th>Status</th><th>Name</th><th>Email</th><th>Subject</th><th>Date</th><th>Email</th><th>Action</th></tr></thead><tbody>'+
-    data.map(e=>'<tr class="'+(e.read?'':'unreadr')+'">'+
-      '<td>'+(e.read?'<span class="badge bn">Read</span>':'<span class="badge br2">● New</span>')+'</td>'+
-      '<td class="tdm">'+e.name+'</td>'+
-      '<td style="font-size:.76rem;color:var(--accent3)">'+e.email+'</td>'+
-      '<td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.78rem">'+e.subject+'</td>'+
-      '<td style="font-size:.72rem;color:var(--muted);white-space:nowrap">'+e.date+'</td>'+
-      '<td>'+(e.email_sent?'<span class="badge bg2c">✓</span>':'<span class="badge bn">—</span>')+'</td>'+
-      '<td><div class="act">'+
-        '<button class="ib" onclick="viewEnq('+e.id+')" title="View">👁</button>'+
-        '<button class="ib del" onclick="askDel(\'enq\','+e.id+',\'from '+esc(e.name)+'\')" title="Delete">🗑️</button>'+
-      '</div></td></tr>'
-    ).join('')+'</tbody></table>':'<div class="emptyrow">No enquiries yet.<br/>Messages submitted on the contact form appear here automatically.</div>';
-}
-function searchEnq(q){
-  const ql=q.toLowerCase();
-  renderEnqTable(DB.enquiries.filter(e=>e.name.toLowerCase().includes(ql)||e.email.toLowerCase().includes(ql)||e.subject.toLowerCase().includes(ql)));
-}
-function viewEnq(id){
-  const e=DB.enquiries.find(x=>x.id===id); if(!e) return;
-  if(!e.read){ e.read=true; saveEnqLocal(DB.enquiries); updateBadges(); }
-  document.getElementById('enqMTitle').textContent='📨 From: '+e.name;
-  document.getElementById('enqMBody').innerHTML=
-    '<div class="enqdetail">'+
-    '<div class="enqrow"><span class="enqlbl">Name</span><span class="enqval">'+e.name+'</span></div>'+
-    '<div class="enqrow"><span class="enqlbl">Email</span><span class="enqval"><a href="mailto:'+e.email+'" style="color:var(--accent3)">'+e.email+'</a></span></div>'+
-    (e.phone?'<div class="enqrow"><span class="enqlbl">Phone</span><span class="enqval">'+e.phone+'</span></div>':'')+
-    '<div class="enqrow"><span class="enqlbl">Subject</span><span class="enqval">'+e.subject+'</span></div>'+
-    '<div class="enqrow"><span class="enqlbl">Date</span><span class="enqval" style="color:var(--muted)">'+e.date+'</span></div>'+
-    '<div class="enqrow"><span class="enqlbl">Sent</span><span class="enqval">'+(e.email_sent?'<span class="badge bg2c">✓ Via EmailJS</span>':'<span class="badge bn">Stored locally</span>')+'</span></div>'+
-    '</div>'+
-    '<div class="enqmsg">'+e.message+'</div>';
-  document.getElementById('enqDelBtn').onclick=()=>{ closeModal('enqOverlay'); askDel('enq',id,'from '+e.name); };
-  document.getElementById('enqOverlay').classList.add('open');
-  renderEnqTable(DB.enquiries);
-}
-function clearReadEnq(){
-  DB.enquiries=DB.enquiries.filter(e=>!e.read);
-  saveEnqLocal(DB.enquiries); updateBadges(); renderEnqTable(DB.enquiries); toast('✓ Read enquiries cleared.','ok');
-}
-
-// ══════════════════════════════════════════
-// DELETE
-// ══════════════════════════════════════════
-function askDel(type,id,name){ delCtx={type,id}; document.getElementById('delName').textContent='"'+name+'"'; document.getElementById('delOverlay').classList.add('open'); }
-function closeModal(id){ document.getElementById(id).classList.remove('open'); }
-function confirmDel(){
-  const{type,id}=delCtx; closeModal('delOverlay');
-  if(type==='project'){ DB.projects=DB.projects.filter(p=>p.id!==id); dlJson('projects.json',DB.projects); renderProjTable(DB.projects); toast('🗑 Deleted. Upload projects.json to data/.','ok'); }
-  else if(type==='exp'){ DB.experience=DB.experience.filter(e=>e.id!==id); dlJson('experience.json',DB.experience); renderExpTable(); toast('🗑 Deleted. Upload experience.json to data/.','ok'); }
-  else if(type==='edu'){ DB.education=DB.education.filter(e=>e.id!==id); dlJson('education.json',DB.education); renderEduTable(); toast('🗑 Deleted. Upload education.json to data/.','ok'); }
-  else if(type==='enq'){ DB.enquiries=DB.enquiries.filter(e=>e.id!==id); saveEnqLocal(DB.enquiries); renderEnqTable(DB.enquiries); toast('🗑 Enquiry deleted.','ok'); }
-  updateBadges(); renderDash();
-}
-
-// ══════════════════════════════════════════
-// UTILS
-// ══════════════════════════════════════════
-function v(id){ return(document.getElementById(id)||{}).value||''; }
-function e2(s){ return(s||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
-function toast(msg,type='ok'){
-  const t=document.getElementById('toast'); t.textContent=msg; t.className='show '+type;
-  clearTimeout(t._t); t._t=setTimeout(()=>{t.className='';},4500);
-}
-document.getElementById('hbtn').onclick=()=>document.getElementById('sb').classList.toggle('open');
-document.addEventListener('click',e=>{
-  const sb=document.getElementById('sb');
-  if(sb.classList.contains('open')&&!sb.contains(e.target)&&e.target!==document.getElementById('hbtn')) sb.classList.remove('open');
-});
-
-// BOOT
-(async()=>{ await loadAuth(); if(checkSession()) showAdmin(); })();
+/* ═════════ start ═════════ */
+(async()=>{try{await loadAuth()}catch(e){}
+  const s=sessionStorage.getItem(SESS); if(s&&AUTH&&JSON.parse(s).email===AUTH.email)openApp(); else $('lEmail').focus()})();
 </script>
 </body>
 </html>

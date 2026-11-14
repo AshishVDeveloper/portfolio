@@ -4,97 +4,170 @@
     "order": 1,
     "icon": "🐘",
     "name": "PHP",
-    "sub": "Core Lang"
+    "sub": "Core Lang",
+    "group": "Backend",
+    "logo": "php/php-original"
   },
   {
     "id": 2,
     "order": 2,
     "icon": "⚡",
     "name": "Laravel",
-    "sub": "Framework"
+    "sub": "Framework",
+    "group": "Backend",
+    "logo": "laravel/laravel-original"
   },
   {
     "id": 3,
     "order": 3,
     "icon": "🔥",
     "name": "CodeIgniter",
-    "sub": "CI 4"
+    "sub": "CI 4",
+    "group": "Backend",
+    "logo": "codeigniter/codeigniter-plain"
   },
   {
     "id": 4,
     "order": 4,
     "icon": "🗄️",
     "name": "MySQL",
-    "sub": "Database"
+    "sub": "Database",
+    "group": "Database",
+    "logo": "mysql/mysql-original"
   },
   {
     "id": 5,
     "order": 5,
     "icon": "🔗",
     "name": "REST API",
-    "sub": "Integration"
+    "sub": "Integration",
+    "group": "Backend",
+    "logo": ""
   },
   {
     "id": 6,
     "order": 6,
     "icon": "⚙️",
     "name": "JavaScript",
-    "sub": "Frontend"
+    "sub": "Frontend",
+    "group": "Frontend",
+    "logo": "javascript/javascript-original"
   },
   {
     "id": 7,
     "order": 7,
     "icon": "🎨",
     "name": "Bootstrap",
-    "sub": "CSS"
+    "sub": "CSS",
+    "group": "Frontend",
+    "logo": "bootstrap/bootstrap-original"
   },
   {
     "id": 8,
     "order": 8,
     "icon": "🔄",
     "name": "Ajax",
-    "sub": "Async"
+    "sub": "Async",
+    "group": "Frontend",
+    "logo": "jquery/jquery-original"
   },
   {
     "id": 9,
     "order": 9,
     "icon": "🌐",
     "name": "HTML/CSS",
-    "sub": "Markup"
+    "sub": "Markup",
+    "group": "Frontend",
+    "logo": "html5/html5-original"
   },
   {
     "id": 10,
     "order": 10,
     "icon": "🐙",
     "name": "Git",
-    "sub": "Version Ctrl"
+    "sub": "Version Ctrl",
+    "group": "Tools",
+    "logo": "git/git-original"
   },
   {
     "id": 11,
     "order": 11,
     "icon": "🐍",
     "name": "Python",
-    "sub": "Language"
+    "sub": "Language",
+    "group": "Backend",
+    "logo": "python/python-original"
   },
   {
     "id": 12,
     "order": 12,
     "icon": "🚀",
     "name": "FastAPI",
-    "sub": "Framework"
+    "sub": "Framework",
+    "group": "Backend",
+    "logo": "fastapi/fastapi-original"
   },
   {
     "id": 13,
     "order": 13,
     "icon": "⚛️",
     "name": "React",
-    "sub": "Frontend"
+    "sub": "Frontend",
+    "group": "Frontend",
+    "logo": "react/react-original"
   },
   {
     "id": 14,
     "order": 14,
     "icon": "🐘",
     "name": "PostgreSQL",
-    "sub": "Database"
+    "sub": "Database",
+    "group": "Database",
+    "logo": "postgresql/postgresql-original"
+  },
+  {
+    "id": 15,
+    "order": 15,
+    "icon": "🧩",
+    "name": "TypeScript",
+    "sub": "Language",
+    "group": "Frontend",
+    "logo": "typescript/typescript-original"
+  },
+  {
+    "id": 16,
+    "order": 16,
+    "icon": "🧩",
+    "name": "Tailwind CSS",
+    "sub": "CSS",
+    "group": "Frontend",
+    "logo": "tailwindcss/tailwindcss-original"
+  },
+  {
+    "id": 17,
+    "order": 17,
+    "icon": "🧩",
+    "name": "WordPress",
+    "sub": "CMS",
+    "group": "Backend",
+    "logo": "wordpress/wordpress-plain"
+  },
+  {
+    "id": 18,
+    "order": 18,
+    "icon": "🧩",
+    "name": "Django",
+    "sub": "Framework",
+    "group": "Backend",
+    "logo": "django/django-plain"
+  },
+  {
+    "id": 19,
+    "order": 19,
+    "icon": "🎙️",
+    "name": "AI Voice Assistant",
+    "sub": "Voice + AI",
+    "group": "AI",
+    "logo": ""
   }
 ]

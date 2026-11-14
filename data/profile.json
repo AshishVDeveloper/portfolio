@@ -2,15 +2,14 @@
   "name": "Asheesh Vishwakarma",
   "initials": "AV",
   "tagline": "Senior Software Developer & Team Lead",
-  "specialization": "Laravel & CodeIgniter",
-  "hero_desc": "Crafting robust web applications with clean code and seamless UX. Specializing in full-stack PHP development, API integrations, and scalable CRM/ERP systems.",
-  "availability": "Available for Work",
+  "specialization": "Laravel · CodeIgniter · FastAPI",
+  "hero_desc": "From database design to the last screen, I deliver complete business systems for growing companies — and I currently lead a development team at A One Salasar Pvt Ltd, Thane.",
+  "availability": "Open to freelance projects",
   "email": "av.developer73@gmail.com",
   "phone": "9004200401",
   "location": "Airoli, Navi Mumbai, Maharashtra",
-  "status": "Open to Work",
   "about_p1": "I'm a Senior Software Developer & Team Lead at A One Salasar Pvt Ltd, Thane, with 4+ years of professional experience. Based in Airoli, Navi Mumbai, I build scalable web applications using Laravel and CodeIgniter 4, and lead a team delivering business software.",
-  "about_p2": "From multi-company CRM systems to full eCommerce platforms and ERP solutions — I deliver end-to-end products that solve real business problems, with third-party API integrations, payment gateways, and mobile APIs.",
+  "about_p2": "From multi-company CRMs to full eCommerce platforms and ERP solutions, I deliver end-to-end products that solve real business problems — with third-party API integrations, payment gateways, mobile APIs and, most recently, AI voice assistants.",
   "stats": [
     {
       "num": "4+",
@@ -24,5 +23,39 @@
       "num": "10+",
       "label": "Technologies"
     }
-  ]
+  ],
+  "company": "A One Salasar Pvt Ltd",
+  "github": "https://github.com/AshishVDeveloper",
+  "whatsapp": "919004200401",
+  "rotating": [
+    "CRM systems",
+    "ERP software",
+    "eCommerce stores",
+    "order management",
+    "REST APIs",
+    "AI voice assistants"
+  ],
+  "services": [
+    {
+      "title": "Custom development",
+      "desc": "Web applications built around how your business actually works."
+    },
+    {
+      "title": "CRM solutions",
+      "desc": "Leads, customers, sales, HR, expenses and invoices in one place."
+    },
+    {
+      "title": "ERP systems",
+      "desc": "Production, inventory, orders and cross-department workflows."
+    },
+    {
+      "title": "Websites & eCommerce",
+      "desc": "Business websites and online stores with payment gateways."
+    },
+    {
+      "title": "Enhancement & support",
+      "desc": "Bug fixes, speed improvements and new features for existing apps."
+    }
+  ],
+  "photo": "assets/asheesh.jpg"
 }
