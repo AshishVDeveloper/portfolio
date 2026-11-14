@@ -285,15 +285,17 @@
     "id": 18,
     "order": 3,
     "title": "Garment ERP",
-    "tech": "PHP",
+    "tech": "Python FastAPI · React · PostgreSQL",
     "url": "#",
     "category": "ERP",
-    "description": "An ERP for the garment industry managing production, inventory, orders and operations. Currently under active development.",
+    "description": "An ERP for the garment industry managing production, inventory, orders and operations. Built with a Python FastAPI backend, a React frontend and a PostgreSQL database, with an AI voice assistant built in. Currently under active development.",
     "tags": [
-      "PHP",
-      "MySQL",
+      "Python",
+      "FastAPI",
+      "React",
+      "PostgreSQL",
+      "AI Voice Assistant",
       "ERP",
-      "Garment",
       "Under Development"
     ],
     "featured": true
