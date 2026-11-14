@@ -1,3 +1,35 @@
 [
-  {"id":1,"order":1,"title":"Junior PHP Developer","company":"I Resolve Services Pvt Ltd","location":"Mulund, Mumbai","duration":"June 2022 – Present","current":true,"points":["Planned, coded and deployed web applications using PHP, MySQL and JavaScript.","Enhanced functionality by implementing PHP solutions and optimizing server-side code.","Reduced page load times by optimizing front-end code in HTML, CSS, and JavaScript.","Developed back-end components to connect applications with web services.","Integrated third-party APIs (IndiaMART, Razorpay, etc.) for seamless system communication.","Maintained version control using Git, ensuring smooth team collaboration.","Configured and deployed REST APIs; integrated with external third-party services.","Developed user-friendly web forms with validation and error handling.","Managed all projects using Git version control."]}
+  {
+    "id": 2,
+    "order": 1,
+    "title": "Senior Software Developer & Team Lead",
+    "company": "A One Salasar Pvt Ltd",
+    "location": "Thane, Maharashtra",
+    "duration": "Oct 2026 – Present",
+    "current": true,
+    "points": [
+      "Leading the development team and owning architecture, code reviews and delivery of business applications.",
+      "Building and enhancing web, CRM and ERP solutions with PHP, Laravel and MySQL."
+    ]
+  },
+  {
+    "id": 1,
+    "order": 2,
+    "title": "Junior PHP Developer",
+    "company": "I Resolve Services Pvt Ltd",
+    "location": "Mulund, Mumbai",
+    "duration": "June 2022 – Oct 2026",
+    "current": false,
+    "points": [
+      "Planned, coded and deployed web applications using PHP, MySQL and JavaScript.",
+      "Enhanced functionality by implementing PHP solutions and optimizing server-side code.",
+      "Reduced page load times by optimizing front-end code in HTML, CSS, and JavaScript.",
+      "Developed back-end components to connect applications with web services.",
+      "Integrated third-party APIs (IndiaMART, Razorpay, etc.) for seamless system communication.",
+      "Maintained version control using Git, ensuring smooth team collaboration.",
+      "Configured and deployed REST APIs; integrated with external third-party services.",
+      "Developed user-friendly web forms with validation and error handling.",
+      "Managed all projects using Git version control."
+    ]
+  }
 ]

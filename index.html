@@ -7,8 +7,8 @@
 <!-- ═══════════════════════════════════════════
      PRIMARY SEO META TAGS
 ════════════════════════════════════════════ -->
-<title>Asheesh Vishwakarma | PHP Developer – Laravel & CodeIgniter Expert</title>
-<meta name="description" content="Asheesh Vishwakarma is a skilled PHP Developer specializing in Laravel, CodeIgniter, REST APIs, and full-stack web development. Available for freelance and full-time opportunities."/>
+<title>Asheesh Vishwakarma | Senior Software Developer & Team Lead – Laravel & CodeIgniter</title>
+<meta name="description" content="Asheesh Vishwakarma is a Senior Software Developer & Team Lead specializing in Laravel, CodeIgniter, REST APIs, and full-stack web development. Available for freelance and full-time opportunities."/>
 <meta name="keywords" content="Asheesh Vishwakarma, PHP Developer, Laravel Developer, CodeIgniter Developer, REST API Developer, Full Stack PHP, Web Developer India, Hire PHP Developer, Backend Developer"/>
 <meta name="author" content="Asheesh Vishwakarma"/>
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
@@ -19,7 +19,7 @@
 ════════════════════════════════════════════ -->
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://asheeshvishwakarma.com/"/>
-<meta property="og:title" content="Asheesh Vishwakarma | PHP Developer – Laravel & CodeIgniter Expert"/>
+<meta property="og:title" content="Asheesh Vishwakarma | Senior Software Developer & Team Lead – Laravel & CodeIgniter"/>
 <meta property="og:description" content="Skilled PHP Developer specializing in Laravel, CodeIgniter, and REST APIs. Building fast, scalable web applications. Available for hire."/>
 <meta property="og:image" content="https://asheeshvishwakarma.com/og-image.jpg"/>
 <meta property="og:image:width" content="1200"/>
@@ -32,7 +32,7 @@
      TWITTER / X CARD
 ════════════════════════════════════════════ -->
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Asheesh Vishwakarma | PHP Developer – Laravel & CodeIgniter Expert"/>
+<meta name="twitter:title" content="Asheesh Vishwakarma | Senior Software Developer & Team Lead – Laravel & CodeIgniter"/>
 <meta name="twitter:description" content="Skilled PHP Developer specializing in Laravel, CodeIgniter, and REST APIs. Building fast, scalable web applications."/>
 <meta name="twitter:image" content="https://asheeshvishwakarma.com/og-image.jpg"/>
 <meta name="twitter:image:alt" content="Asheesh Vishwakarma – PHP Developer Portfolio"/>
@@ -430,7 +430,7 @@ async function boot(){
   document.getElementById('aboutP2').textContent=P.about_p2;
   document.getElementById('contactInfo').innerHTML='<div class="info-item"><span class="info-lbl">Location</span><span class="info-val">'+P.location+'</span></div><div class="info-item"><span class="info-lbl">Email</span><span class="info-val">'+P.email+'</span></div><div class="info-item"><span class="info-lbl">Phone</span><span class="info-val">'+P.phone+'</span></div><div class="info-item"><span class="info-lbl">Status</span><span class="info-val" style="color:var(--accent3)">'+P.status+'</span></div>';
   document.getElementById('contactCards').innerHTML='<div class="c-detail"><div class="c-icon">📧</div><div><div class="c-lbl">Email</div><div class="c-val">'+P.email+'</div></div></div><div class="c-detail"><div class="c-icon">📱</div><div><div class="c-lbl">Phone</div><div class="c-val">'+P.phone+'</div></div></div><div class="c-detail"><div class="c-icon">📍</div><div><div class="c-lbl">Location</div><div class="c-val">'+P.location+'</div></div></div>';
-  document.getElementById('footerText').innerHTML='© 2025 <strong>'+P.name+'</strong> &nbsp;·&nbsp; '+P.tagline+' &nbsp;·&nbsp; <a href="mailto:'+P.email+'">'+P.email+'</a>';
+  document.getElementById('footerText').innerHTML='© '+new Date().getFullYear()+' <strong>'+P.name+'</strong> &nbsp;·&nbsp; '+P.tagline+' &nbsp;·&nbsp; <a href="mailto:'+P.email+'">'+P.email+'</a>';
   SK.sort((a,b)=>(a.order||99)-(b.order||99));
   document.getElementById('skillsGrid').innerHTML=SK.map(s=>'<div class="skill-card"><span class="sk-icon">'+s.icon+'</span><div class="sk-name">'+s.name+'</div><div class="sk-sub">'+s.sub+'</div></div>').join('');
   PR.sort((a,b)=>(a.order||99)-(b.order||99));

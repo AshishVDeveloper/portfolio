@@ -1,7 +1,7 @@
 {
   "name": "Asheesh Vishwakarma",
   "initials": "AV",
-  "tagline": "PHP Developer",
+  "tagline": "Senior Software Developer & Team Lead",
   "specialization": "Laravel & CodeIgniter",
   "hero_desc": "Crafting robust web applications with clean code and seamless UX. Specializing in full-stack PHP development, API integrations, and scalable CRM/ERP systems.",
   "availability": "Available for Work",
@@ -9,12 +9,20 @@
   "phone": "9004200401",
   "location": "Airoli, Navi Mumbai, Maharashtra",
   "status": "Open to Work",
-  "about_p1": "I'm a PHP Developer based in Airoli, Navi Mumbai, with 3+ years of professional experience at I Resolve Services Pvt Ltd. I build scalable web applications using Laravel and CodeIgniter 4.",
+  "about_p1": "I'm a Senior Software Developer & Team Lead at A One Salasar Pvt Ltd, Thane, with 4+ years of professional experience. Based in Airoli, Navi Mumbai, I build scalable web applications using Laravel and CodeIgniter 4, and lead a team delivering business software.",
   "about_p2": "From multi-company CRM systems to full eCommerce platforms and ERP solutions — I deliver end-to-end products that solve real business problems, with third-party API integrations, payment gateways, and mobile APIs.",
   "stats": [
-    { "num": "3+", "label": "Years Exp." },
-    { "num": "9+", "label": "Projects" },
-    { "num": "10+", "label": "Technologies" }
+    {
+      "num": "4+",
+      "label": "Years Exp."
+    },
+    {
+      "num": "15+",
+      "label": "Projects"
+    },
+    {
+      "num": "10+",
+      "label": "Technologies"
+    }
   ]
 }
-
