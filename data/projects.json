@@ -283,7 +283,7 @@
     "order": 2,
     "title": "Metso CRM",
     "tech": "",
-    "url": "",
+    "url": "https://metso.aonesalasar.com/login",
     "category": "CRM",
     "description": "A CRM to manage leads, customers and sales activity.",
     "tags": [
@@ -316,7 +316,7 @@
     "order": 4,
     "title": "Client Hub",
     "tech": "",
-    "url": "",
+    "url": "https://client-hub.aonesalasar.com/login",
     "category": "Web App",
     "description": "A central portal to manage clients, their details and interactions in one place.",
     "tags": [
