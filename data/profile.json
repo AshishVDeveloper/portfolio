@@ -2,13 +2,13 @@
   "name": "Asheesh Vishwakarma",
   "initials": "AV",
   "tagline": "Senior Software Developer & Team Lead",
-  "specialization": "Laravel · CodeIgniter · FastAPI",
-  "hero_desc": "From database design to the last screen, I deliver complete business systems for growing companies — and I currently lead a development team at A One Salasar Pvt Ltd, Thane.",
+  "specialization": "PHP · Python · JavaScript",
+  "hero_desc": "Full-stack developer working across PHP (Laravel, CodeIgniter), Python (FastAPI, Django) and JavaScript (React, Node.js). From database design to the last screen, I deliver complete business systems — and I currently lead a development team at A One Salasar Pvt Ltd, Thane.",
   "availability": "Open to freelance projects",
   "email": "av.developer73@gmail.com",
   "phone": "9004200401",
   "location": "Airoli, Navi Mumbai, Maharashtra",
-  "about_p1": "I'm a Senior Software Developer & Team Lead at A One Salasar Pvt Ltd, Thane, with 4+ years of professional experience. Based in Airoli, Navi Mumbai, I build scalable web applications using Laravel and CodeIgniter 4, and lead a team delivering business software.",
+  "about_p1": "I'm a Senior Software Developer & Team Lead at A One Salasar Pvt Ltd, Thane, with 4+ years of professional experience. Based in Airoli, Navi Mumbai, I build scalable web applications with Laravel and CodeIgniter 4 on the PHP side, Python with FastAPI and Django for APIs and newer products, and React and Node.js for fast, modern front ends and services.",
   "about_p2": "From multi-company CRMs to full eCommerce platforms and ERP solutions, I deliver end-to-end products that solve real business problems — with third-party API integrations, payment gateways, mobile APIs and, most recently, AI voice assistants.",
   "stats": [
     {
@@ -20,7 +20,7 @@
       "label": "Projects"
     },
     {
-      "num": "10+",
+      "num": "15+",
       "label": "Technologies"
     }
   ],
@@ -30,9 +30,10 @@
   "rotating": [
     "CRM systems",
     "ERP software",
+    "FastAPI & Django backends",
+    "React dashboards",
+    "Node.js services",
     "eCommerce stores",
-    "order management",
-    "REST APIs",
     "AI voice assistants"
   ],
   "services": [
@@ -57,5 +58,18 @@
       "desc": "Bug fixes, speed improvements and new features for existing apps."
     }
   ],
-  "photo": "assets/asheesh.jpg"
+  "photo": "assets/asheesh.jpg",
+  "avatar": "assets/asheesh-face.jpg",
+  "core": [
+    "PHP",
+    "Laravel",
+    "CodeIgniter",
+    "Python",
+    "FastAPI",
+    "Django",
+    "React",
+    "Node.js",
+    "PostgreSQL",
+    "MySQL"
+  ]
 }
