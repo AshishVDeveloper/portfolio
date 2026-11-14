@@ -71,5 +71,7 @@
     "Node.js",
     "PostgreSQL",
     "MySQL"
-  ]
+  ],
+  "upi": "9004200401@kotakbank",
+  "upi_qr": "assets/upi-qr.png"
 }

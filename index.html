@@ -203,6 +203,12 @@ textarea{resize:vertical;min-height:130px}
 .formnote{font-size:.82rem;color:var(--muted);margin-top:.8rem}
 .hp{position:absolute;left:-9999px}
 
+.support{display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center;border:1px solid var(--line);border-radius:18px;background:var(--soft);padding:2.4rem}
+.support .ctas{margin-top:1.6rem}
+.upi{display:inline-flex;align-items:center;gap:.6rem;margin-top:1.2rem;padding:.55rem .9rem;border:1px dashed var(--line);border-radius:10px;font-weight:600;font-size:1.02rem}
+.upi small{color:var(--muted);font-weight:400}
+.qr{background:#fff;border:1px solid var(--line);border-radius:14px;padding:.8rem;width:220px;text-align:center;color:#0B1F3A;font-size:.82rem;font-weight:500}
+.qr img{width:100%;height:auto;border-radius:6px}
 footer.site{border-top:1px solid var(--line);padding:2rem 0;color:var(--muted);font-size:.9rem}
 footer.site .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 footer.site a{text-decoration:none}
@@ -244,6 +250,8 @@ footer.site a:hover{color:var(--paper)}
   .portrait{max-width:none;width:100%;aspect-ratio:1/1}
   .portrait img{object-position:center top}
   .edu,.row2,.info{grid-template-columns:1fr}
+  .support{grid-template-columns:1fr;padding:1.6rem;gap:1.6rem}
+  .qr{width:100%;max-width:260px;margin:0 auto}
   .stack{grid-template-columns:1fr;gap:1.6rem}
   .stack>div{display:grid;grid-template-columns:1fr 1fr;gap:0 .9rem}
   .stack h3{grid-column:1/-1}
@@ -372,9 +380,25 @@ footer.site a:hover{color:var(--paper)}
     </form>
   </div>
 </section>
+<section id="support" hidden>
+  <div class="wrap">
+    <div class="support">
+      <div>
+        <h2>Support my work</h2>
+        <p class="lede">If my projects, code or help have been useful to you, you can buy me a chai with a small UPI payment. Any amount is appreciated.</p>
+        <div class="upi"><small>UPI ID</small><span id="upiId"></span></div>
+        <div class="ctas">
+          <a class="btn btn-blue" id="upiPay" href="#">Pay with UPI app</a>
+          <button class="btn btn-ghost" id="upiCopy" type="button">Copy UPI ID</button>
+        </div>
+      </div>
+      <div class="qr"><img id="upiQr" src="assets/upi-qr.png" alt="UPI QR code to pay Asheesh Vishwakarma" width="220" height="220"/><div>Scan with GPay, PhonePe, Paytm or any UPI app</div></div>
+    </div>
+  </div>
+</section>
 </main>
 
-<footer class="site"><div class="wrap"><span id="fText"></span><span><a href="#top">Back to top</a></span></div></footer>
+<footer class="site"><div class="wrap"><span id="fText"></span><span><a href="#support">Support my work</a> · <a href="#top">Back to top</a></span></div></footer>
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -465,6 +489,9 @@ async function boot(){
   if(P.github) reach.push(['gh',P.github,'GitHub',P.github.replace(/^https?:\/\//,'')]);
   if(P.location) reach.push(['pin','https://maps.google.com/?q='+encodeURIComponent(P.location),'Location',P.location]);
   $('reach').innerHTML=reach.map(r=>'<a href="'+esc(r[1])+'"'+(r[1].startsWith('http')?' target="_blank" rel="noopener"':'')+'>'+ICONS[r[0]]+'<span><small>'+r[2]+'</small>'+esc(r[3])+'</span></a>').join('');
+  if(P.upi){$('support').hidden=false;$('upiId').textContent=P.upi;if(P.upi_qr)$('upiQr').src=P.upi_qr;
+    $('upiPay').href='upi://pay?pa='+encodeURIComponent(P.upi)+'&pn='+encodeURIComponent(P.name)+'&cu=INR';
+    $('upiCopy').onclick=async()=>{try{await navigator.clipboard.writeText(P.upi);toast('UPI ID copied.')}catch(e){toast('Copy failed. The UPI ID is '+P.upi,true)}}}
   $('fText').innerHTML='© '+new Date().getFullYear()+' '+esc(P.name)+' · '+esc(P.tagline);
 }
 function shortDesc(d){d=String(d||'');const i=d.indexOf('. ');return i>0&&i<150?d.slice(0,i+1):d.length>140?d.slice(0,137)+'…':d}
