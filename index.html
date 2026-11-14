@@ -237,12 +237,46 @@ textarea{resize:vertical;min-height:130px}
 .upi small{color:var(--muted);font-weight:400}
 .qr{background:#fff;border:1px solid var(--line);border-radius:14px;padding:.8rem;width:220px;text-align:center;color:#0B1F3A;font-size:.82rem;font-weight:500}
 .qr img{width:100%;height:auto;border-radius:6px}
+
+/* voice assistant */
+.vafab{position:fixed;right:1.2rem;bottom:1.2rem;z-index:70;width:58px;height:58px;border-radius:50%;border:0;background:var(--blue);color:var(--onaccent);display:grid;place-items:center;cursor:pointer;box-shadow:0 12px 30px -8px color-mix(in srgb,var(--blue) 70%,transparent)}
+.vafab:hover{filter:brightness(.95)}
+.vafab svg{width:26px;height:26px}
+.vafab[aria-expanded="true"]{display:none}
+.vapanel[hidden]{display:none}
+.vapanel{position:fixed;right:1.2rem;bottom:1.2rem;z-index:71;width:370px;max-height:min(600px,calc(100vh - 2.4rem));display:flex;flex-direction:column;background:var(--deep);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.vapanel header{display:flex;align-items:center;gap:.75rem;padding:.9rem 1rem;border-bottom:1px solid var(--line)}
+.vapanel header img{width:38px;height:38px;border-radius:50%;object-fit:cover;object-position:top}
+.vapanel header b{display:block;font-size:.98rem;line-height:1.2}
+.vapanel header small{color:var(--muted);font-size:.8rem;line-height:1.35;display:block}
+.vapanel header,.vachips,.vastatus,.vabar{flex-shrink:0}
+.vapanel header button{margin-left:auto;background:none;border:0;color:var(--muted);font-size:1.4rem;cursor:pointer;line-height:1;padding:.2rem .4rem}
+.valog{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:.6rem;min-height:180px}
+.vab{max-width:85%;padding:.6rem .85rem;border-radius:14px;font-size:.93rem;line-height:1.5}
+.vab.bot{background:var(--ink);border:1px solid var(--line);border-bottom-left-radius:4px;align-self:flex-start}
+.vab.me{background:var(--blue);color:var(--onaccent);border-bottom-right-radius:4px;align-self:flex-end}
+.vachips{display:flex;gap:.4rem;overflow-x:auto;padding:.2rem 1rem .7rem;scrollbar-width:none}
+.vachips button{flex-shrink:0;background:transparent;border:1px solid var(--line);color:var(--paper);border-radius:999px;padding:.35rem .75rem;font:500 .82rem var(--body);cursor:pointer;white-space:nowrap}
+.vachips button:hover{border-color:var(--blue)}
+.vabar{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem 1rem;border-top:1px solid var(--line)}
+.vabar form{display:flex;flex:1;gap:.4rem;background:none;border:0;padding:0;border-radius:0}
+.vabar input{margin:0;padding:.6rem .8rem;font-size:.92rem}
+.vabar .btn{padding:.6rem .85rem}
+.vamic{width:46px;height:46px;flex-shrink:0;border-radius:50%;border:1px solid var(--line);background:var(--ink);color:var(--paper);display:grid;place-items:center;cursor:pointer}
+.vamic svg{width:22px;height:22px}
+.vamic.on{background:var(--blue);color:var(--onaccent);border-color:var(--blue);animation:pulse 1.3s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--blue) 55%,transparent)}100%{box-shadow:0 0 0 14px transparent}}
+.vastatus{padding:0 1rem;min-height:1.2em;font-size:.82rem;color:var(--muted)}
+@media (max-width:760px){
+  .vafab{right:1rem;bottom:1rem}
+  .vapanel{left:.6rem;right:.6rem;bottom:.6rem;width:auto;max-height:78vh}
+}
 footer.site{border-top:1px solid var(--line);padding:2rem 0;color:var(--muted);font-size:.9rem}
 footer.site .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 footer.site a{text-decoration:none}
 footer.site a:hover{color:var(--paper)}
 
-#toast{position:fixed;left:50%;bottom:1.5rem;transform:translate(-50%,20px);opacity:0;visibility:hidden;background:var(--paper);color:var(--ink);padding:.8rem 1.2rem;border-radius:10px;font-weight:500;z-index:99;transition:transform .3s,opacity .3s,visibility .3s;max-width:90vw}
+#toast{position:fixed;left:50%;bottom:5.5rem;transform:translate(-50%,20px);opacity:0;visibility:hidden;background:var(--paper);color:var(--ink);padding:.8rem 1.2rem;border-radius:10px;font-weight:500;z-index:99;transition:transform .3s,opacity .3s,visibility .3s;max-width:90vw}
 #toast.show{transform:translate(-50%,0);opacity:1;visibility:visible}
 #toast.err{background:#ffb4b4}
 
@@ -441,6 +475,18 @@ footer.site a:hover{color:var(--paper)}
 
 <footer class="site"><div class="wrap"><span id="fText"></span><span><a href="#support" data-t="support">Support my work</a> · <a href="#top" data-t="top">Back to top</a></span></div></footer>
 <div id="toast" role="status" aria-live="polite"></div>
+<button class="vafab" id="vaFab" type="button" aria-controls="vaPanel" aria-expanded="false" data-ta="va_open" aria-label="Open voice assistant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+<div class="vapanel" id="vaPanel" role="dialog" aria-labelledby="vaTitle" hidden>
+  <header><img src="assets/asheesh-face.jpg" alt=""/><div><b id="vaTitle" data-t="va_title">Voice assistant</b><small data-t="va_hint">Tap the mic and ask about Asheesh — or type below.</small></div><button type="button" id="vaClose" data-ta="va_close" aria-label="Close assistant">×</button></header>
+  <div class="valog" id="vaLog" aria-live="polite"></div>
+  <div class="vachips" id="vaChips"><button type="button" data-t="q1">Who is Asheesh?</button><button type="button" data-t="q2">What is he building now?</button><button type="button" data-t="q3">Which technologies?</button><button type="button" data-t="q4">How can I contact him?</button></div>
+  <div class="vastatus" id="vaStatus" aria-live="polite"></div>
+  <div class="vabar">
+    <button class="vamic" id="vaMic" type="button" aria-pressed="false" data-ta="va_mic" aria-label="Speak"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+    <form id="vaForm"><input id="vaInput" type="text" autocomplete="off" data-tp="va_ph" placeholder="Type a question" aria-label="Question"/><button class="btn btn-blue" type="submit" data-t="va_send">Ask</button></form>
+  </div>
+</section>
+
 
 <script>
 const BASE='data/', ENQ_KEY='av_enquiries', ROOT=document.documentElement;
@@ -493,6 +539,7 @@ function render(){
   $('hWa').href=wa; if(P.whatsapp){$('hWa').target='_blank';$('hWa').rel='noopener'}
   if(P.photo)$('aPhoto').src=P.photo;
   $('cPhoto').src=P.avatar||P.photo||$('cPhoto').src;
+  document.querySelector('.vapanel header img').src=$('cPhoto').src;
   const LOGO={};SK.forEach(s=>LOGO[s.name]=s);
   $('hCore').innerHTML=(P.core||[]).map(n=>{const s=LOGO[n]||{};return '<span>'+(s.logo?'<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/'+esc(s.logo)+'.svg" alt="" loading="lazy" onerror="this.remove()"/>':'')+esc(n)+'</span>'}).join('');
   $('cName').textContent=P.name; $('cCompany').innerHTML=esc(P.tagline)+(P.company?'<br/>'+esc(P.company):'');
@@ -619,5 +666,6 @@ $('cForm').onsubmit=async e=>{
   render();
 })();
 </script>
+<script src="assistant.js" defer></script>
 </body>
 </html>
