@@ -150,7 +150,9 @@
    "a_unsupported": "Voice input isn't available in this browser. Type your question instead.",
    "a_listening": "Listening…",
    "a_mic_denied": "Microphone access is blocked. Allow it in your browser settings, or type your question.",
-   "a_heard": "You said"
+   "a_heard": "You said",
+   "saveqr": "Save QR to gallery",
+   "upi_tip": "Paying from this phone? Save the QR, open GPay, PhonePe or Paytm and choose \"Scan from gallery\" — or copy the UPI ID and pay to it."
   },
   "hi": {
    "nav_about": "परिचय",
@@ -280,7 +282,9 @@
    "a_unsupported": "इस ब्राउज़र में वॉइस इनपुट उपलब्ध नहीं है। अपना सवाल लिखकर पूछें।",
    "a_listening": "सुन रहा हूँ…",
    "a_mic_denied": "माइक्रोफ़ोन की अनुमति बंद है। ब्राउज़र सेटिंग्स में अनुमति दें, या सवाल लिखें।",
-   "a_heard": "आपने कहा"
+   "a_heard": "आपने कहा",
+   "saveqr": "QR गैलरी में सेव करें",
+   "upi_tip": "इसी फ़ोन से भुगतान? QR सेव करें, GPay, PhonePe या Paytm खोलें और \"गैलरी से स्कैन\" चुनें — या UPI ID कॉपी करके उस पर भुगतान करें।"
   },
   "mr": {
    "nav_about": "माझ्याबद्दल",
@@ -410,7 +414,9 @@
    "a_unsupported": "या ब्राउझरमध्ये व्हॉइस इनपुट उपलब्ध नाही. तुमचा प्रश्न लिहून विचारा.",
    "a_listening": "ऐकत आहे…",
    "a_mic_denied": "मायक्रोफोनची परवानगी बंद आहे. ब्राउझर सेटिंग्जमध्ये परवानगी द्या, किंवा प्रश्न लिहा.",
-   "a_heard": "तुम्ही म्हणालात"
+   "a_heard": "तुम्ही म्हणालात",
+   "saveqr": "QR गॅलरीत सेव्ह करा",
+   "upi_tip": "याच फोनवरून पेमेंट? QR सेव्ह करा, GPay, PhonePe किंवा Paytm उघडा आणि \"गॅलरीतून स्कॅन\" निवडा — किंवा UPI ID कॉपी करून त्यावर पेमेंट करा."
   },
   "gu": {
    "nav_about": "મારા વિશે",
@@ -540,7 +546,9 @@
    "a_unsupported": "આ બ્રાઉઝરમાં વૉઇસ ઇનપુટ ઉપલબ્ધ નથી. તમારો પ્રશ્ન લખીને પૂછો.",
    "a_listening": "સાંભળી રહ્યો છું…",
    "a_mic_denied": "માઇક્રોફોનની પરવાનગી બંધ છે. બ્રાઉઝર સેટિંગ્સમાં પરવાનગી આપો, અથવા પ્રશ્ન લખો.",
-   "a_heard": "તમે કહ્યું"
+   "a_heard": "તમે કહ્યું",
+   "saveqr": "QR ગેલેરીમાં સેવ કરો",
+   "upi_tip": "આ જ ફોનથી ચુકવણી? QR સેવ કરો, GPay, PhonePe અથવા Paytm ખોલો અને \"ગેલેરીમાંથી સ્કેન\" પસંદ કરો — અથવા UPI ID કૉપી કરીને તેના પર ચુકવણી કરો."
   },
   "ta": {
    "nav_about": "என்னைப் பற்றி",
@@ -670,7 +678,9 @@
    "a_unsupported": "இந்த உலாவியில் குரல் உள்ளீடு இல்லை. உங்கள் கேள்வியைத் தட்டச்சு செய்யுங்கள்.",
    "a_listening": "கேட்கிறேன்…",
    "a_mic_denied": "மைக்ரோஃபோன் அனுமதி தடுக்கப்பட்டுள்ளது. உலாவி அமைப்புகளில் அனுமதி வழங்குங்கள், அல்லது கேள்வியைத் தட்டச்சு செய்யுங்கள்.",
-   "a_heard": "நீங்கள் சொன்னது"
+   "a_heard": "நீங்கள் சொன்னது",
+   "saveqr": "QR-ஐ கேலரியில் சேமிக்கவும்",
+   "upi_tip": "இதே போனில் இருந்து செலுத்துகிறீர்களா? QR-ஐ சேமித்து, GPay, PhonePe அல்லது Paytm-ல் \"கேலரியில் இருந்து ஸ்கேன்\" தேர்ந்தெடுக்கவும் — அல்லது UPI ID-ஐ நகலெடுத்து செலுத்தவும்."
   }
  },
  "content": {

@@ -235,6 +235,7 @@ textarea{resize:vertical;min-height:130px}
 .support .ctas{margin-top:1.6rem}
 .upi{display:inline-flex;align-items:center;gap:.6rem;margin-top:1.2rem;padding:.55rem .9rem;border:1px dashed var(--line);border-radius:10px;font-weight:600;font-size:1.02rem}
 .upi small{color:var(--muted);font-weight:400}
+.upitip{margin-top:.9rem;font-size:.9rem;color:var(--muted);max-width:46ch}
 .qr{background:#fff;border:1px solid var(--line);border-radius:14px;padding:.8rem;width:220px;text-align:center;color:#0B1F3A;font-size:.82rem;font-weight:500}
 .qr img{width:100%;height:auto;border-radius:6px}
 
@@ -463,9 +464,10 @@ footer.site a:hover{color:var(--paper)}
         <p class="lede" data-t="support_lede">If my projects, code or help have been useful to you, you can buy me a chai with a small UPI payment. Any amount is appreciated.</p>
         <div class="upi"><small data-t="upi">UPI ID</small><span id="upiId"></span></div>
         <div class="ctas">
-          <a class="btn btn-blue" id="upiPay" href="#" data-t="pay">Pay with UPI app</a>
+          <a class="btn btn-blue" id="upiPay" href="assets/upi-qr.png" download="Asheesh-Vishwakarma-UPI-QR.png" data-t="saveqr">Save QR to gallery</a>
           <button class="btn btn-ghost" id="upiCopy" type="button" data-t="copy">Copy UPI ID</button>
         </div>
+        <p class="upitip" data-t="upi_tip">Paying from this phone? Save the QR, open GPay, PhonePe or Paytm and choose "Scan from gallery" — or copy the UPI ID and pay to it.</p>
       </div>
       <div class="qr"><img id="upiQr" src="assets/upi-qr.png" alt="UPI QR code to pay Asheesh Vishwakarma" width="220" height="220"/><div data-t="scan">Scan with GPay, PhonePe, Paytm or any UPI app</div></div>
     </div>
@@ -581,7 +583,7 @@ function render(){
   if(P.location) reach.push(['pin','https://maps.google.com/?q='+encodeURIComponent(P.location),t('c_loc'),P.location]);
   $('reach').innerHTML=reach.map(r=>'<a href="'+esc(r[1])+'"'+(r[1].startsWith('http')?' target="_blank" rel="noopener"':'')+'>'+ICONS[r[0]]+'<span><small>'+esc(r[2])+'</small>'+esc(r[3])+'</span></a>').join('');
   if(P.upi){$('support').hidden=false;$('upiId').textContent=P.upi;if(P.upi_qr)$('upiQr').src=P.upi_qr;
-    $('upiPay').href='upi://pay?pa='+encodeURIComponent(P.upi)+'&pn='+encodeURIComponent(P.name)+'&cu=INR';
+    $('upiPay').href=P.upi_qr||'assets/upi-qr.png';
     $('upiCopy').onclick=async()=>{try{await navigator.clipboard.writeText(P.upi);toast(t('copied'))}catch(e){toast(t('copy_fail',{upi:P.upi}),true)}}}
   D.drawn=true;
   $('fText').innerHTML='© '+new Date().getFullYear()+' '+esc(P.name)+' · '+esc(P.tagline);
