@@ -235,6 +235,15 @@ textarea{resize:vertical;min-height:130px}
 .support .ctas{margin-top:1.6rem}
 .upi{display:inline-flex;align-items:center;gap:.6rem;margin-top:1.2rem;padding:.55rem .9rem;border:1px dashed var(--line);border-radius:10px;font-weight:600;font-size:1.02rem}
 .upi small{color:var(--muted);font-weight:400}
+.amt{display:flex;flex-direction:column;gap:.35rem;margin-top:1.2rem;font-weight:600;font-size:.92rem;max-width:260px}
+.amt-in{display:flex;align-items:center;border:1.5px solid var(--line);border-radius:12px;background:transparent;padding:0 .9rem;color:var(--paper);transition:border-color .2s}
+.amt-in:focus-within{border-color:var(--blue)}
+.amt-in b{font-size:1.3rem;margin-right:.3rem}
+.amt-in input{border:0;outline:0;background:transparent;font-family:inherit;font-weight:700;font-size:1.4rem;line-height:1;width:100%;padding:.65rem 0;color:inherit}
+.amt-in input::-webkit-outer-spin-button,.amt-in input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}.amt-in input{-moz-appearance:textfield;color:var(--paper)}
+.amt-quick{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.6rem}
+.amt-quick button{border:1.5px solid var(--line);background:transparent;color:inherit;border-radius:999px;padding:.35rem .8rem;font-weight:600;cursor:pointer}
+.amt-quick button[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:#fff}
 .upitip{margin-top:.9rem;font-size:.9rem;color:var(--muted);max-width:46ch}
 .qr{background:#fff;border:1px solid var(--line);border-radius:14px;padding:.8rem;width:220px;text-align:center;color:#0B1F3A;font-size:.82rem;font-weight:500}
 .qr img{width:100%;height:auto;border-radius:6px}
@@ -463,11 +472,13 @@ footer.site a:hover{color:var(--paper)}
         <h2 data-t="support">Support my work</h2>
         <p class="lede" data-t="support_lede">If my projects, code or help have been useful to you, you can buy me a chai with a small UPI payment. Any amount is appreciated.</p>
         <div class="upi"><small data-t="upi">UPI ID</small><span id="upiId"></span></div>
+        <label class="amt" for="upiAmt"><span data-t="amt">Amount (₹)</span><span class="amt-in"><b>₹</b><input id="upiAmt" type="number" inputmode="numeric" min="1" max="100000" step="1" value="100"/></span></label>
+        <div class="amt-quick" role="group" aria-label="Quick amounts"><button type="button" data-amt="51">₹51</button><button type="button" data-amt="100" aria-pressed="true">₹100</button><button type="button" data-amt="251">₹251</button><button type="button" data-amt="501">₹501</button></div>
         <div class="ctas">
-          <a class="btn btn-blue" id="upiPay" href="assets/upi-qr.png" download="Asheesh-Vishwakarma-UPI-QR.png" data-t="saveqr">Save QR to gallery</a>
+          <a class="btn btn-blue" id="upiPay" href="#">Pay ₹100 with UPI app</a>
           <button class="btn btn-ghost" id="upiCopy" type="button" data-t="copy">Copy UPI ID</button>
         </div>
-        <p class="upitip" data-t="upi_tip">Paying from this phone? Save the QR, open GPay, PhonePe or Paytm and choose "Scan from gallery" — or copy the UPI ID and pay to it.</p>
+        <p class="upitip" data-t="upi_tip">If your UPI app says the payment failed, scan the QR code or pay to the UPI ID instead.</p>
       </div>
       <div class="qr"><img id="upiQr" src="assets/upi-qr.png" alt="UPI QR code to pay Asheesh Vishwakarma" width="220" height="220"/><div data-t="scan">Scan with GPay, PhonePe, Paytm or any UPI app</div></div>
     </div>
@@ -583,7 +594,11 @@ function render(){
   if(P.location) reach.push(['pin','https://maps.google.com/?q='+encodeURIComponent(P.location),t('c_loc'),P.location]);
   $('reach').innerHTML=reach.map(r=>'<a href="'+esc(r[1])+'"'+(r[1].startsWith('http')?' target="_blank" rel="noopener"':'')+'>'+ICONS[r[0]]+'<span><small>'+esc(r[2])+'</small>'+esc(r[3])+'</span></a>').join('');
   if(P.upi){$('support').hidden=false;$('upiId').textContent=P.upi;if(P.upi_qr)$('upiQr').src=P.upi_qr;
-    $('upiPay').href=P.upi_qr||'assets/upi-qr.png';
+    const amtIn=$('upiAmt'),payBtn=$('upiPay'),setPay=()=>{let a=Math.max(1,Math.min(100000,Math.round(+amtIn.value||0)));if(!+amtIn.value)a=100;
+      payBtn.textContent=t('pay_amt',{amt:a.toLocaleString('en-IN')});
+      payBtn.href='upi://pay?pa='+encodeURIComponent(P.upi)+'&pn='+encodeURIComponent(P.name)+'&am='+a+'.00&cu=INR&tn='+encodeURIComponent('Support for '+P.name);
+      document.querySelectorAll('[data-amt]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.amt===a))};
+    amtIn.oninput=setPay;document.querySelectorAll('[data-amt]').forEach(b=>b.onclick=()=>{amtIn.value=b.dataset.amt;setPay()});setPay();window.__setPay=setPay;
     $('upiCopy').onclick=async()=>{try{await navigator.clipboard.writeText(P.upi);toast(t('copied'))}catch(e){toast(t('copy_fail',{upi:P.upi}),true)}}}
   D.drawn=true;
   $('fText').innerHTML='© '+new Date().getFullYear()+' '+esc(P.name)+' · '+esc(P.tagline);
@@ -610,7 +625,7 @@ function setMode(m){ROOT.dataset.mode=m;ROOT.dataset.theme=m==='auto'?(mq.matche
 mq.addEventListener&&mq.addEventListener('change',()=>{if(ROOT.dataset.mode==='auto')setMode('auto')});
 function setAccent(a){ROOT.dataset.accent=a;store.set('av_accent',a);syncSettings()}
 function loadFont(l){if(!FONTS[l]||document.getElementById('font-'+l))return;const k=document.createElement('link');k.id='font-'+l;k.rel='stylesheet';k.href='https://fonts.googleapis.com/css2?family='+FONTS[l]+':wght@400;500;600;700&display=swap';document.head.appendChild(k)}
-function setLang(l){LANG=l;ROOT.lang=l;ROOT.dataset.lang=l;store.set('av_lang',l);loadFont(l);applyStatic();render();syncSettings()}
+function setLang(l){LANG=l;ROOT.lang=l;ROOT.dataset.lang=l;store.set('av_lang',l);loadFont(l);applyStatic();render();syncSettings();window.__setPay&&window.__setPay()}
 function syncSettings(){
   $('segMode').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===(ROOT.dataset.mode||'auto')));
   $('swatches').innerHTML=Object.entries(ACCENTS).map(([k,c])=>'<button type="button" data-a="'+k+'" style="background:'+c+'" aria-label="'+esc(t('a_'+k))+'" title="'+esc(t('a_'+k))+'" aria-pressed="'+(ROOT.dataset.accent===k)+'"></button>').join('');

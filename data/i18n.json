@@ -152,7 +152,9 @@
    "a_mic_denied": "Microphone access is blocked. Allow it in your browser settings, or type your question.",
    "a_heard": "You said",
    "saveqr": "Save QR to gallery",
-   "upi_tip": "Paying from this phone? Save the QR, open GPay, PhonePe or Paytm and choose \"Scan from gallery\" — or copy the UPI ID and pay to it."
+   "upi_tip": "If your UPI app says the payment failed, scan the QR code or pay to the UPI ID instead.",
+   "amt": "Amount (₹)",
+   "pay_amt": "Pay ₹{amt} with UPI app"
   },
   "hi": {
    "nav_about": "परिचय",
@@ -284,7 +286,9 @@
    "a_mic_denied": "माइक्रोफ़ोन की अनुमति बंद है। ब्राउज़र सेटिंग्स में अनुमति दें, या सवाल लिखें।",
    "a_heard": "आपने कहा",
    "saveqr": "QR गैलरी में सेव करें",
-   "upi_tip": "इसी फ़ोन से भुगतान? QR सेव करें, GPay, PhonePe या Paytm खोलें और \"गैलरी से स्कैन\" चुनें — या UPI ID कॉपी करके उस पर भुगतान करें।"
+   "upi_tip": "अगर UPI ऐप भुगतान विफल बताए, तो QR कोड स्कैन करें या UPI ID पर भुगतान करें।",
+   "amt": "राशि (₹)",
+   "pay_amt": "UPI ऐप से ₹{amt} भुगतान करें"
   },
   "mr": {
    "nav_about": "माझ्याबद्दल",
@@ -416,7 +420,9 @@
    "a_mic_denied": "मायक्रोफोनची परवानगी बंद आहे. ब्राउझर सेटिंग्जमध्ये परवानगी द्या, किंवा प्रश्न लिहा.",
    "a_heard": "तुम्ही म्हणालात",
    "saveqr": "QR गॅलरीत सेव्ह करा",
-   "upi_tip": "याच फोनवरून पेमेंट? QR सेव्ह करा, GPay, PhonePe किंवा Paytm उघडा आणि \"गॅलरीतून स्कॅन\" निवडा — किंवा UPI ID कॉपी करून त्यावर पेमेंट करा."
+   "upi_tip": "UPI ॲपने पेमेंट अयशस्वी दाखवल्यास QR कोड स्कॅन करा किंवा UPI ID वर पेमेंट करा.",
+   "amt": "रक्कम (₹)",
+   "pay_amt": "UPI ॲपने ₹{amt} भरा"
   },
   "gu": {
    "nav_about": "મારા વિશે",
@@ -548,7 +554,9 @@
    "a_mic_denied": "માઇક્રોફોનની પરવાનગી બંધ છે. બ્રાઉઝર સેટિંગ્સમાં પરવાનગી આપો, અથવા પ્રશ્ન લખો.",
    "a_heard": "તમે કહ્યું",
    "saveqr": "QR ગેલેરીમાં સેવ કરો",
-   "upi_tip": "આ જ ફોનથી ચુકવણી? QR સેવ કરો, GPay, PhonePe અથવા Paytm ખોલો અને \"ગેલેરીમાંથી સ્કેન\" પસંદ કરો — અથવા UPI ID કૉપી કરીને તેના પર ચુકવણી કરો."
+   "upi_tip": "જો UPI એપ ચુકવણી નિષ્ફળ બતાવે, તો QR કોડ સ્કેન કરો અથવા UPI ID પર ચુકવણી કરો.",
+   "amt": "રકમ (₹)",
+   "pay_amt": "UPI એપથી ₹{amt} ચૂકવો"
   },
   "ta": {
    "nav_about": "என்னைப் பற்றி",
@@ -680,7 +688,9 @@
    "a_mic_denied": "மைக்ரோஃபோன் அனுமதி தடுக்கப்பட்டுள்ளது. உலாவி அமைப்புகளில் அனுமதி வழங்குங்கள், அல்லது கேள்வியைத் தட்டச்சு செய்யுங்கள்.",
    "a_heard": "நீங்கள் சொன்னது",
    "saveqr": "QR-ஐ கேலரியில் சேமிக்கவும்",
-   "upi_tip": "இதே போனில் இருந்து செலுத்துகிறீர்களா? QR-ஐ சேமித்து, GPay, PhonePe அல்லது Paytm-ல் \"கேலரியில் இருந்து ஸ்கேன்\" தேர்ந்தெடுக்கவும் — அல்லது UPI ID-ஐ நகலெடுத்து செலுத்தவும்."
+   "upi_tip": "UPI ஆப் பணம் செலுத்தல் தோல்வி எனக் காட்டினால், QR குறியீட்டை ஸ்கேன் செய்யவும் அல்லது UPI ID-க்கு செலுத்தவும்.",
+   "amt": "தொகை (₹)",
+   "pay_amt": "UPI ஆப் மூலம் ₹{amt} செலுத்தவும்"
   }
  },
  "content": {
